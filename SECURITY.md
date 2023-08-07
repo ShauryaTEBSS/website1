@@ -4,4 +4,4 @@ NorQom is the part of TestADege Edu, a non- profit campaign run by TEBSS (TeachB
 </br>
 <br>
 </br>
-<center>Powered by <i>GitHub Pages</i>and TEBSS Technologies </center>
+<center>Powered by <i>GitHub Pages</i> and TEBSS Technologies </center>
