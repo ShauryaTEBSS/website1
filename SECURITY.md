@@ -1,21 +1,7 @@
-# Security Policy
-
-## Supported Versions
-
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
-
-## Reporting a Vulnerability
-
-Use this section to tell people how to report a vulnerability.
-
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+NorQom is the part of TestADege Edu, a non- profit campaign run by TEBSS (TeachBee Educations by Shaurya Singh.
+<b> If you have any queries about this, you can contacr us at testadege.srv@hotmail.com<b>
+<br>
+</br>
+<br>
+</br>
+<center>Powered by <i>GitHub Pages</i>and TEBSS Technologies </center>
