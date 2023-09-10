@@ -58,6 +58,11 @@ body{
   margin: 20px auto 0;
   border-radius: 4px;
   cursor: pointer;
-  display: none;
-  
+  display: none;  
+}
+.correct{
+  backgorund: #9aeabc;
+}
+.incorrect{
+  backgorund: #ff9393;
 }
