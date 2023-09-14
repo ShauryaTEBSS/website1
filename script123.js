@@ -64,7 +64,7 @@ nextBtn.addEventListener(
         questionCount + 1 + " of " + quizArray.length + " Question";
       //display quiz
       quizDisplay(questionCount);
-      count = 11;
+      count = 16;
       clearInterval(countdown);
       timerDisplay();
     }
@@ -80,7 +80,7 @@ const timerDisplay = () => {
       clearInterval(countdown);
       displayNext();
     }
-  }, 1000);
+  }, 1600);
 };
 
 //Display quiz
