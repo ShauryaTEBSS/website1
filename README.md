@@ -2,6 +2,7 @@
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
+      Apache licenses are subject cyber security. If you face any difficulties, we ae not responsible                  
 
    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
