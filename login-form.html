@@ -1,4 +1,22 @@
 <html>
   <head>Login</head>
 <iframe src="https://script.google.com/macros/s/AKfycbw_lwrkRKa5K0m086VtDuLGMVw0nu9KZa6uDjwJPVFjqZg5NdnPw9lEa3bVmTRsk_S3LA/exec" height="700px" width="100%"></iframe>
+<script>
+const disabledKeys = ["u", "I", "c"];
+
+const showAlert = e => {
+    e.preventDefault();
+    return alert("Sorry, but you can't copy or right-click on this webpage. Webpage protected by Cloudflare!");
+}
+
+document.addEventListener("contextmenu", e => {
+    showAlert(e);
+});
+
+document.addEventListener("keydown", e => {
+    if (e.ctrlKey && disabledKeys.includes(e.key) || e.key === "F12") {
+        showAlert(e);
+    }
+});
+</script>
 </html>
