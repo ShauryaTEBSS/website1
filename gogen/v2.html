@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Candidate Status – Google GoGen 3.0 ArtOFest</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* -------------------- GLOBAL VARS -------------------- */
+:root { --bg: #f5f7fa; --card: #ffffff; --text: #222; --accent: #4a7dfc; --border: #dce1e8; --danger: #ff453a; --success: #32d74b; }
+.dark { --bg: #0f141a; --card: #18222d; --text: #f5f7fa; --accent: #4a90ff; --border: #2a3138; }
+
+/* -------------------- LAYOUT -------------------- */
+body { margin: 0; font-family: "Segoe UI", sans-serif; background: var(--bg); color: var(--text); transition: 0.3s; }
+.container { max-width: 900px; margin: auto; padding: 20px; }
+.card { background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid var(--border); }
+h2, h3 { margin-top: 0; color: var(--accent); }
+
+/* -------------------- FORMS -------------------- */
+input, select { width: 100%; padding: 12px; box-sizing: border-box; margin: 8px 0 15px 0; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); outline: none; }
+input:focus, select:focus { border-color: var(--accent); }
+button { padding: 12px 20px; background: var(--accent); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; width: 100%; }
+button:hover { opacity: 0.9; transform: translateY(-1px); }
+button.secondary { background: var(--border); color: var(--text); }
+button.danger { background: var(--danger); color: white; }
+
+/* -------------------- PROGRESS & STAGES -------------------- */
+.progress-container { background: var(--border); border-radius: 30px; height: 20px; overflow: hidden; margin-bottom: 20px; }
+.progress-bar { height: 20px; background: var(--accent); width: 0%; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+.stage { padding: 15px; background: var(--bg); border-left: 4px solid var(--border); margin: 10px 0; border-radius: 0 8px 8px 0; }
+.stage.active { border-left-color: var(--accent); background: var(--card); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.badge { padding: 4px 10px; border-radius: 4px; font-size: 12px; color: white; display: inline-block; }
+.completed { background: var(--success); } .pending { background: #ff9f0a; }
+
+/* -------------------- ADMIN PANEL SPECIFIC -------------------- */
+#loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 999; display: none; align-items: center; justify-content: center; }
+.login-box { background: var(--card); padding: 30px; border-radius: 12px; width: 300px; text-align: center; }
+
+#adminDashboard { display: none; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+.stat-box { background: var(--bg); padding: 15px; border-radius: 8px; text-align: center; border: 1px solid var(--border); }
+.stat-number { font-size: 24px; font-weight: bold; color: var(--accent); display: block; }
+
+/* TABLE */
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--border); }
+th { background: var(--bg); color: var(--accent); }
+.action-btn { padding: 5px 10px; font-size: 12px; width: auto; margin-right: 5px; }
+
+/* -------------------- UTILS -------------------- */
+.switch { position: fixed; top: 20px; right: 20px; background: var(--card); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--border); cursor: pointer; user-select: none; z-index: 100; font-size: 14px; }
+.hidden { display: none; }
+.admin-trigger { text-align: center; margin-top: 30px; font-size: 12px; color: var(--border); cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div class="switch" onclick="toggleDarkMode()">🌙/☀ Theme</div>
+
+<div id="loginOverlay">
+  <div class="login-box">
+    <h3>Admin Access</h3>
+    <input type="text" id="adminUser" placeholder="Username">
+    <input type="password" id="adminPass" placeholder="Password">
+    <button onclick="attemptLogin()">Login</button>
+    <button class="secondary" onclick="closeLogin()" style="margin-top:10px;">Cancel</button>
+  </div>
+</div>
+
+<div class="container">
+  
+  <div id="publicSection">
+    <div class="card" style="text-align: center;">
+      <h1 style="margin-bottom: 5px;">Google GoGen 3.0</h1>
+      <p style="color: #666; margin-top: 0;">Candidate Status Portal</p>
+    </div>
+
+    <div class="card">
+      <h2>Check Status</h2>
+      <input id="candidateId" placeholder="Enter Candidate ID (e.g., AZ0082Y4)">
+      <select id="candidateCohort">
+        <option value="">Select Cohort</option>
+        <option>Cohort 1</option>
+        <option>Cohort 2</option>
+        <option>Cohort 3</option>
+        <option>Cohort 4</option>
+      </select>
+      <button onclick="checkStatus()">Track Application</button>
+    </div>
+
+    <div id="results" class="card hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3>Candidate Profile</h3>
+        <span class="badge completed" id="rStatusBadge">Active</span>
+      </div>
+      
+      <p><b>Name:</b> <span id="rName"></span></p>
+      <p><b>Cohort:</b> <span id="rCohort"></span></p>
+      <p><b>Current Phase:</b> <span id="rStageText"></span></p>
+
+      <h3>Progress Tracker</h3>
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <div id="stageList"></div>
+
+      <div id="certificateBox" class="hidden" style="margin-top: 20px; text-align: center; background: var(--bg); padding: 15px; border-radius: 8px;">
+        <h3 style="margin-top:0;">🎉 Certified!</h3>
+        <p>You have qualified for a certificate.</p>
+        <button onclick="window.open(CERTIFICATE_LINK)">Download Certificate</button>
+      </div>
+    </div>
+    
+    <div class="admin-trigger" onclick="showLogin()">Admin Login (Staff Only)</div>
+  </div>
+
+  <div id="adminDashboard">
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>Admin Dashboard</h2>
+        <button class="secondary" onclick="logoutAdmin()" style="width: auto;">Logout</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box"><span class="stat-number" id="totalCandidates">0</span>Total Candidates</div>
+        <div class="stat-box"><span class="stat-number" id="cohort1Count">0</span>In Cohort 1</div>
+        <div class="stat-box"><span class="stat-number" id="cohort3Count">0</span>In Cohort 3</div>
+      </div>
+
+      <h3 style="border-top: 1px solid var(--border); padding-top: 15px;">Add / Update Candidate</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <input id="newId" placeholder="ID (e.g. A101)">
+        <input id="newName" placeholder="Full Name">
+        <select id="newCohort">
+          <option>Cohort 1</option>
+          <option>Cohort 2</option>
+          <option>Cohort 3</option>
+          <option>Cohort 4</option>
+        </select>
+        <select id="newStage">
+          <option value="0">Stage 1</option>
+          <option value="1">Stage 2</option>
+          <option value="2">Stage 3</option>
+          <option value="3">Stage 4</option>
+          <option value="4">Stage 5</option>
+          <option value="5">Stage 6 (Winner)</option>
+        </select>
+      </div>
+      <input id="newCert" placeholder="Certificate URL (Optional)">
+      <button onclick="upsertCandidate()">Save Candidate</button>
+    </div>
+
+    <div class="card">
+      <h3>All Candidates Database</h3>
+      <div class="table-wrapper">
+        <table id="adminTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Cohort</th>
+              <th>Stage</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="adminTableBody">
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ------------------------------------------------------------
+   1. DATA & CONFIG
+------------------------------------------------------------ */
+const STAGES = [
+  { name: "Submission Verification", desc: "Format & originality check." },
+  { name: "Quality Assessment", desc: "Design & creativity evaluation." },
+  { name: "Innovation Review", desc: "Uniqueness panel review." },
+  { name: "Technical Precision", desc: "Vector & export quality check." },
+  { name: "Jury Round", desc: "Senior judge scoring." },
+  { name: "Final Selection", desc: "Winner announcement." }
+];
+
+// Default Data
+let candidates = {
+  "AZ0082Y4": { name: "Srishti Singh", cohort: "Cohort 3", stage: 1, certificate: "" },
+  "AZ0099X1": { name: "Rahul Verma", cohort: "Cohort 1", stage: 4, certificate: "#" },
+  "TEST01":   { name: "Demo User", cohort: "Cohort 2", stage: 0, certificate: "" }
+};
+
+// Load from Memory
+if (localStorage.getItem("gogenDB_v2")) {
+  candidates = JSON.parse(localStorage.getItem("gogenDB_v2"));
+}
+
+function saveDB() {
+  localStorage.setItem("gogenDB_v2", JSON.stringify(candidates));
+  refreshStats();
+  renderAdminTable();
+}
+
+/* ------------------------------------------------------------
+   2. PUBLIC FUNCTIONS
+------------------------------------------------------------ */
+let CERTIFICATE_LINK = "";
+
+function checkStatus() {
+  const id = document.getElementById("candidateId").value.trim();
+  const cohort = document.getElementById("candidateCohort").value;
+  const resultBox = document.getElementById("results");
+
+  if (!candidates[id] || candidates[id].cohort !== cohort) {
+    alert("❌ No record found! Check ID and Cohort.");
+    resultBox.classList.add("hidden");
+    return;
+  }
+
+  const c = candidates[id];
+  resultBox.classList.remove("hidden");
+  
+  // Fill Data
+  document.getElementById("rName").innerText = c.name;
+  document.getElementById("rCohort").innerText = c.cohort;
+  document.getElementById("rStageText").innerText = `${STAGES[c.stage].name} (Stage ${c.stage + 1}/6)`;
+  
+  // Progress Bar
+  const pct = ((c.stage + 1) / 6) * 100;
+  document.getElementById("progressBar").style.width = `${pct}%`;
+
+  // Render Stages
+  let html = "";
+  STAGES.forEach((stage, index) => {
+    const isCompleted = index <= c.stage;
+    const statusClass = isCompleted ? "completed" : "pending";
+    const statusText = isCompleted ? "✓ Completed" : "⏳ Pending";
+    const activeClass = index === c.stage ? "active" : "";
+    
+    html += `
+      <div class="stage ${activeClass}">
+        <div style="display:flex; justify-content:space-between;">
+          <b>${stage.name}</b>
+          <span class="badge ${statusClass}">${statusText}</span>
+        </div>
+        <small>${stage.desc}</small>
+      </div>
+    `;
+  });
+  document.getElementById("stageList").innerHTML = html;
+
+  // Certificate
+  if (c.certificate && c.certificate.length > 5) {
+    CERTIFICATE_LINK = c.certificate;
+    document.getElementById("certificateBox").classList.remove("hidden");
+  } else {
+    document.getElementById("certificateBox").classList.add("hidden");
+  }
+}
+
+/* ------------------------------------------------------------
+   3. ADMIN SECURITY & LOGIC
+------------------------------------------------------------ */
+function showLogin() { document.getElementById("loginOverlay").style.display = "flex"; }
+function closeLogin() { document.getElementById("loginOverlay").style.display = "none"; }
+
+function attemptLogin() {
+  const u = document.getElementById("adminUser").value;
+  const p = document.getElementById("adminPass").value;
+
+  // HARDCODED CREDENTIALS
+  if (u === "admin" && p === "123789") {
+    closeLogin();
+    document.getElementById("publicSection").style.display = "none";
+    document.getElementById("adminDashboard").style.display = "block";
+    refreshStats();
+    renderAdminTable();
+    // Clear fields for security
+    document.getElementById("adminUser").value = "";
+    document.getElementById("adminPass").value = "";
+  } else {
+    alert("⛔ Access Denied: Wrong Username or Password");
+  }
+}
+
+function logoutAdmin() {
+  document.getElementById("adminDashboard").style.display = "none";
+  document.getElementById("publicSection").style.display = "block";
+}
+
+/* ------------------------------------------------------------
+   4. DASHBOARD OPERATIONS (CRUD)
+------------------------------------------------------------ */
+function refreshStats() {
+  const keys = Object.keys(candidates);
+  document.getElementById("totalCandidates").innerText = keys.length;
+  document.getElementById("cohort1Count").innerText = Object.values(candidates).filter(c => c.cohort === "Cohort 1").length;
+  document.getElementById("cohort3Count").innerText = Object.values(candidates).filter(c => c.cohort === "Cohort 3").length;
+}
+
+function renderAdminTable() {
+  const tbody = document.getElementById("adminTableBody");
+  tbody.innerHTML = "";
+
+  Object.keys(candidates).forEach(id => {
+    const c = candidates[id];
+    const row = `
+      <tr>
+        <td><b>${id}</b></td>
+        <td>${c.name}</td>
+        <td>${c.cohort}</td>
+        <td>Stage ${c.stage + 1}</td>
+        <td>
+          <button class="action-btn" onclick="editCandidate('${id}')">✏️ Edit</button>
+          <button class="action-btn danger" onclick="deleteCandidate('${id}')">🗑️</button>
+        </td>
+      </tr>
+    `;
+    tbody.innerHTML += row;
+  });
+}
+
+function upsertCandidate() {
+  const id = document.getElementById("newId").value.trim();
+  const name = document.getElementById("newName").value.trim();
+  const cohort = document.getElementById("newCohort").value;
+  const stage = parseInt(document.getElementById("newStage").value);
+  const cert = document.getElementById("newCert").value.trim();
+
+  if (!id || !name) {
+    alert("ID and Name are required!");
+    return;
+  }
+
+  // Update or Create
+  candidates[id] = { name, cohort, stage, certificate: cert };
+  saveDB();
+  alert("✅ Candidate Saved Successfully");
+  
+  // Clear inputs
+  document.getElementById("newId").value = "";
+  document.getElementById("newName").value = "";
+}
+
+function deleteCandidate(id) {
+  if(confirm(`Are you sure you want to delete candidate ${id}?`)) {
+    delete candidates[id];
+    saveDB();
+  }
+}
+
+function editCandidate(id) {
+  const c = candidates[id];
+  document.getElementById("newId").value = id;
+  document.getElementById("newName").value = c.name;
+  document.getElementById("newCohort").value = c.cohort;
+  document.getElementById("newStage").value = c.stage;
+  document.getElementById("newCert").value = c.certificate;
+  window.scrollTo(0, 0); // Scroll to form
+  alert(`Editing ${c.name}. Change values and click 'Save Candidate'.`);
+}
+
+/* ------------------------------------------------------------
+   UTILS
+------------------------------------------------------------ */
+function toggleDarkMode() {
+  document.body.classList.toggle("dark");
+}
+
+/* Keyboard Shortcut for Admin (Optional backup) */
+document.addEventListener("keydown", e => {
+  if (e.key === "~") showLogin();
+});
+
+</script>
+</body>
+</html>
