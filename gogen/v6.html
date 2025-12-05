@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Google GoGen 3.0 – Official Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ------------------------------------------------------------
+   1. THEME & VARIABLES
+------------------------------------------------------------ */
+:root {
+  --bg-color: #f0f2f5;
+  --card-bg: #ffffff;
+  --text-main: #202124;
+  --text-sub: #5f6368;
+  --google-blue: #1a73e8;
+  --google-red: #ea4335;
+  --google-yellow: #fbbc04;
+  --google-green: #34a853;
+  --border: #dadce0;
+  --shadow: 0 4px 12px rgba(0,0,0,0.08);
+  --modal-overlay: rgba(32,33,36,0.7);
+}
+
+.dark {
+  --bg-color: #171717;
+  --card-bg: #242526;
+  --text-main: #e4e6eb;
+  --text-sub: #b0b3b8;
+  --google-blue: #8ab4f8;
+  --google-red: #f28b82;
+  --google-yellow: #fdd663;
+  --google-green: #81c995;
+  --border: #3e4042;
+  --shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* ------------------------------------------------------------
+   2. CORE LAYOUT
+------------------------------------------------------------ */
+body { margin: 0; font-family: 'Google Sans', sans-serif; background-color: var(--bg-color); color: var(--text-main); transition: 0.3s; padding-bottom: 60px; }
+.container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+.hidden { display: none !important; }
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 25px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Branding */
+.brand-header { text-align: center; margin-bottom: 30px; }
+.brand-header img { height: 45px; margin-bottom: 10px; }
+.brand-header h1 { margin: 0; font-size: 24px; font-weight: 500; color: var(--text-main); }
+
+/* Inputs & Buttons */
+input, select, textarea {
+  width: 100%; box-sizing: border-box; padding: 14px; margin-bottom: 15px;
+  border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg-color); color: var(--text-main);
+  font-family: inherit; font-size: 15px; outline: none;
+}
+input:focus, select:focus { border-color: var(--google-blue); box-shadow: 0 0 0 3px rgba(26,115,232,0.15); }
+
+button {
+  background: var(--google-blue); color: #fff; border: none; padding: 12px 24px;
+  border-radius: 25px; font-weight: 500; font-size: 15px; cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s; width: 100%;
+}
+button:active { transform: scale(0.98); }
+button.secondary { background: var(--border); color: var(--text-main); }
+button.danger { background: var(--google-red); color: #fff; }
+button.edit { background: var(--google-yellow); color: #373737; }
+button.small { width: auto; padding: 6px 14px; font-size: 13px; }
+
+/* ------------------------------------------------------------
+   3. SPECIAL UI ELEMENTS
+------------------------------------------------------------ */
+/* Status Badges */
+.badge { padding: 5px 12px; border-radius: 15px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.badge.pending { background: #f1f3f4; color: #5f6368; border: 1px solid #ccc; }
+.badge.active { background: rgba(26,115,232,0.1); color: var(--google-blue); border: 1px solid var(--google-blue); }
+.badge.winner { background: rgba(52,168,83,0.1); color: var(--google-green); border: 1px solid var(--google-green); }
+
+/* Timeline UI */
+.timeline-item { display: flex; position: relative; padding-bottom: 25px; opacity: 0.4; transition: 0.5s; }
+.timeline-item.active, .timeline-item.completed { opacity: 1; }
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-marker {
+  width: 24px; height: 24px; border-radius: 50%; background: var(--border);
+  z-index: 2; display: flex; align-items: center; justify-content: center;
+  margin-right: 15px; color: white; font-size: 14px; font-weight: bold; flex-shrink: 0;
+}
+.timeline-line {
+  position: absolute; left: 11px; top: 24px; bottom: 0; width: 2px; background: var(--border); z-index: 1;
+}
+.timeline-item:last-child .timeline-line { display: none; }
+/* Colors for timeline */
+.completed .timeline-marker { background: var(--google-green); }
+.active .timeline-marker { background: var(--google-blue); box-shadow: 0 0 0 4px rgba(26,115,232,0.2); }
+.completed .timeline-line { background: var(--google-green); }
+
+/* Announcement Box */
+.announcement {
+  background: rgba(251, 188, 4, 0.15); border-left: 4px solid var(--google-yellow);
+  padding: 15px; border-radius: 4px; margin-bottom: 20px;
+  display: flex; align-items: center; animation: pulse 2s infinite;
+}
+
+/* Modals */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: var(--modal-overlay); backdrop-filter: blur(5px);
+  z-index: 999; display: none; align-items: center; justify-content: center;
+}
+.modal-box {
+  background: var(--card-bg); width: 90%; max-width: 420px; padding: 30px;
+  border-radius: 16px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  animation: slideUp 0.3s;
+}
+
+/* Admin Table */
+.table-container { overflow-x: auto; margin-top: 15px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; color: var(--text-sub); border-bottom: 2px solid var(--border); padding: 10px; }
+td { border-bottom: 1px solid var(--border); padding: 10px; color: var(--text-main); }
+.admin-actions { display: flex; gap: 6px; }
+
+/* Animations */
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(251,188,4, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(251,188,4, 0); } 100% { box-shadow: 0 0 0 0 rgba(0,0,0, 0); } }
+.switch { position: fixed; top: 20px; right: 20px; cursor: pointer; background: var(--card-bg); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--border); font-size: 14px; z-index: 100; }
+.link-muted { color: var(--border); text-align: center; margin-top: 30px; cursor: pointer; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="switch" onclick="toggleTheme()">🌗 Theme</div>
+
+<div id="stage0Modal" class="modal-overlay">
+  <div class="modal-box">
+    <div style="font-size: 40px; margin-bottom: 15px;">⚠️</div>
+    <h2 style="margin-top:0; color:var(--text-main);">Application Incomplete</h2>
+    <p style="color:var(--text-sub); line-height:1.5; font-size:14px;">
+      Documents haven't been received or the form was not submitted correctly.
+    </p>
+    <div style="background:var(--bg-color); padding:15px; border-radius:8px; margin:20px 0; font-size:13px; color:var(--text-sub);">
+      If this is an error, please contact your facilitator:<br>
+      <a href="mailto:info@shauryasingh.me" style="color:var(--google-blue); font-weight:bold; text-decoration:none; display:block; margin-top:5px;">info@shauryasingh.me</a>
+    </div>
+    <button onclick="document.getElementById('stage0Modal').style.display='none'">Close</button>
+  </div>
+</div>
+
+<div id="copyrightModal" class="modal-overlay">
+  <div class="modal-box">
+    <div style="font-size: 40px; margin-bottom: 15px;">⚖️</div>
+    <h2 style="margin-top:0; color:var(--text-main);">Copyright Transfer</h2>
+    <p style="color:var(--text-sub); line-height:1.5; font-size:14px;">
+      To proceed to the evaluation phase, you must grant <b>Google GoGen</b> rights to evaluate, display, and modify your submission for ArtOFest purposes.
+    </p>
+    <div style="background:var(--bg-color); padding:15px; border-radius:8px; margin:20px 0; text-align:left; display:flex; align-items:center;">
+      <input type="checkbox" id="agreeCheck" style="width:20px; height:20px; margin:0 10px 0 0;">
+      <label for="agreeCheck" style="font-size:13px; cursor:pointer;">I agree to the terms & conditions.</label>
+    </div>
+    <button onclick="signCopyright()">Confirm & View Results</button>
+  </div>
+</div>
+
+<div id="loginModal" class="modal-overlay">
+  <div class="modal-box">
+    <h3 style="margin-top:0;">Staff Access</h3>
+    <input type="text" id="adminUser" placeholder="Username">
+    <input type="password" id="adminPass" placeholder="Password">
+    <button onclick="attemptLogin()">Login</button>
+    <button class="secondary" onclick="document.getElementById('loginModal').style.display='none'" style="margin-top:10px;">Cancel</button>
+  </div>
+</div>
+
+<div class="container">
+  
+  <div class="brand-header">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+    <h1>GoGen 3.0 ArtOFest</h1>
+  </div>
+
+  <div id="userView">
+    
+    <div class="card">
+      <h2 style="margin-top:0;">Track Application</h2>
+      <p style="color:var(--text-sub); margin-bottom:20px;">Enter your details to view your scorecard.</p>
+      
+      <div style="display:grid; grid-template-columns: 2fr 1fr; gap:10px;">
+        <input id="userId" placeholder="Candidate ID (e.g. AZ008)">
+        <select id="userCohort">
+          <option value="">Cohort</option>
+          <option>Cohort 1</option>
+          <option>Cohort 2</option>
+          <option>Cohort 3</option>
+          <option>Cohort 4</option>
+        </select>
+      </div>
+      <button onclick="checkStatus()">Search Record</button>
+    </div>
+
+    <div id="resultsArea" class="hidden">
+      
+      <div id="userAnnounceBanner" class="announcement hidden">
+        <span style="font-size:20px; margin-right:10px;">📢</span>
+        <div>
+          <strong style="color:var(--text-main);">Update:</strong>
+          <span id="userAnnounceText" style="color:var(--text-main);"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:15px;">
+          <div>
+            <h2 id="resName" style="margin:0;">User Name</h2>
+            <small id="resCohort" style="color:var(--text-sub);">Cohort X</small>
+          </div>
+          <span id="resBadge" class="badge pending">STATUS</span>
+        </div>
+
+        <div id="timelineContainer"></div>
+
+        <div id="certBox" class="hidden" style="margin-top:30px; text-align:center; background:rgba(52,168,83,0.05); padding:20px; border-radius:8px; border:1px dashed var(--google-green);">
+          <h3 style="margin:0 0 10px 0; color:var(--google-green);">🎉 Certificate Available</h3>
+          <button onclick="downloadCert()" class="small" style="background:var(--google-green);">Download PDF</button>
+        </div>
+
+      </div>
+    </div>
+    <div class="link-muted" onclick="document.getElementById('loginModal').style.display='flex'">Admin Login</div>
+  </div>
+
+  <div id="adminView" class="hidden">
+    
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="margin:0;">Admin Dashboard</h2>
+        <button class="secondary small" onclick="logout()">Logout</button>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:20px;">
+        <div style="text-align:center; padding:10px; background:var(--bg-color); border-radius:8px;">
+          <div style="font-size:24px; font-weight:bold; color:var(--google-blue);" id="statTotal">0</div>
+          <div style="font-size:12px; color:var(--text-sub);">Candidates</div>
+        </div>
+        <div style="text-align:center; padding:10px; background:var(--bg-color); border-radius:8px;">
+          <div style="font-size:24px; font-weight:bold; color:var(--google-yellow);" id="statPending">0</div>
+          <div style="font-size:12px; color:var(--text-sub);">Pending</div>
+        </div>
+        <div style="text-align:center; padding:10px; background:var(--bg-color); border-radius:8px;">
+          <div style="font-size:24px; font-weight:bold; color:var(--google-green);" id="statWinners">0</div>
+          <div style="font-size:12px; color:var(--text-sub);">Winners</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-left:5px solid var(--google-yellow);">
+      <h3>Global Announcement</h3>
+      <div style="display:flex; gap:10px;">
+        <input id="admAnnounceInput" placeholder="Type a message for all users..." style="margin-bottom:0;">
+        <button onclick="postAnnouncement()" class="small" style="background:var(--google-yellow); color:black; width:auto;">Post</button>
+        <button onclick="clearAnnouncement()" class="secondary small">Clear</button>
+      </div>
+    </div>
+
+    <div class="card" id="editFormCard">
+      <div style="display:flex; justify-content:space-between;">
+        <h3 id="formTitle">Add / Update Candidate</h3>
+        <button onclick="resetForm()" class="secondary small">Reset Form</button>
+      </div>
+      
+      <div style="display:grid; grid-template-columns: 1fr 2fr; gap:15px;">
+        <input id="admId" placeholder="ID (Unique)">
+        <input id="admName" placeholder="Full Name">
+      </div>
+      
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+        <select id="admCohort">
+          <option>Cohort 1</option>
+          <option>Cohort 2</option>
+          <option>Cohort 3</option>
+          <option>Cohort 4</option>
+        </select>
+        <select id="admStage">
+          <option value="0">Stage 0 - Not Received / Error</option>
+          <option value="1">Stage 1 - Verified</option>
+          <option value="2">Stage 2 - Quality Check</option>
+          <option value="3">Stage 3 - Innovation</option>
+          <option value="4">Stage 4 - Technical</option>
+          <option value="5">Stage 5 - Jury Round</option>
+          <option value="6">Stage 6 - Final Winner</option>
+        </select>
+      </div>
+      
+      <input id="admCert" placeholder="Certificate URL (Optional)">
+      <button onclick="saveCandidate()">Save Candidate</button>
+    </div>
+
+    <div class="card">
+      <h3>Candidate Database</h3>
+      <div class="table-container">
+        <table>
+          <thead><tr><th>ID</th><th>Name</th><th>Stage</th><th>Signed?</th><th>Actions</th></tr></thead>
+          <tbody id="admTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+/* ------------------------------------------------------------
+   1. CONFIGURATION
+------------------------------------------------------------ */
+const STAGES = [
+  { t: "Application Received", d: "Docs under review." },
+  { t: "Submission Verification", d: "Format check passed." },
+  { t: "Quality Assessment", d: "Design evaluation." },
+  { t: "Innovation Review", d: "Creativity check." },
+  { t: "Technical Precision", d: "Vector/Export check." },
+  { t: "Jury Round", d: "Senior panel scoring." },
+  { t: "Final Selection", d: "Winner declared." }
+];
+
+// Initial DB with Dummy Data
+// Test 'TEST01' to see the new Stage 0 Popup
+let db = {
+  "AZ0082": { name: "Srishti Singh", cohort: "Cohort 3", stage: 2, signed: true, cert: "" },
+  "TEST01": { name: "Demo User", cohort: "Cohort 1", stage: 0, signed: false, cert: "" },
+  "WIN001": { name: "Rahul Verma", cohort: "Cohort 2", stage: 6, signed: true, cert: "https://example.com/cert.pdf" }
+};
+
+// Load Data
+if(localStorage.getItem("gogenFinal_v6")) {
+  db = JSON.parse(localStorage.getItem("gogenFinal_v6"));
+}
+
+/* ------------------------------------------------------------
+   2. PUBLIC FUNCTIONS
+------------------------------------------------------------ */
+let currentLookUpId = null;
+
+function checkStatus() {
+  const id = document.getElementById("userId").value.trim();
+  const cohort = document.getElementById("userCohort").value;
+  const resArea = document.getElementById("resultsArea");
+
+  // Load Announcement
+  const ann = localStorage.getItem("gogenAnnounce");
+  if(ann) {
+    document.getElementById("userAnnounceBanner").classList.remove("hidden");
+    document.getElementById("userAnnounceText").innerText = ann;
+  } else {
+    document.getElementById("userAnnounceBanner").classList.add("hidden");
+  }
+
+  if(!db[id] || db[id].cohort !== cohort) {
+    alert("❌ Record not found. Please check ID and Cohort.");
+    resArea.classList.add("hidden");
+    return;
+  }
+
+  currentLookUpId = id;
+  const user = db[id];
+
+  // ---------------- MODIFIED STAGE 0 LOGIC ----------------
+  // If Stage 0 -> Show Alert Modal & Hide Results
+  if(user.stage === 0) {
+    document.getElementById("stage0Modal").style.display = "flex";
+    resArea.classList.add("hidden");
+    return; 
+  }
+
+  // Copyright Gate (Stage 1+)
+  if(user.stage >= 1 && !user.signed) {
+    document.getElementById("copyrightModal").style.display = "flex";
+    resArea.classList.add("hidden");
+    return;
+  }
+
+  renderTimeline(user);
+}
+
+function signCopyright() {
+  if(!document.getElementById("agreeCheck").checked) {
+    alert("Please tick the checkbox to agree.");
+    return;
+  }
+  db[currentLookUpId].signed = true;
+  saveDB();
+  document.getElementById("copyrightModal").style.display = "none";
+  renderTimeline(db[currentLookUpId]);
+}
+
+function renderTimeline(user) {
+  document.getElementById("resultsArea").classList.remove("hidden");
+  document.getElementById("resName").innerText = user.name;
+  document.getElementById("resCohort").innerText = user.cohort;
+
+  // Set Badge
+  const badge = document.getElementById("resBadge");
+  badge.className = "badge"; // reset
+  if(user.stage === 6) { badge.innerText = "Winner"; badge.classList.add("winner"); }
+  else { badge.innerText = "In Progress"; badge.classList.add("active"); }
+
+  // Build Timeline HTML
+  let html = "";
+  STAGES.forEach((s, i) => {
+    let statusClass = "";
+    let icon = i + 1; // 1, 2, 3...
+    
+    if(i < user.stage) { statusClass = "completed"; icon = "✓"; }
+    else if (i === user.stage) { statusClass = "active"; }
+    
+    html += `
+      <div class="timeline-item ${statusClass}">
+        <div class="timeline-line"></div>
+        <div class="timeline-marker">${icon}</div>
+        <div>
+          <div style="font-weight:500;">${s.t}</div>
+          <div style="font-size:13px; color:var(--text-sub);">${s.d}</div>
+        </div>
+      </div>
+    `;
+  });
+  document.getElementById("timelineContainer").innerHTML = html;
+
+  // Certificate
+  if(user.cert) {
+    document.getElementById("certBox").classList.remove("hidden");
+    window.certLink = user.cert;
+  } else {
+    document.getElementById("certBox").classList.add("hidden");
+  }
+}
+
+function downloadCert() { if(window.certLink) window.open(window.certLink); }
+
+/* ------------------------------------------------------------
+   3. ADMIN FUNCTIONS
+------------------------------------------------------------ */
+function attemptLogin() {
+  const u = document.getElementById("adminUser").value;
+  const p = document.getElementById("adminPass").value;
+  if(u === "admin" && p === "123789") {
+    document.getElementById("loginModal").style.display = "none";
+    document.getElementById("userView").classList.add("hidden");
+    document.getElementById("adminView").classList.remove("hidden");
+    refreshAdmin();
+  } else {
+    alert("⛔ Access Denied");
+  }
+}
+
+function logout() {
+  document.getElementById("adminView").classList.add("hidden");
+  document.getElementById("userView").classList.remove("hidden");
+}
+
+function refreshAdmin() {
+  // Stats
+  const keys = Object.keys(db);
+  document.getElementById("statTotal").innerText = keys.length;
+  document.getElementById("statPending").innerText = Object.values(db).filter(u => u.stage === 0).length;
+  document.getElementById("statWinners").innerText = Object.values(db).filter(u => u.stage === 6).length;
+
+  // Announcement Field
+  document.getElementById("admAnnounceInput").value = localStorage.getItem("gogenAnnounce") || "";
+
+  // Table
+  const tbody = document.getElementById("admTableBody");
+  tbody.innerHTML = "";
+  keys.forEach(id => {
+    const u = db[id];
+    tbody.innerHTML += `
+      <tr>
+        <td><b>${id}</b></td>
+        <td>${u.name}</td>
+        <td>Stage ${u.stage}</td>
+        <td>${u.signed ? '✅' : '❌'}</td>
+        <td>
+          <div class="admin-actions">
+            <button class="edit small" onclick="editUser('${id}')">Edit</button>
+            <button class="danger small" onclick="deleteUser('${id}')">Del</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+function saveCandidate() {
+  const id = document.getElementById("admId").value.trim();
+  const name = document.getElementById("admName").value.trim();
+  if(!id || !name) return alert("ID and Name required.");
+
+  // Preserve 'signed' status if existing
+  const existingSigned = db[id] ? db[id].signed : false;
+
+  db[id] = {
+    name: name,
+    cohort: document.getElementById("admCohort").value,
+    stage: parseInt(document.getElementById("admStage").value),
+    cert: document.getElementById("admCert").value,
+    signed: existingSigned
+  };
+  saveDB();
+  alert("Saved Successfully!");
+  resetForm();
+  refreshAdmin();
+}
+
+function editUser(id) {
+  const u = db[id];
+  document.getElementById("admId").value = id;
+  document.getElementById("admName").value = u.name;
+  document.getElementById("admCohort").value = u.cohort;
+  document.getElementById("admStage").value = u.stage;
+  document.getElementById("admCert").value = u.cert || "";
+  
+  // Smooth scroll to form
+  document.getElementById("editFormCard").scrollIntoView({ behavior: "smooth" });
+}
+
+function deleteUser(id) {
+  if(confirm("Delete candidate " + id + "?")) {
+    delete db[id];
+    saveDB();
+    refreshAdmin();
+  }
+}
+
+function resetForm() {
+  document.getElementById("admId").value = "";
+  document.getElementById("admName").value = "";
+  document.getElementById("admCert").value = "";
+}
+
+/* --- ANNOUNCEMENTS --- */
+function postAnnouncement() {
+  const txt = document.getElementById("admAnnounceInput").value;
+  localStorage.setItem("gogenAnnounce", txt);
+  alert("Announcement Posted Live!");
+}
+function clearAnnouncement() {
+  localStorage.removeItem("gogenAnnounce");
+  document.getElementById("admAnnounceInput").value = "";
+  alert("Announcement Cleared.");
+}
+
+/* --- UTILS --- */
+function saveDB() { localStorage.setItem("gogenFinal_v6", JSON.stringify(db)); }
+function toggleTheme() { document.body.classList.toggle("dark"); }
+</script>
+</body>
+</html>
