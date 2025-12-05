@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Google GoGen 3.0 – Official Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ------------------------------------------------------------
+   1. THEME & VARIABLES
+------------------------------------------------------------ */
+:root {
+  --bg-color: #f0f2f5;
+  --card-bg: #ffffff;
+  --text-main: #202124;
+  --text-sub: #5f6368;
+  --google-blue: #1a73e8;
+  --google-red: #ea4335;
+  --google-yellow: #fbbc04;
+  --google-green: #34a853;
+  --border: #dadce0;
+  --shadow: 0 4px 12px rgba(0,0,0,0.08);
+  --modal-overlay: rgba(32,33,36,0.7);
+}
+
+.dark {
+  --bg-color: #171717;
+  --card-bg: #242526;
+  --text-main: #e4e6eb;
+  --text-sub: #b0b3b8;
+  --google-blue: #8ab4f8;
+  --google-red: #f28b82;
+  --google-yellow: #fdd663;
+  --google-green: #81c995;
+  --border: #3e4042;
+  --shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* ------------------------------------------------------------
+   2. CORE LAYOUT
+------------------------------------------------------------ */
+body { margin: 0; font-family: 'Google Sans', sans-serif; background-color: var(--bg-color); color: var(--text-main); transition: 0.3s; padding-bottom: 60px; }
+.container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+.hidden { display: none !important; }
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 25px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+/* Branding */
+.brand-header { text-align: center; margin-bottom: 30px; }
+.brand-header img { height: 45px; margin-bottom: 10px; }
+.brand-header h1 { margin: 0; font-size: 24px; font-weight: 500; color: var(--text-main); }
+
+/* Inputs & Buttons */
+input, select, textarea {
+  width: 100%; box-sizing: border-box; padding: 14px; margin-bottom: 15px;
+  border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg-color); color: var(--text-main);
+  font-family: inherit; font-size: 15px; outline: none;
+}
+input:focus, select:focus { border-color: var(--google-blue); box-shadow: 0 0 0 3px rgba(26,115,232,0.15); }
+
+button {
+  background: var(--google-blue); color: #fff; border: none; padding: 12px 24px;
+  border-radius: 25px; font-weight: 500; font-size: 15px; cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s; width: 100%;
+}
+button:active { transform: scale(0.98); }
+button.secondary { background: var(--border); color: var(--text-main); }
+button.danger { background: var(--google-red); color: #fff; }
+button.edit { background: var(--google-yellow); color: #373737; }
+button.small { width: auto; padding: 6px 14px; font-size: 13px; }
+
+/* ------------------------------------------------------------
+   3. TIMELINE UI (ADVANCED)
+------------------------------------------------------------ */
+.timeline-item { display: flex; position: relative; padding-bottom: 30px; opacity: 0.4; transition: 0.5s; }
+.timeline-item.active, .timeline-item.completed, .timeline-item.failed { opacity: 1; }
+.timeline-item:last-child { padding-bottom: 0; }
+
+.timeline-marker {
+  width: 28px; height: 28px; border-radius: 50%; background: var(--border);
+  z-index: 2; display: flex; align-items: center; justify-content: center;
+  margin-right: 15px; color: white; font-size: 14px; font-weight: bold; flex-shrink: 0;
+  border: 2px solid var(--card-bg);
+}
+
+.timeline-line {
+  position: absolute; left: 14px; top: 28px; bottom: 0; width: 2px; background: var(--border); z-index: 1;
+}
+.timeline-item:last-child .timeline-line { display: none; }
+
+/* Status Colors */
+.completed .timeline-marker { background: var(--google-green); }
+.completed .timeline-line { background: var(--google-green); }
+
+.active .timeline-marker { background: var(--google-blue); box-shadow: 0 0 0 4px rgba(26,115,232,0.2); }
+
+.failed .timeline-marker { background: var(--google-red); box-shadow: 0 0 0 4px rgba(234,67,53,0.2); }
+.failed .timeline-line { background: var(--google-red); display: none; /* Hide line after failure */ }
+
+/* Failure Reason Box */
+.failure-box {
+  margin-top: 10px;
+  background: rgba(234, 67, 53, 0.08);
+  border-left: 3px solid var(--google-red);
+  padding: 10px 15px;
+  border-radius: 0 8px 8px 0;
+  color: var(--google-red);
+  font-size: 13px;
+  animation: slideUp 0.4s;
+}
+
+/* ------------------------------------------------------------
+   4. MODALS & EXTRAS
+------------------------------------------------------------ */
+.badge { padding: 5px 12px; border-radius: 15px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.badge.pending { background: #f1f3f4; color: #5f6368; }
+.badge.active { background: rgba(26,115,232,0.1); color: var(--google-blue); }
+.badge.winner { background: rgba(52,168,83,0.1); color: var(--google-green); }
+.badge.rejected { background: var(--google-red); color: white; }
+
+.announcement {
+  background: rgba(251, 188, 4, 0.15); border-left: 4px solid var(--google-yellow);
+  padding: 15px; border-radius: 4px; margin-bottom: 20px;
+  display: flex; align-items: center; animation: pulse 2s infinite;
+}
+
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: var(--modal-overlay); backdrop-filter: blur(5px);
+  z-index: 999; display: none; align-items: center; justify-content: center;
+}
+.modal-box {
+  background: var(--card-bg); width: 90%; max-width: 420px; padding: 30px;
+  border-radius: 16px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  animation: slideUp 0.3s;
+}
+
+/* Confetti (Simple CSS implementation) */
+.confetti { position: fixed; width: 10px; height: 10px; background-color: #f00; animation: fall linear forwards; z-index: 1000; }
+@keyframes fall { to { transform: translateY(100vh) rotate(720deg); } }
+
+/* Print Styles */
+@media print {
+  body { background: white; color: black; }
+  .no-print, button, .switch, .link-muted, .brand-header img { display: none !important; }
+  .card { box-shadow: none; border: 1px solid #ccc; }
+  .container { max-width: 100%; margin: 0; }
+}
+
+/* Admin Table */
+.table-container { overflow-x: auto; margin-top: 15px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; color: var(--text-sub); border-bottom: 2px solid var(--border); padding: 10px; }
+td { border-bottom: 1px solid var(--border); padding: 10px; color: var(--text-main); }
+.admin-actions { display: flex; gap: 6px; }
+
+/* Animations */
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(251,188,4, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(251,188,4, 0); } 100% { box-shadow: 0 0 0 0 rgba(0,0,0, 0); } }
+.switch { position: fixed; top: 20px; right: 20px; cursor: pointer; background: var(--card-bg); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--border); font-size: 14px; z-index: 100; }
+.link-muted { color: var(--border); text-align: center; margin-top: 30px; cursor: pointer; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="switch no-print" onclick="toggleTheme()">🌗 Theme</div>
+
+<div id="stage0Modal" class="modal-overlay">
+  <div class="modal-box">
+    <div style="font-size: 40px; margin-bottom: 15px;">⚠️</div>
+    <h2 style="margin-top:0; color:var(--text-main);">Application Received</h2>
+    <p style="color:var(--text-sub); line-height:1.5; font-size:14px;">
+      Documents are currently under review. If you have not submitted them yet, this status is pending confirmation.
+    </p>
+    <div style="background:var(--bg-color); padding:15px; border-radius:8px; margin:20px 0; font-size:13px; color:var(--text-sub);">
+      Contact: <a href="mailto:info@shauryasingh.me" style="color:var(--google-blue); font-weight:bold;">info@shauryasingh.me</a>
+    </div>
+    <button onclick="document.getElementById('stage0Modal').style.display='none'">Close</button>
+  </div>
+</div>
+
+<div id="copyrightModal" class="modal-overlay">
+  <div class="modal-box">
+    <div style="font-size: 40px; margin-bottom: 15px;">⚖️</div>
+    <h2 style="margin-top:0; color:var(--text-main);">Copyright Transfer</h2>
+    <p style="color:var(--text-sub); line-height:1.5; font-size:14px;">
+      You must grant <b>Google GoGen</b> rights to evaluate, display, and modify your submission.
+    </p>
+    <div style="background:var(--bg-color); padding:15px; border-radius:8px; margin:20px 0; text-align:left; display:flex; align-items:center;">
+      <input type="checkbox" id="agreeCheck" style="width:20px; height:20px; margin:0 10px 0 0;">
+      <label for="agreeCheck" style="font-size:13px; cursor:pointer;">I agree to the terms.</label>
+    </div>
+    <button onclick="signCopyright()">Confirm & View Results</button>
+  </div>
+</div>
+
+<div id="loginModal" class="modal-overlay">
+  <div class="modal-box">
+    <h3>Staff Access</h3>
+    <input type="text" id="adminUser" placeholder="Username">
+    <input type="password" id="adminPass" placeholder="Password">
+    <button onclick="attemptLogin()">Login</button>
+    <button class="secondary" onclick="document.getElementById('loginModal').style.display='none'" style="margin-top:10px;">Cancel</button>
+  </div>
+</div>
+
+<div class="container">
+  
+  <div class="brand-header">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+    <h1>GoGen 3.0 ArtOFest</h1>
+  </div>
+
+  <div id="userView">
+    
+    <div class="card no-print">
+      <h2 style="margin-top:0;">Track Application</h2>
+      <div style="display:grid; grid-template-columns: 2fr 1fr; gap:10px;">
+        <input id="userId" placeholder="Candidate ID (e.g. AZ008)">
+        <select id="userCohort">
+          <option value="">Cohort</option>
+          <option>Cohort 1</option>
+          <option>Cohort 2</option>
+          <option>Cohort 3</option>
+          <option>Cohort 4</option>
+        </select>
+      </div>
+      <button onclick="checkStatus()">Search Record</button>
+    </div>
+
+    <div id="resultsArea" class="hidden">
+      
+      <div id="userAnnounceBanner" class="announcement hidden">
+        <span style="font-size:20px; margin-right:10px;">📢</span>
+        <div><strong style="color:var(--text-main);">Update:</strong> <span id="userAnnounceText" style="color:var(--text-main);"></span></div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:15px;">
+          <div>
+            <h2 id="resName" style="margin:0;">User Name</h2>
+            <small id="resCohort" style="color:var(--text-sub);">Cohort X</small>
+          </div>
+          <span id="resBadge" class="badge pending">STATUS</span>
+        </div>
+
+        <div id="timelineContainer"></div>
+
+        <div id="certBox" class="hidden no-print" style="margin-top:30px; text-align:center; background:rgba(52,168,83,0.05); padding:20px; border-radius:8px; border:1px dashed var(--google-green);">
+          <h3 style="margin:0 0 10px 0; color:var(--google-green);">🎉 Certificate Available</h3>
+          <button onclick="downloadCert()" class="small" style="background:var(--google-green);">Download PDF</button>
+        </div>
+
+        <button onclick="window.print()" class="secondary small no-print" style="margin-top:20px;">🖨️ Print Report</button>
+
+      </div>
+    </div>
+    <div class="link-muted no-print" onclick="document.getElementById('loginModal').style.display='flex'">Admin Login</div>
+  </div>
+
+  <div id="adminView" class="hidden">
+    
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="margin:0;">Admin Dashboard</h2>
+        <button class="secondary small" onclick="logout()">Logout</button>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:20px;">
+        <div style="text-align:center; padding:10px; background:var(--bg-color); border-radius:8px;">
+          <div style="font-size:24px; font-weight:bold; color:var(--google-blue);" id="statTotal">0</div>
+          <div style="font-size:12px; color:var(--text-sub);">Candidates</div>
+        </div>
+        <div style="text-align:center; padding:10px; background:var(--bg-color); border-radius:8px;">
+          <div style="font-size:24px; font-weight:bold; color:var(--google-red);" id="statDQ">0</div>
+          <div style="font-size:12px; color:var(--text-sub);">Disqualified</div>
+        </div>
+        <div style="text-align:center; padding:10px; background:var(--bg-color); border-radius:8px;">
+          <div style="font-size:24px; font-weight:bold; color:var(--google-green);" id="statWinners">0</div>
+          <div style="font-size:12px; color:var(--text-sub);">Winners</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-left:5px solid var(--google-yellow);">
+      <h3>Global Announcement</h3>
+      <div style="display:flex; gap:10px;">
+        <input id="admAnnounceInput" placeholder="Message for all users..." style="margin-bottom:0;">
+        <button onclick="postAnnouncement()" class="small" style="background:var(--google-yellow); color:black; width:auto;">Post</button>
+        <button onclick="clearAnnouncement()" class="secondary small">Clear</button>
+      </div>
+    </div>
+
+    <div class="card" id="editFormCard">
+      <div style="display:flex; justify-content:space-between;">
+        <h3 id="formTitle">Manage Candidate</h3>
+        <button onclick="resetForm()" class="secondary small">Reset</button>
+      </div>
+      
+      <div style="display:grid; grid-template-columns: 1fr 2fr; gap:15px;">
+        <input id="admId" placeholder="ID (Unique)">
+        <input id="admName" placeholder="Full Name">
+      </div>
+      
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+        <select id="admCohort">
+          <option>Cohort 1</option>
+          <option>Cohort 2</option>
+          <option>Cohort 3</option>
+          <option>Cohort 4</option>
+        </select>
+        <select id="admStage">
+          <option value="0">Stage 0 - App Received / Pending</option>
+          <option value="1">Stage 1 - Submission Verification</option>
+          <option value="2">Stage 2 - Quality Assessment</option>
+          <option value="3">Stage 3 - Innovation Review</option>
+          <option value="4">Stage 4 - Technical Precision</option>
+          <option value="5">Stage 5 - Jury Round</option>
+          <option value="6">Stage 6 - Final Winner</option>
+        </select>
+      </div>
+      
+      <div style="background:var(--bg-color); padding:15px; border-radius:8px; border:1px solid var(--border); margin-bottom:15px;">
+        <div style="display:flex; align-items:center; margin-bottom:10px;">
+          <input type="checkbox" id="admIneligible" style="width:20px; height:20px; margin:0 10px 0 0;" onchange="toggleReasonInput()">
+          <label for="admIneligible" style="font-weight:bold; color:var(--google-red);">Mark as Ineligible (Disqualify)</label>
+        </div>
+        <input id="admReason" placeholder="Reason (e.g. Plagiarism)" disabled>
+      </div>
+
+      <input id="admCert" placeholder="Certificate URL (Optional)">
+      <button onclick="saveCandidate()">Save Candidate</button>
+    </div>
+
+    <div class="card">
+      <h3>Candidate Database</h3>
+      <div class="table-container">
+        <table>
+          <thead><tr><th>ID</th><th>Name</th><th>Stage</th><th>Updated</th><th>Action</th></tr></thead>
+          <tbody id="admTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+/* ------------------------------------------------------------
+   1. CONFIGURATION
+------------------------------------------------------------ */
+const STAGES = [
+  { t: "Application Received", d: "Docs under review." },
+  { t: "Submission Verification", d: "Confirmation of docs." },
+  { t: "Quality Assessment", d: "Design evaluation." },
+  { t: "Innovation Review", d: "Creativity check." },
+  { t: "Technical Precision", d: "Vector/Export check." },
+  { t: "Jury Round", d: "Senior panel scoring." },
+  { t: "Final Winner", d: "Award processing." }
+];
+
+// DATA STRUCTURE
+// 'lastUpdated': String timestamp
+let db = {
+  "AZ0082": { name: "Srishti Singh", cohort: "Cohort 3", stage: 3, signed: true, cert: "", ineligible: true, reason: "Submission format incorrect.", lastUpdated: "10/24/2023" },
+  "TEST01": { name: "Pending User", cohort: "Cohort 1", stage: 0, signed: false, cert: "", ineligible: false, reason: "", lastUpdated: "10/25/2023" },
+  "WIN001": { name: "Rahul Verma", cohort: "Cohort 2", stage: 6, signed: true, cert: "https://example.com", ineligible: false, reason: "", lastUpdated: "10/25/2023" }
+};
+
+if(localStorage.getItem("gogenPro_v8")) {
+  db = JSON.parse(localStorage.getItem("gogenPro_v8"));
+}
+
+/* ------------------------------------------------------------
+   2. PUBLIC LOGIC
+------------------------------------------------------------ */
+let currentLookUpId = null;
+
+function checkStatus() {
+  const id = document.getElementById("userId").value.trim();
+  const cohort = document.getElementById("userCohort").value;
+  const resArea = document.getElementById("resultsArea");
+
+  // Load Announcement
+  const ann = localStorage.getItem("gogenAnnounce");
+  if(ann) {
+    document.getElementById("userAnnounceBanner").classList.remove("hidden");
+    document.getElementById("userAnnounceText").innerText = ann;
+  } else {
+    document.getElementById("userAnnounceBanner").classList.add("hidden");
+  }
+
+  if(!db[id] || db[id].cohort !== cohort) {
+    alert("❌ Record not found.");
+    resArea.classList.add("hidden");
+    return;
+  }
+
+  currentLookUpId = id;
+  const user = db[id];
+
+  // Stage 0 -> Alert
+  if(user.stage === 0 && !user.ineligible) {
+    document.getElementById("stage0Modal").style.display = "flex";
+    return;
+  }
+
+  // Copyright Gate (If not ineligible)
+  if(user.stage >= 1 && !user.ineligible && !user.signed) {
+    document.getElementById("copyrightModal").style.display = "flex";
+    return;
+  }
+
+  renderTimeline(user);
+}
+
+function signCopyright() {
+  if(!document.getElementById("agreeCheck").checked) {
+    alert("Please check the box.");
+    return;
+  }
+  db[currentLookUpId].signed = true;
+  saveDB();
+  document.getElementById("copyrightModal").style.display = "none";
+  renderTimeline(db[currentLookUpId]);
+}
+
+/* --- THE NEW ROBUST RENDERER --- */
+function renderTimeline(user) {
+  document.getElementById("resultsArea").classList.remove("hidden");
+  document.getElementById("resName").innerText = user.name;
+  document.getElementById("resCohort").innerText = user.cohort;
+
+  // BADGE LOGIC
+  const badge = document.getElementById("resBadge");
+  badge.className = "badge";
+  if (user.ineligible) { badge.innerText = "Disqualified"; badge.classList.add("rejected"); }
+  else if(user.stage === 6) { badge.innerText = "Winner"; badge.classList.add("winner"); triggerConfetti(); }
+  else { badge.innerText = "In Progress"; badge.classList.add("active"); }
+
+  let html = "";
+  
+  // LOOP THROUGH STAGES
+  for (let i = 0; i < STAGES.length; i++) {
+    
+    // CASE 1: USER IS DISQUALIFIED AT THIS STAGE
+    if (user.ineligible && i === user.stage) {
+      html += `
+        <div class="timeline-item failed">
+          <div class="timeline-line"></div>
+          <div class="timeline-marker">✕</div>
+          <div style="width:100%;">
+            <div style="font-weight:bold; color:var(--google-red);">${STAGES[i].t} (Failed)</div>
+            <div class="failure-box">
+              <b>Disqualification Reason:</b><br>
+              ${user.reason || "Not specified."}
+            </div>
+          </div>
+        </div>
+      `;
+      break; // STOP RENDERING FUTURE STAGES
+    }
+
+    // CASE 2: NORMAL STAGES
+    let statusClass = "";
+    let icon = i + 1;
+
+    if (i < user.stage) { statusClass = "completed"; icon = "✓"; }
+    else if (i === user.stage) { statusClass = "active"; icon = "●"; }
+    
+    html += `
+      <div class="timeline-item ${statusClass}">
+        <div class="timeline-line"></div>
+        <div class="timeline-marker">${icon}</div>
+        <div>
+          <div style="font-weight:500;">${STAGES[i].t}</div>
+          <div style="font-size:13px; color:var(--text-sub);">${STAGES[i].d}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  document.getElementById("timelineContainer").innerHTML = html;
+
+  // Cert
+  if(user.cert && !user.ineligible) {
+    document.getElementById("certBox").classList.remove("hidden");
+    window.certLink = user.cert;
+  } else {
+    document.getElementById("certBox").classList.add("hidden");
+  }
+}
+
+function downloadCert() { if(window.certLink) window.open(window.certLink); }
+
+/* ------------------------------------------------------------
+   3. ADMIN FUNCTIONS
+------------------------------------------------------------ */
+function attemptLogin() {
+  if(document.getElementById("adminUser").value === "admin" && document.getElementById("adminPass").value === "123789") {
+    document.getElementById("loginModal").style.display = "none";
+    document.getElementById("userView").classList.add("hidden");
+    document.getElementById("adminView").classList.remove("hidden");
+    refreshAdmin();
+  } else alert("Access Denied");
+}
+
+function logout() {
+  document.getElementById("adminView").classList.add("hidden");
+  document.getElementById("userView").classList.remove("hidden");
+}
+
+function refreshAdmin() {
+  const keys = Object.keys(db);
+  document.getElementById("statTotal").innerText = keys.length;
+  document.getElementById("statDQ").innerText = Object.values(db).filter(u => u.ineligible).length;
+  document.getElementById("statWinners").innerText = Object.values(db).filter(u => u.stage === 6).length;
+  
+  const tbody = document.getElementById("admTableBody");
+  tbody.innerHTML = "";
+  keys.forEach(id => {
+    const u = db[id];
+    let st = u.ineligible ? `<span style="color:red">DQ (S${u.stage})</span>` : `Stage ${u.stage}`;
+    tbody.innerHTML += `
+      <tr>
+        <td><b>${id}</b></td>
+        <td>${u.name}</td>
+        <td>${st}</td>
+        <td style="font-size:12px; color:gray;">${u.lastUpdated || '-'}</td>
+        <td>
+          <div class="admin-actions">
+            <button class="edit small" onclick="editUser('${id}')">Edit</button>
+            <button class="danger small" onclick="deleteUser('${id}')">Del</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+function toggleReasonInput() {
+  const isChecked = document.getElementById("admIneligible").checked;
+  const el = document.getElementById("admReason");
+  el.disabled = !isChecked;
+  if(!isChecked) el.value = "";
+}
+
+function saveCandidate() {
+  const id = document.getElementById("admId").value.trim();
+  const name = document.getElementById("admName").value.trim();
+  const isIneligible = document.getElementById("admIneligible").checked;
+  const reason = document.getElementById("admReason").value;
+
+  if(!id || !name) return alert("ID/Name required.");
+  if(isIneligible && !reason) return alert("Reason required for Disqualification.");
+
+  const old = db[id] || {};
+  db[id] = {
+    name: name,
+    cohort: document.getElementById("admCohort").value,
+    stage: parseInt(document.getElementById("admStage").value),
+    cert: document.getElementById("admCert").value,
+    signed: old.signed || false,
+    ineligible: isIneligible,
+    reason: reason,
+    lastUpdated: new Date().toLocaleString() // Timestamp Feature
+  };
+  saveDB();
+  alert("Saved!");
+  resetForm();
+  refreshAdmin();
+}
+
+function editUser(id) {
+  const u = db[id];
+  document.getElementById("admId").value = id;
+  document.getElementById("admName").value = u.name;
+  document.getElementById("admCohort").value = u.cohort;
+  document.getElementById("admStage").value = u.stage;
+  document.getElementById("admCert").value = u.cert || "";
+  document.getElementById("admIneligible").checked = u.ineligible || false;
+  document.getElementById("admReason").value = u.reason || "";
+  toggleReasonInput();
+  document.getElementById("editFormCard").scrollIntoView({ behavior: "smooth" });
+}
+
+function deleteUser(id) {
+  if(confirm("Delete " + id + "?")) { delete db[id]; saveDB(); refreshAdmin(); }
+}
+
+function resetForm() {
+  document.getElementById("admId").value = "";
+  document.getElementById("admName").value = "";
+  document.getElementById("admCert").value = "";
+  document.getElementById("admIneligible").checked = false;
+  document.getElementById("admReason").value = "";
+  toggleReasonInput();
+}
+
+/* --- EXTRAS --- */
+function postAnnouncement() {
+  localStorage.setItem("gogenAnnounce", document.getElementById("admAnnounceInput").value);
+  alert("Posted!");
+}
+function clearAnnouncement() {
+  localStorage.removeItem("gogenAnnounce");
+  document.getElementById("admAnnounceInput").value = "";
+  alert("Cleared.");
+}
+
+function triggerConfetti() {
+  for(let i=0; i<30; i++) {
+    const p = document.createElement("div");
+    p.classList.add("confetti");
+    p.style.left = Math.random() * 100 + "vw";
+    p.style.animationDuration = (Math.random() * 2 + 3) + "s";
+    p.style.backgroundColor = ["#4285F4", "#DB4437", "#F4B400", "#0F9D58"][Math.floor(Math.random()*4)];
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 5000);
+  }
+}
+
+function saveDB() { localStorage.setItem("gogenPro_v8", JSON.stringify(db)); }
+function toggleTheme() { document.body.classList.toggle("dark"); }
+</script>
+</body>
+</html>
