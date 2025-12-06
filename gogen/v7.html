@@ -10,7 +10,7 @@
    1. THEME & VARIABLES
 ------------------------------------------------------------ */
 :root {
-  --bg-color: #f0f2f5;
+  --bg-color: #f8f9fa;
   --card-bg: #ffffff;
   --text-main: #202124;
   --text-sub: #5f6368;
@@ -19,187 +19,224 @@
   --google-yellow: #fbbc04;
   --google-green: #34a853;
   --border: #dadce0;
-  --shadow: 0 4px 12px rgba(0,0,0,0.08);
-  --modal-overlay: rgba(32,33,36,0.7);
+  --shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  --shadow-hover: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  --modal-overlay: rgba(32,33,36,0.6);
+  --radius: 16px;
 }
 
 .dark {
-  --bg-color: #171717;
-  --card-bg: #242526;
-  --text-main: #e4e6eb;
-  --text-sub: #b0b3b8;
+  --bg-color: #121212;
+  --card-bg: #1e1e1e;
+  --text-main: #e8eaed;
+  --text-sub: #9aa0a6;
   --google-blue: #8ab4f8;
   --google-red: #f28b82;
   --google-yellow: #fdd663;
   --google-green: #81c995;
-  --border: #3e4042;
-  --shadow: 0 4px 12px rgba(0,0,0,0.4);
+  --border: #3c4043;
+  --shadow: 0 4px 12px rgba(0,0,0,0.5);
+  --shadow-hover: 0 8px 16px rgba(0,0,0,0.6);
 }
 
 /* ------------------------------------------------------------
-   2. CORE LAYOUT
+   2. CORE LAYOUT & TYPOGRAPHY
 ------------------------------------------------------------ */
-body { margin: 0; font-family: 'Google Sans', sans-serif; background-color: var(--bg-color); color: var(--text-main); transition: 0.3s; padding-bottom: 60px; }
-.container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+body { margin: 0; font-family: 'Google Sans', sans-serif; background-color: var(--bg-color); color: var(--text-main); transition: background 0.3s, color 0.3s; padding-bottom: 80px; overflow-x: hidden; }
+.container { max-width: 850px; margin: 40px auto; padding: 0 20px; position: relative; z-index: 10; }
 .hidden { display: none !important; }
 
-/* Cards */
+/* Cards & Glassmorphism */
 .card {
   background: var(--card-bg);
-  border-radius: 12px;
-  padding: 30px;
-  margin-bottom: 25px;
+  border-radius: var(--radius);
+  padding: 32px;
+  margin-bottom: 24px;
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
-  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.2s, box-shadow 0.2s;
   position: relative;
+  overflow: hidden;
 }
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
 
 /* Branding */
-.brand-header { text-align: center; margin-bottom: 30px; }
-.brand-header img { height: 45px; margin-bottom: 10px; }
-.brand-header h1 { margin: 0; font-size: 24px; font-weight: 500; color: var(--text-main); }
+.brand-header { text-align: center; margin-bottom: 40px; animation: fadeInDown 0.8s; }
+.brand-header img { height: 48px; margin-bottom: 12px; }
+.brand-header h1 { margin: 0; font-size: 26px; font-weight: 500; letter-spacing: -0.5px; }
 
-/* Inputs & Buttons */
+/* Inputs */
+.input-group { position: relative; margin-bottom: 15px; }
 input, select, textarea {
-  width: 100%; box-sizing: border-box; padding: 14px; margin-bottom: 15px;
+  width: 100%; box-sizing: border-box; padding: 16px;
   border-radius: 8px; border: 1px solid var(--border);
   background: var(--bg-color); color: var(--text-main);
-  font-family: inherit; font-size: 15px; outline: none;
+  font-family: inherit; font-size: 16px; outline: none;
+  transition: 0.2s;
 }
-input:focus, select:focus { border-color: var(--google-blue); box-shadow: 0 0 0 3px rgba(26,115,232,0.15); }
+input:focus, select:focus { border-color: var(--google-blue); box-shadow: 0 0 0 2px rgba(26,115,232,0.2); background: var(--card-bg); }
 
+/* Buttons & Ripple Effect */
 button {
-  background: var(--google-blue); color: #fff; border: none; padding: 12px 24px;
-  border-radius: 25px; font-weight: 500; font-size: 15px; cursor: pointer;
-  transition: transform 0.1s, opacity 0.2s; width: 100%;
+  background: var(--google-blue); color: #fff; border: none; padding: 14px 28px;
+  border-radius: 30px; font-weight: 500; font-size: 15px; cursor: pointer;
+  transition: all 0.2s; width: 100%; position: relative; overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
+button:hover { filter: brightness(1.1); box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
 button:active { transform: scale(0.98); }
-button.secondary { background: var(--border); color: var(--text-main); }
-button.danger { background: var(--google-red); color: #fff; }
-button.edit { background: var(--google-yellow); color: #373737; }
-button.small { width: auto; padding: 6px 14px; font-size: 13px; }
+button:disabled { background: var(--border); cursor: not-allowed; transform: none; box-shadow: none; }
+
+button.secondary { background: transparent; border: 1px solid var(--border); color: var(--text-main); box-shadow: none; }
+button.secondary:hover { background: rgba(128,128,128,0.1); }
+button.danger { background: var(--google-red); }
+button.edit { background: var(--google-yellow); color: #202124; }
+button.success { background: var(--google-green); }
+button.small { width: auto; padding: 8px 16px; font-size: 13px; }
+
+/* Ripple Animation CSS */
+.ripple { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.4); transform: scale(0); animation: ripple 0.6s linear; pointer-events: none; }
+@keyframes ripple { to { transform: scale(4); opacity: 0; } }
 
 /* ------------------------------------------------------------
-   3. TIMELINE UI (ADVANCED)
+   3. ANIMATED TIMELINE
 ------------------------------------------------------------ */
-.timeline-item { display: flex; position: relative; padding-bottom: 30px; opacity: 0.4; transition: 0.5s; }
-.timeline-item.active, .timeline-item.completed, .timeline-item.failed { opacity: 1; }
-.timeline-item:last-child { padding-bottom: 0; }
+.timeline-item { display: flex; position: relative; padding-bottom: 35px; opacity: 0; transform: translateY(10px); }
+/* Staggered Animation Logic handled in JS */
 
 .timeline-marker {
-  width: 28px; height: 28px; border-radius: 50%; background: var(--border);
+  width: 32px; height: 32px; border-radius: 50%; background: var(--border);
   z-index: 2; display: flex; align-items: center; justify-content: center;
-  margin-right: 15px; color: white; font-size: 14px; font-weight: bold; flex-shrink: 0;
-  border: 2px solid var(--card-bg);
+  margin-right: 20px; color: white; font-size: 14px; font-weight: bold; flex-shrink: 0;
+  border: 4px solid var(--card-bg); transition: 0.3s;
 }
-
 .timeline-line {
-  position: absolute; left: 14px; top: 28px; bottom: 0; width: 2px; background: var(--border); z-index: 1;
+  position: absolute; left: 18px; top: 32px; bottom: 0; width: 3px; background: var(--border); z-index: 1;
+  transition: background 0.5s ease;
 }
 .timeline-item:last-child .timeline-line { display: none; }
 
-/* Status Colors */
-.completed .timeline-marker { background: var(--google-green); }
+/* Status Styling */
+.completed .timeline-marker { background: var(--google-green); transform: scale(1.1); }
 .completed .timeline-line { background: var(--google-green); }
 
-.active .timeline-marker { background: var(--google-blue); box-shadow: 0 0 0 4px rgba(26,115,232,0.2); }
+.active .timeline-marker { background: var(--google-blue); box-shadow: 0 0 0 4px rgba(26,115,232,0.2); transform: scale(1.2); }
 
-.failed .timeline-marker { background: var(--google-red); box-shadow: 0 0 0 4px rgba(234,67,53,0.2); }
-.failed .timeline-line { background: var(--google-red); display: none; /* Hide line after failure */ }
+.failed .timeline-marker { background: var(--google-red); }
+.failed .timeline-line { background: var(--google-red); opacity: 0.5; }
 
-/* Failure Reason Box */
 .failure-box {
-  margin-top: 10px;
-  background: rgba(234, 67, 53, 0.08);
-  border-left: 3px solid var(--google-red);
-  padding: 10px 15px;
-  border-radius: 0 8px 8px 0;
-  color: var(--google-red);
-  font-size: 13px;
-  animation: slideUp 0.4s;
+  margin-top: 12px; background: rgba(234, 67, 53, 0.1); border-left: 4px solid var(--google-red);
+  padding: 12px 16px; border-radius: 0 8px 8px 0; color: var(--google-red); font-size: 14px;
+  animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 /* ------------------------------------------------------------
-   4. MODALS & EXTRAS
+   4. UI COMPONENTS (Toasts, Modals, Badges)
 ------------------------------------------------------------ */
-.badge { padding: 5px 12px; border-radius: 15px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+/* Toasts Notification */
+#toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 2000; display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 400px; }
+.toast {
+  background: #323232; color: white; padding: 14px 20px; border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: space-between;
+  font-size: 14px; animation: slideUpToast 0.3s ease-out; opacity: 0.95;
+}
+.toast.success { border-left: 4px solid var(--google-green); }
+.toast.error { border-left: 4px solid var(--google-red); }
+.toast.info { border-left: 4px solid var(--google-blue); }
+
+/* Badge */
+.badge { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; }
 .badge.pending { background: #f1f3f4; color: #5f6368; }
-.badge.active { background: rgba(26,115,232,0.1); color: var(--google-blue); }
-.badge.winner { background: rgba(52,168,83,0.1); color: var(--google-green); }
+.badge.active { background: rgba(26,115,232,0.15); color: var(--google-blue); }
+.badge.winner { background: rgba(52,168,83,0.15); color: var(--google-green); }
 .badge.rejected { background: var(--google-red); color: white; }
 
-.announcement {
-  background: rgba(251, 188, 4, 0.15); border-left: 4px solid var(--google-yellow);
-  padding: 15px; border-radius: 4px; margin-bottom: 20px;
-  display: flex; align-items: center; animation: pulse 2s infinite;
-}
-
+/* Modals */
 .modal-overlay {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: var(--modal-overlay); backdrop-filter: blur(5px);
+  background: var(--modal-overlay); backdrop-filter: blur(8px);
   z-index: 999; display: none; align-items: center; justify-content: center;
+  animation: fadeIn 0.2s;
 }
 .modal-box {
-  background: var(--card-bg); width: 90%; max-width: 420px; padding: 30px;
-  border-radius: 16px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-  animation: slideUp 0.3s;
+  background: var(--card-bg); width: 90%; max-width: 450px; padding: 35px;
+  border-radius: 24px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+  animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Confetti (Simple CSS implementation) */
-.confetti { position: fixed; width: 10px; height: 10px; background-color: #f00; animation: fall linear forwards; z-index: 1000; }
-@keyframes fall { to { transform: translateY(100vh) rotate(720deg); } }
+/* Confetti */
+.confetti { position: fixed; top: -10px; width: 10px; height: 10px; z-index: 1500; pointer-events: none; }
 
-/* Print Styles */
+/* Admin Stats Bar */
+.stat-bar { height: 4px; background: #eee; border-radius: 2px; margin-top: 5px; overflow: hidden; }
+.stat-fill { height: 100%; border-radius: 2px; transition: width 1s ease; }
+
+/* Utility */
+.switch { position: fixed; top: 20px; right: 20px; cursor: pointer; background: var(--card-bg); padding: 10px; border-radius: 50%; box-shadow: var(--shadow); z-index: 100; font-size: 20px; transition: 0.3s; }
+.switch:hover { transform: rotate(15deg) scale(1.1); }
+.link-muted { color: var(--text-sub); text-align: center; margin-top: 30px; cursor: pointer; font-size: 13px; text-decoration: underline; opacity: 0.6; }
+.link-muted:hover { opacity: 1; }
+
+/* Keyframes */
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideUpToast { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scaleUp { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* Loading Spinner */
+.spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle; }
+
+/* Print */
 @media print {
-  body { background: white; color: black; }
-  .no-print, button, .switch, .link-muted, .brand-header img { display: none !important; }
-  .card { box-shadow: none; border: 1px solid #ccc; }
+  body { background: white; color: black; padding: 0; }
+  .no-print, button, .switch, .link-muted, .toast-container { display: none !important; }
+  .card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
   .container { max-width: 100%; margin: 0; }
 }
 
 /* Admin Table */
-.table-container { overflow-x: auto; margin-top: 15px; }
-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-th { text-align: left; color: var(--text-sub); border-bottom: 2px solid var(--border); padding: 10px; }
-td { border-bottom: 1px solid var(--border); padding: 10px; color: var(--text-main); }
-.admin-actions { display: flex; gap: 6px; }
+.table-container { overflow-x: auto; margin-top: 15px; border-radius: 8px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--card-bg); }
+th { text-align: left; color: var(--text-sub); border-bottom: 2px solid var(--border); padding: 14px; background: var(--bg-color); font-weight: 600; }
+td { border-bottom: 1px solid var(--border); padding: 14px; color: var(--text-main); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+.admin-actions { display: flex; gap: 8px; }
 
-/* Animations */
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(251,188,4, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(251,188,4, 0); } 100% { box-shadow: 0 0 0 0 rgba(0,0,0, 0); } }
-.switch { position: fixed; top: 20px; right: 20px; cursor: pointer; background: var(--card-bg); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--border); font-size: 14px; z-index: 100; }
-.link-muted { color: var(--border); text-align: center; margin-top: 30px; cursor: pointer; font-size: 13px; }
 </style>
 </head>
 <body>
 
-<div class="switch no-print" onclick="toggleTheme()">🌗 Theme</div>
+<div class="switch no-print" onclick="toggleTheme()" title="Toggle Dark Mode">🌓</div>
+
+<div id="toast-container"></div>
 
 <div id="stage0Modal" class="modal-overlay">
   <div class="modal-box">
-    <div style="font-size: 40px; margin-bottom: 15px;">⚠️</div>
-    <h2 style="margin-top:0; color:var(--text-main);">Application Not Received</h2>
-    <p style="color:var(--text-sub); line-height:1.5; font-size:14px;">
-      Documents are not submitted. If you have not submitted them yet, this status is pending confirmation. Contact your facilitator(info@shauryasingh.me)
+    <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
+    <h2 style="margin-top:0; color:var(--text-main);">Application Pending</h2>
+    <p style="color:var(--text-sub); line-height:1.6;">
+      Your documents are not yet verified. Please ensure you have submitted all files to your facilitator.
     </p>
-    <div style="background:var(--bg-color); padding:15px; border-radius:8px; margin:20px 0; font-size:13px; color:var(--text-sub);">
-      Contact: <a href="mailto:info@shauryasingh.me" style="color:var(--google-blue); font-weight:bold;">info@shauryasingh.me</a>
+    <div style="background:var(--bg-color); padding:15px; border-radius:12px; margin:20px 0; font-size:14px; color:var(--text-sub); border:1px solid var(--border);">
+      📧 <a href="mailto:info@shauryasingh.me" style="color:var(--google-blue); font-weight:bold; text-decoration:none;">info@shauryasingh.me</a>
     </div>
-    <button onclick="document.getElementById('stage0Modal').style.display='none'">Close</button>
+    <button onclick="document.getElementById('stage0Modal').style.display='none'">Understood</button>
   </div>
 </div>
 
 <div id="copyrightModal" class="modal-overlay">
   <div class="modal-box">
-    <div style="font-size: 40px; margin-bottom: 15px;">⚖️</div>
-    <h2 style="margin-top:0; color:var(--text-main);">Copyright Transfer</h2>
-    <p style="color:var(--text-sub); line-height:1.5; font-size:14px;">
-      You must grant <b>Google GoGen</b> rights to evaluate, display, and modify your submission.
+    <div style="font-size: 48px; margin-bottom: 20px;">⚖️</div>
+    <h2 style="margin-top:0; color:var(--text-main);">Action Required</h2>
+    <p style="color:var(--text-sub); line-height:1.6; font-size:15px;">
+      To view your results, you must grant <b>Google GoGen</b> rights to evaluate and display your submission.
     </p>
-    <div style="background:var(--bg-color); padding:15px; border-radius:8px; margin:20px 0; text-align:left; display:flex; align-items:center;">
-      <input type="checkbox" id="agreeCheck" style="width:20px; height:20px; margin:0 10px 0 0;">
-      <label for="agreeCheck" style="font-size:13px; cursor:pointer;">I agree to the terms.</label>
+    <div style="background:var(--bg-color); padding:15px; border-radius:12px; margin:20px 0; text-align:left; display:flex; align-items:center; cursor:pointer;" onclick="document.getElementById('agreeCheck').click()">
+      <input type="checkbox" id="agreeCheck" style="width:20px; height:20px; margin:0 15px 0 0; cursor:pointer;">
+      <label for="agreeCheck" style="font-size:14px; cursor:pointer; font-weight:500;">I agree to the Terms & Conditions.</label>
     </div>
     <button onclick="signCopyright()">Confirm & View Results</button>
   </div>
@@ -207,10 +244,11 @@ td { border-bottom: 1px solid var(--border); padding: 10px; color: var(--text-ma
 
 <div id="loginModal" class="modal-overlay">
   <div class="modal-box">
-    <h3>Staff Access</h3>
-    <input type="text" id="adminUser" placeholder="Username">
+    <h2 style="margin-bottom:20px;">Staff Access</h2>
+    <input type="text" id="adminUser" placeholder="Username" style="margin-bottom:10px;">
     <input type="password" id="adminPass" placeholder="Password">
-    <button onclick="attemptLogin()">Login</button>
+    <div style="height:20px;"></div>
+    <button onclick="attemptLogin()">Login Dashboard</button>
     <button class="secondary" onclick="document.getElementById('loginModal').style.display='none'" style="margin-top:10px;">Cancel</button>
   </div>
 </div>
@@ -219,100 +257,112 @@ td { border-bottom: 1px solid var(--border); padding: 10px; color: var(--text-ma
   
   <div class="brand-header">
     <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
-    <h1>GoGen 3.0 ArtOFest</h1>
+    <h1>GoGen 3.0 <span style="color:var(--text-sub); font-weight:400;">ArtOFest</span></h1>
   </div>
 
   <div id="userView">
     
     <div class="card no-print">
-      <h2 style="margin-top:0;">Track Application</h2>
-      <div style="display:grid; grid-template-columns: 2fr 1fr; gap:10px;">
-        <input id="userId" placeholder="Candidate ID (e.g. AZ008)">
+      <h2 style="margin-top:0; margin-bottom:20px;">Track Application</h2>
+      <div style="display:grid; grid-template-columns: 2fr 1fr; gap:15px; margin-bottom:20px;">
+        <input id="userId" placeholder="Candidate ID (e.g. AZ0082)" onkeyup="if(event.key==='Enter') checkStatus()">
         <select id="userCohort">
-          <option value="">Cohort</option>
+          <option value="">Select Cohort</option>
           <option>Cohort 1</option>
           <option>Cohort 2</option>
           <option>Cohort 3</option>
           <option>Cohort 4</option>
         </select>
       </div>
-      <button onclick="checkStatus()">Search Record</button>
+      <button onclick="checkStatus()" id="searchBtn">Search Record</button>
     </div>
 
     <div id="resultsArea" class="hidden">
       
-      <div id="userAnnounceBanner" class="announcement hidden">
-        <span style="font-size:20px; margin-right:10px;">📢</span>
-        <div><strong style="color:var(--text-main);">Update:</strong> <span id="userAnnounceText" style="color:var(--text-main);"></span></div>
+      <div id="userAnnounceBanner" class="hidden" style="background:rgba(251,188,4,0.15); border:1px solid var(--google-yellow); padding:16px; border-radius:12px; margin-bottom:24px; display:flex; align-items:center; animation:slideUp 0.5s;">
+        <span style="font-size:24px; margin-right:15px;">📢</span>
+        <div>
+          <strong style="color:var(--text-main); display:block; margin-bottom:2px;">Latest Update</strong>
+          <span id="userAnnounceText" style="color:var(--text-sub); font-size:14px;"></span>
+        </div>
       </div>
 
       <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:15px;">
+        <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:24px; padding-bottom:15px; border-bottom:1px solid var(--border);">
           <div>
-            <h2 id="resName" style="margin:0;">User Name</h2>
-            <small id="resCohort" style="color:var(--text-sub);">Cohort X</small>
+            <h2 id="resName" style="margin:0; font-size:22px;">User Name</h2>
+            <div style="color:var(--text-sub); font-size:14px; margin-top:4px;">ID: <span id="resID"></span> • <span id="resCohort"></span></div>
           </div>
           <span id="resBadge" class="badge pending">STATUS</span>
         </div>
 
         <div id="timelineContainer"></div>
 
-        <div id="certBox" class="hidden no-print" style="margin-top:30px; text-align:center; background:rgba(52,168,83,0.05); padding:20px; border-radius:8px; border:1px dashed var(--google-green);">
-          <h3 style="margin:0 0 10px 0; color:var(--google-green);">🎉 Certificate Available</h3>
-          <button onclick="downloadCert()" class="small" style="background:var(--google-green);">Download PDF</button>
+        <div id="certBox" class="hidden no-print" style="margin-top:30px; text-align:center; background:linear-gradient(to right, rgba(52,168,83,0.05), rgba(52,168,83,0.1)); padding:25px; border-radius:16px; border:1px dashed var(--google-green);">
+          <div style="font-size:40px; margin-bottom:10px;">🎓</div>
+          <h3 style="margin:0 0 5px 0; color:var(--google-green);">Congratulations!</h3>
+          <p style="color:var(--text-sub); font-size:14px; margin-bottom:15px;">Your certificate of completion is ready.</p>
+          <button onclick="downloadCert()" class="small success" style="width:auto; padding:10px 24px;">Download Certificate</button>
         </div>
 
-        <button onclick="window.print()" class="secondary small no-print" style="margin-top:20px;">🖨️ Print Report</button>
+        <button onclick="window.print()" class="secondary small no-print" style="margin-top:20px; margin-left:auto; display:block; width:auto;">🖨️ Print Report</button>
 
       </div>
     </div>
-    <div class="link-muted no-print" onclick="document.getElementById('loginModal').style.display='flex'">Admin Login</div>
+    <div class="link-muted no-print" onclick="document.getElementById('loginModal').style.display='flex'">Administrator Login</div>
   </div>
 
   <div id="adminView" class="hidden">
     
     <div class="card">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2 style="margin:0;">Admin Dashboard</h2>
-        <button class="secondary small" onclick="logout()">Logout</button>
+        <div>
+          <h2 style="margin:0;">Dashboard</h2>
+          <small style="color:var(--text-sub);">Welcome, Admin</small>
+        </div>
+        <button class="secondary small" onclick="logout()" style="width:auto;">Logout</button>
       </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:20px;">
-        <div style="text-align:center; padding:10px; background:var(--bg-color); border-radius:8px;">
-          <div style="font-size:24px; font-weight:bold; color:var(--google-blue);" id="statTotal">0</div>
-          <div style="font-size:12px; color:var(--text-sub);">Candidates</div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(100px, 1fr)); gap:15px; margin-top:25px;">
+        <div style="padding:15px; background:var(--bg-color); border-radius:12px; border:1px solid var(--border);">
+          <div style="font-size:12px; color:var(--text-sub); font-weight:bold;">TOTAL</div>
+          <div style="font-size:28px; font-weight:bold; color:var(--google-blue);" id="statTotal">0</div>
+          <div class="stat-bar"><div class="stat-fill" style="width:100%; background:var(--google-blue);"></div></div>
         </div>
-        <div style="text-align:center; padding:10px; background:var(--bg-color); border-radius:8px;">
-          <div style="font-size:24px; font-weight:bold; color:var(--google-red);" id="statDQ">0</div>
-          <div style="font-size:12px; color:var(--text-sub);">Disqualified</div>
+        <div style="padding:15px; background:var(--bg-color); border-radius:12px; border:1px solid var(--border);">
+          <div style="font-size:12px; color:var(--text-sub); font-weight:bold;">DISQUALIFIED</div>
+          <div style="font-size:28px; font-weight:bold; color:var(--google-red);" id="statDQ">0</div>
+          <div class="stat-bar"><div class="stat-fill" id="barDQ" style="width:0%; background:var(--google-red);"></div></div>
         </div>
-        <div style="text-align:center; padding:10px; background:var(--bg-color); border-radius:8px;">
-          <div style="font-size:24px; font-weight:bold; color:var(--google-green);" id="statWinners">0</div>
-          <div style="font-size:12px; color:var(--text-sub);">Winners</div>
+        <div style="padding:15px; background:var(--bg-color); border-radius:12px; border:1px solid var(--border);">
+          <div style="font-size:12px; color:var(--text-sub); font-weight:bold;">WINNERS</div>
+          <div style="font-size:28px; font-weight:bold; color:var(--google-green);" id="statWinners">0</div>
+          <div class="stat-bar"><div class="stat-fill" id="barWin" style="width:0%; background:var(--google-green);"></div></div>
         </div>
       </div>
     </div>
 
     <div class="card" style="border-left:5px solid var(--google-yellow);">
-      <h3>Global Announcement</h3>
-      <div style="display:flex; gap:10px;">
-        <input id="admAnnounceInput" placeholder="Message for all users..." style="margin-bottom:0;">
-        <button onclick="postAnnouncement()" class="small" style="background:var(--google-yellow); color:black; width:auto;">Post</button>
-        <button onclick="clearAnnouncement()" class="secondary small">Clear</button>
+      <h3 style="margin-top:0;">Global Announcement</h3>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <input id="admAnnounceInput" placeholder="Message for all users..." style="margin-bottom:0; flex:1;">
+        <button onclick="postAnnouncement()" class="small edit" style="width:auto;">Post Update</button>
+        <button onclick="clearAnnouncement()" class="secondary small" style="width:auto;">Clear</button>
       </div>
     </div>
 
     <div class="card" id="editFormCard">
-      <div style="display:flex; justify-content:space-between;">
-        <h3 id="formTitle">Manage Candidate</h3>
-        <button onclick="resetForm()" class="secondary small">Reset</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h3 id="formTitle" style="margin:0;">Manage Candidate</h3>
+        <button onclick="resetForm()" class="secondary small" style="width:auto;">New / Reset</button>
       </div>
       
-      <div style="display:grid; grid-template-columns: 1fr 2fr; gap:15px;">
-        <input id="admId" placeholder="ID (Unique)">
-        <input id="admName" placeholder="Full Name">
+      <div style="display:grid; grid-template-columns: 1fr 2fr; gap:15px; margin-bottom:15px;">
+        <div class="input-group"><input id="admId" placeholder="ID (Unique)"></div>
+        <div class="input-group"><input id="admName" placeholder="Full Name"></div>
       </div>
       
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom:15px;">
         <select id="admCohort">
           <option>Cohort 1</option>
           <option>Cohort 2</option>
@@ -320,33 +370,38 @@ td { border-bottom: 1px solid var(--border); padding: 10px; color: var(--text-ma
           <option>Cohort 4</option>
         </select>
         <select id="admStage">
-          <option value="0">Stage 0 - App Received / Pending</option>
-          <option value="1">Stage 1 - Submission Verification</option>
-          <option value="2">Stage 2 - Quality Assessment</option>
-          <option value="3">Stage 3 - Innovation Review</option>
-          <option value="4">Stage 4 - Technical Precision</option>
-          <option value="5">Stage 5 - Jury Round</option>
-          <option value="6">Stage 6 - Final Winner</option>
+          <option value="0">0. App Received</option>
+          <option value="1">1. Submission Verification</option>
+          <option value="2">2. Quality Assessment</option>
+          <option value="3">3. Innovation Review</option>
+          <option value="4">4. Technical Precision</option>
+          <option value="5">5. Jury Round</option>
+          <option value="6">6. Final Winner</option>
         </select>
       </div>
       
-      <div style="background:var(--bg-color); padding:15px; border-radius:8px; border:1px solid var(--border); margin-bottom:15px;">
+      <div style="background:var(--bg-color); padding:15px; border-radius:12px; border:1px solid var(--border); margin-bottom:15px;">
         <div style="display:flex; align-items:center; margin-bottom:10px;">
           <input type="checkbox" id="admIneligible" style="width:20px; height:20px; margin:0 10px 0 0;" onchange="toggleReasonInput()">
-          <label for="admIneligible" style="font-weight:bold; color:var(--google-red);">Mark as Ineligible (Disqualify)</label>
+          <label for="admIneligible" style="font-weight:bold; color:var(--google-red); cursor:pointer;">Mark as Ineligible (Disqualify)</label>
         </div>
-        <input id="admReason" placeholder="Reason (e.g. Plagiarism)" disabled>
+        <input id="admReason" placeholder="Reason (e.g. Plagiarism, Late Submission)" disabled>
       </div>
 
-      <input id="admCert" placeholder="Certificate URL (Optional)">
-      <button onclick="saveCandidate()">Save Candidate</button>
+      <input id="admCert" placeholder="Certificate URL (Optional)" style="margin-bottom:15px;">
+      
+      <button onclick="saveCandidate()">Save Candidate Record</button>
     </div>
 
     <div class="card">
-      <h3>Candidate Database</h3>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h3 style="margin:0;">Candidate Database</h3>
+        <button onclick="exportCSV()" class="secondary small" style="width:auto;">⬇ Export CSV</button>
+      </div>
+      
       <div class="table-container">
         <table>
-          <thead><tr><th>ID</th><th>Name</th><th>Stage</th><th>Updated</th><th>Action</th></tr></thead>
+          <thead><tr><th>ID</th><th>Name</th><th>Cohort</th><th>Stage</th><th>Updated</th><th>Action</th></tr></thead>
           <tbody id="admTableBody"></tbody>
         </table>
       </div>
@@ -358,28 +413,26 @@ td { border-bottom: 1px solid var(--border); padding: 10px; color: var(--text-ma
 
 <script>
 /* ------------------------------------------------------------
-   1. CONFIGURATION
+   1. CONFIGURATION & DATA
 ------------------------------------------------------------ */
 const STAGES = [
-  { t: "Application Received", d: "Docs under review." },
-  { t: "Submission Verification", d: "Basic Review of docs." },
-  { t: "Quality Assessment", d: "Design evaluation." },
-  { t: "Innovation Review", d: "Creativity check." },
-  { t: "Technical Precision", d: "Vector/Export check." },
-  { t: "Jury Round", d: "Senior panel scoring." },
-  { t: "Final Winner", d: "Award processing." }
+  { t: "Application Received", d: "Documents under initial review." },
+  { t: "Submission Verification", d: "Validating file formats and links." },
+  { t: "Quality Assessment", d: "Design aesthetics evaluation." },
+  { t: "Innovation Review", d: "Creativity and originality check." },
+  { t: "Technical Precision", d: "Vector quality and layer check." },
+  { t: "Jury Round", d: "Senior panel scoring and ranking." },
+  { t: "Final Winner", d: "Award processing and certification." }
 ];
 
-// DATA STRUCTURE
-// 'lastUpdated': String timestamp
 let db = {
-  "AZ0082": { name: "Srishti Singh", cohort: "Cohort 3", stage: 3, signed: true, cert: "", ineligible: true, reason: "Submission format incorrect.", lastUpdated: "10/24/2023" },
-  "TEST01": { name: "Pending User", cohort: "Cohort 1", stage: 0, signed: false, cert: "", ineligible: false, reason: "", lastUpdated: "10/25/2023" },
+  "AZ0082": { name: "Srishti Singh", cohort: "Cohort 3", stage: 3, signed: true, cert: "", ineligible: true, reason: "Incorrect submission format.", lastUpdated: "10/24/2023" },
+  "TEST01": { name: "John Doe", cohort: "Cohort 1", stage: 0, signed: false, cert: "", ineligible: false, reason: "", lastUpdated: "10/25/2023" },
   "WIN001": { name: "Rahul Verma", cohort: "Cohort 2", stage: 6, signed: true, cert: "https://example.com", ineligible: false, reason: "", lastUpdated: "10/25/2023" }
 };
 
-if(localStorage.getItem("gogenPro_v8")) {
-  db = JSON.parse(localStorage.getItem("gogenPro_v8"));
+if(localStorage.getItem("gogenPro_v9")) {
+  db = JSON.parse(localStorage.getItem("gogenPro_v9"));
 }
 
 /* ------------------------------------------------------------
@@ -387,12 +440,43 @@ if(localStorage.getItem("gogenPro_v8")) {
 ------------------------------------------------------------ */
 let currentLookUpId = null;
 
+// Add ripple effect to buttons
+document.querySelectorAll('button').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    let x = e.clientX - e.target.getBoundingClientRect().left;
+    let y = e.clientY - e.target.getBoundingClientRect().top;
+    let ripple = document.createElement('span');
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    ripple.classList.add('ripple');
+    this.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  });
+});
+
 function checkStatus() {
+  const btn = document.getElementById("searchBtn");
   const id = document.getElementById("userId").value.trim();
   const cohort = document.getElementById("userCohort").value;
   const resArea = document.getElementById("resultsArea");
 
-  // Load Announcement
+  if(!id || !cohort) { showToast("Please enter ID and Select Cohort", "error"); return; }
+
+  // Loading Simulation
+  btn.innerHTML = '<span class="spinner"></span> Searching...';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    btn.innerHTML = 'Search Record';
+    btn.disabled = false;
+    processSearch(id, cohort);
+  }, 800); // 800ms fake delay
+}
+
+function processSearch(id, cohort) {
+  const resArea = document.getElementById("resultsArea");
+  
+  // Check Announcement
   const ann = localStorage.getItem("gogenAnnounce");
   if(ann) {
     document.getElementById("userAnnounceBanner").classList.remove("hidden");
@@ -402,7 +486,7 @@ function checkStatus() {
   }
 
   if(!db[id] || db[id].cohort !== cohort) {
-    alert("❌ Record not found.");
+    showToast("❌ Record not found or Cohort mismatch.", "error");
     resArea.classList.add("hidden");
     return;
   }
@@ -413,66 +497,67 @@ function checkStatus() {
   // Stage 0 -> Alert
   if(user.stage === 0 && !user.ineligible) {
     document.getElementById("stage0Modal").style.display = "flex";
+    resArea.classList.add("hidden");
     return;
   }
 
-  // Copyright Gate (If not ineligible)
+  // Copyright Gate
   if(user.stage >= 1 && !user.ineligible && !user.signed) {
     document.getElementById("copyrightModal").style.display = "flex";
+    resArea.classList.add("hidden");
     return;
   }
 
-  renderTimeline(user);
+  renderTimeline(user, id);
 }
 
 function signCopyright() {
   if(!document.getElementById("agreeCheck").checked) {
-    alert("Please check the box.");
+    showToast("You must agree to the terms.", "error");
     return;
   }
   db[currentLookUpId].signed = true;
   saveDB();
   document.getElementById("copyrightModal").style.display = "none";
-  renderTimeline(db[currentLookUpId]);
+  renderTimeline(db[currentLookUpId], currentLookUpId);
+  showToast("Terms Accepted.", "success");
 }
 
-/* --- THE NEW ROBUST RENDERER --- */
-function renderTimeline(user) {
+function renderTimeline(user, id) {
   document.getElementById("resultsArea").classList.remove("hidden");
   document.getElementById("resName").innerText = user.name;
+  document.getElementById("resID").innerText = id;
   document.getElementById("resCohort").innerText = user.cohort;
 
-  // BADGE LOGIC
   const badge = document.getElementById("resBadge");
   badge.className = "badge";
   if (user.ineligible) { badge.innerText = "Disqualified"; badge.classList.add("rejected"); }
-  else if(user.stage === 6) { badge.innerText = "Winner"; badge.classList.add("winner"); triggerConfetti(); }
+  else if(user.stage === 6) { badge.innerText = "Winner"; badge.classList.add("winner"); setTimeout(triggerConfetti, 500); }
   else { badge.innerText = "In Progress"; badge.classList.add("active"); }
 
   let html = "";
   
-  // LOOP THROUGH STAGES
   for (let i = 0; i < STAGES.length; i++) {
+    // Animation Delay Calculation
+    let delay = i * 150; 
     
-    // CASE 1: USER IS DISQUALIFIED AT THIS STAGE
+    // Disqualified Logic
     if (user.ineligible && i === user.stage) {
       html += `
-        <div class="timeline-item failed">
+        <div class="timeline-item failed" style="animation: slideUp 0.5s ease forwards; animation-delay: ${delay}ms">
           <div class="timeline-line"></div>
           <div class="timeline-marker">✕</div>
           <div style="width:100%;">
             <div style="font-weight:bold; color:var(--google-red);">${STAGES[i].t} (Failed)</div>
             <div class="failure-box">
-              <b>Disqualification Reason:</b><br>
-              ${user.reason || "Not specified."}
+              <b>Reason:</b> ${user.reason || "Not specified."}
             </div>
           </div>
-        </div>
-      `;
-      break; // STOP RENDERING FUTURE STAGES
+        </div>`;
+      break; 
     }
 
-    // CASE 2: NORMAL STAGES
+    // Normal Logic
     let statusClass = "";
     let icon = i + 1;
 
@@ -480,7 +565,7 @@ function renderTimeline(user) {
     else if (i === user.stage) { statusClass = "active"; icon = "●"; }
     
     html += `
-      <div class="timeline-item ${statusClass}">
+      <div class="timeline-item ${statusClass}" style="animation: slideUp 0.5s ease forwards; animation-delay: ${delay}ms">
         <div class="timeline-line"></div>
         <div class="timeline-marker">${icon}</div>
         <div>
@@ -493,16 +578,21 @@ function renderTimeline(user) {
 
   document.getElementById("timelineContainer").innerHTML = html;
 
-  // Cert
-  if(user.cert && !user.ineligible) {
+  if(user.cert && !user.ineligible && user.stage === 6) {
     document.getElementById("certBox").classList.remove("hidden");
     window.certLink = user.cert;
   } else {
     document.getElementById("certBox").classList.add("hidden");
   }
+  
+  // Smooth scroll to results
+  document.getElementById("resultsArea").scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function downloadCert() { if(window.certLink) window.open(window.certLink); }
+function downloadCert() { 
+  if(window.certLink) window.open(window.certLink); 
+  else showToast("Certificate link broken.", "error");
+}
 
 /* ------------------------------------------------------------
    3. ADMIN FUNCTIONS
@@ -512,36 +602,54 @@ function attemptLogin() {
     document.getElementById("loginModal").style.display = "none";
     document.getElementById("userView").classList.add("hidden");
     document.getElementById("adminView").classList.remove("hidden");
+    showToast("Welcome back, Administrator.", "success");
     refreshAdmin();
-  } else alert("Access Denied");
+  } else {
+    showToast("Invalid Credentials", "error");
+    document.getElementById("adminPass").value = "";
+  }
 }
 
 function logout() {
   document.getElementById("adminView").classList.add("hidden");
   document.getElementById("userView").classList.remove("hidden");
+  document.getElementById("adminUser").value = "";
+  document.getElementById("adminPass").value = "";
+  showToast("Logged out successfully.", "info");
 }
 
 function refreshAdmin() {
-  const keys = Object.keys(db);
-  document.getElementById("statTotal").innerText = keys.length;
-  document.getElementById("statDQ").innerText = Object.values(db).filter(u => u.ineligible).length;
-  document.getElementById("statWinners").innerText = Object.values(db).filter(u => u.stage === 6).length;
+  const vals = Object.values(db);
+  const total = vals.length;
+  const dq = vals.filter(u => u.ineligible).length;
+  const win = vals.filter(u => u.stage === 6).length;
+
+  document.getElementById("statTotal").innerText = total;
+  document.getElementById("statDQ").innerText = dq;
+  document.getElementById("statWinners").innerText = win;
+
+  // Animate Bars
+  setTimeout(() => {
+    document.getElementById("barDQ").style.width = (total ? (dq/total)*100 : 0) + "%";
+    document.getElementById("barWin").style.width = (total ? (win/total)*100 : 0) + "%";
+  }, 200);
   
   const tbody = document.getElementById("admTableBody");
   tbody.innerHTML = "";
-  keys.forEach(id => {
+  Object.keys(db).forEach(id => {
     const u = db[id];
-    let st = u.ineligible ? `<span style="color:red">DQ (S${u.stage})</span>` : `Stage ${u.stage}`;
+    let st = u.ineligible ? `<span style="color:var(--google-red); font-weight:bold;">DQ (S${u.stage})</span>` : `Stage ${u.stage}`;
     tbody.innerHTML += `
       <tr>
         <td><b>${id}</b></td>
         <td>${u.name}</td>
+        <td>${u.cohort}</td>
         <td>${st}</td>
         <td style="font-size:12px; color:gray;">${u.lastUpdated || '-'}</td>
         <td>
           <div class="admin-actions">
-            <button class="edit small" onclick="editUser('${id}')">Edit</button>
-            <button class="danger small" onclick="deleteUser('${id}')">Del</button>
+            <button class="edit small" onclick="editUser('${id}')">✏️</button>
+            <button class="danger small" onclick="deleteUser('${id}')">🗑️</button>
           </div>
         </td>
       </tr>
@@ -554,6 +662,7 @@ function toggleReasonInput() {
   const el = document.getElementById("admReason");
   el.disabled = !isChecked;
   if(!isChecked) el.value = "";
+  else el.focus();
 }
 
 function saveCandidate() {
@@ -562,8 +671,8 @@ function saveCandidate() {
   const isIneligible = document.getElementById("admIneligible").checked;
   const reason = document.getElementById("admReason").value;
 
-  if(!id || !name) return alert("ID/Name required.");
-  if(isIneligible && !reason) return alert("Reason required for Disqualification.");
+  if(!id || !name) return showToast("ID and Name are required.", "error");
+  if(isIneligible && !reason) return showToast("Reason required for Disqualification.", "error");
 
   const old = db[id] || {};
   db[id] = {
@@ -574,10 +683,10 @@ function saveCandidate() {
     signed: old.signed || false,
     ineligible: isIneligible,
     reason: reason,
-    lastUpdated: new Date().toLocaleString() // Timestamp Feature
+    lastUpdated: new Date().toLocaleDateString()
   };
   saveDB();
-  alert("Saved!");
+  showToast("Candidate Saved!", "success");
   resetForm();
   refreshAdmin();
 }
@@ -593,10 +702,16 @@ function editUser(id) {
   document.getElementById("admReason").value = u.reason || "";
   toggleReasonInput();
   document.getElementById("editFormCard").scrollIntoView({ behavior: "smooth" });
+  document.getElementById("formTitle").innerText = "Edit: " + id;
 }
 
 function deleteUser(id) {
-  if(confirm("Delete " + id + "?")) { delete db[id]; saveDB(); refreshAdmin(); }
+  if(confirm("Are you sure you want to delete " + id + "?")) { 
+    delete db[id]; 
+    saveDB(); 
+    refreshAdmin();
+    showToast("Record deleted.", "info");
+  }
 }
 
 function resetForm() {
@@ -605,33 +720,82 @@ function resetForm() {
   document.getElementById("admCert").value = "";
   document.getElementById("admIneligible").checked = false;
   document.getElementById("admReason").value = "";
+  document.getElementById("formTitle").innerText = "Manage Candidate";
   toggleReasonInput();
+}
+
+function exportCSV() {
+  let csv = "ID,Name,Cohort,Stage,Status,LastUpdated\n";
+  for(let id in db) {
+    const u = db[id];
+    let status = u.ineligible ? "DQ: "+u.reason : (u.stage === 6 ? "Winner" : "In Progress");
+    csv += `${id},${u.name},${u.cohort},${u.stage},"${status}",${u.lastUpdated}\n`;
+  }
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'GoGen_Candidates.csv';
+  a.click();
+  showToast("Database exported to CSV.", "success");
 }
 
 /* --- EXTRAS --- */
 function postAnnouncement() {
-  localStorage.setItem("gogenAnnounce", document.getElementById("admAnnounceInput").value);
-  alert("Posted!");
+  const txt = document.getElementById("admAnnounceInput").value;
+  if(!txt) return;
+  localStorage.setItem("gogenAnnounce", txt);
+  showToast("Announcement Posted!", "success");
 }
 function clearAnnouncement() {
   localStorage.removeItem("gogenAnnounce");
   document.getElementById("admAnnounceInput").value = "";
-  alert("Cleared.");
+  showToast("Announcement Cleared.", "info");
+}
+
+function showToast(msg, type='info') {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span>${msg}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(20px)';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
 }
 
 function triggerConfetti() {
-  for(let i=0; i<30; i++) {
+  const colors = ["#4285F4", "#DB4437", "#F4B400", "#0F9D58"];
+  for(let i=0; i<60; i++) {
     const p = document.createElement("div");
     p.classList.add("confetti");
-    p.style.left = Math.random() * 100 + "vw";
-    p.style.animationDuration = (Math.random() * 2 + 3) + "s";
-    p.style.backgroundColor = ["#4285F4", "#DB4437", "#F4B400", "#0F9D58"][Math.floor(Math.random()*4)];
     document.body.appendChild(p);
-    setTimeout(() => p.remove(), 5000);
+    
+    const x = Math.random() * 100;
+    const y = -10;
+    
+    p.style.left = x + "vw";
+    p.style.top = y + "px";
+    p.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+    
+    // Physics
+    const duration = Math.random() * 3 + 2;
+    p.animate([
+      { transform: `translate(0, 0) rotate(0deg)` },
+      { transform: `translate(${Math.random()*20-10}vw, 105vh) rotate(${Math.random()*720}deg)` }
+    ], {
+      duration: duration * 1000,
+      easing: 'linear',
+      fill: 'forwards'
+    });
+
+    setTimeout(() => p.remove(), duration * 1000);
   }
 }
 
-function saveDB() { localStorage.setItem("gogenPro_v8", JSON.stringify(db)); }
+function saveDB() { localStorage.setItem("gogenPro_v9", JSON.stringify(db)); }
 function toggleTheme() { document.body.classList.toggle("dark"); }
 </script>
 </body>
