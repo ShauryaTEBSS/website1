@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISSSA | International Social Sciences Studies Association</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
     <style>
         /* Core Variables & Reset */
         :root {
@@ -30,7 +37,7 @@
             color: var(--primary-color);
         }
 
-        /* Navigation */
+        /* ----- Integrated Navigation Styles ----- */
         header {
             background-color: #ffffff;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -40,38 +47,69 @@
         }
 
         .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 0.5rem 2rem; /* Adjusted for Bootstrap padding */
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
             text-decoration: none;
+            color: var(--primary-color) !important;
         }
 
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-main);
+        /* Bootstrap Nav Override */
+        .navbar-nav .nav-link {
+            color: var(--text-main) !important;
             font-weight: 600;
+            font-size: 15px;
+            padding: 8px 16px !important;
             transition: color 0.3s ease;
         }
 
-        .nav-links a:hover {
+        .navbar-nav .nav-link:hover, 
+        .navbar-nav .nav-link:focus,
+        .navbar-nav .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            margin-top: 10px;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .dropdown-item {
+            padding: 10px 20px;
+            font-size: 15px;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--bg-light);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .search-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            padding: 8px 15px;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.1);
             color: var(--primary-color);
         }
 
-        /* Hero Section */
+        /* ----- Hero Section ----- */
         .hero {
             background-color: var(--primary-color);
             color: #ffffff;
@@ -92,7 +130,7 @@
             font-weight: 300;
         }
 
-        .btn {
+        .btn-custom {
             display: inline-block;
             padding: 0.8rem 2rem;
             background-color: #ffffff;
@@ -103,12 +141,12 @@
             transition: background-color 0.3s ease;
         }
 
-        .btn:hover {
+        .btn-custom:hover {
             background-color: var(--secondary-color);
             color: #ffffff;
         }
 
-        /* Main Content Sections */
+        /* ----- Main Content Sections ----- */
         section {
             padding: 4rem 2rem;
             max-width: 1200px;
@@ -131,7 +169,6 @@
             margin: 10px auto 0;
         }
 
-        /* Flex Container for About & Journal */
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -151,7 +188,7 @@
             margin-bottom: 1rem;
         }
 
-        /* Footer */
+        /* ----- Footer ----- */
         footer {
             background-color: var(--primary-color);
             color: #ffffff;
@@ -163,41 +200,114 @@
         footer p {
             font-size: 0.9rem;
             opacity: 0.8;
+            margin-bottom: 0.5rem;
         }
 
-        /* Responsive Design */
+        /* Responsive Design overrides */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none; /* Add a hamburger menu JS script for mobile later */
-            }
             .grid-2 {
                 grid-template-columns: 1fr;
             }
             .hero h1 {
                 font-size: 2.2rem;
             }
+            .navbar-nav {
+                margin-top: 1rem;
+            }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <header>
-        <div class="nav-container">
-            <a href="#" class="logo">ISSSA</a>
-            <ul class="nav-links">
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#journal">Publications (INJASSS)</a></li>
-                <li><a href="#membership">Membership</a></li>
-                <li><a href="#events">Conferences</a></li>
-            </ul>
-        </div>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid nav-container">
+                
+                <a href="#" class="navbar-brand logo">ISSSA</a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#isssaNav" aria-controls="isssaNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-end" id="isssaNav">
+                    <ul class="navbar-nav align-items-center gap-1">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">EC</a>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Events
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
+                                <li><a class="dropdown-item" href="#">Upcoming Seminars</a></li>
+                                <li><a class="dropdown-item" href="#">Annual Conference</a></li>
+                                <li><a class="dropdown-item" href="#">Past Events</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="injasssDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                INJASSS
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="injasssDropdown">
+                                <li><a class="dropdown-item" href="#journal">Current Issue</a></li>
+                                <li><a class="dropdown-item" href="#">Archives</a></li>
+                                <li><a class="dropdown-item" href="#">Author Guidelines</a></li>
+                                <li><a class="dropdown-item" href="#">Submit Paper</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Cooperations</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="awardsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Awards
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="awardsDropdown">
+                                <li><a class="dropdown-item" href="#">Young Scholar Award</a></li>
+                                <li><a class="dropdown-item" href="#">Lifetime Achievement</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="membershipDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Membership
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="membershipDropdown">
+                                <li><a class="dropdown-item" href="#">Join ISSSA</a></li>
+                                <li><a class="dropdown-item" href="#">Renew Membership</a></li>
+                                <li><a class="dropdown-item" href="#">Member Directory</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Photo Gallery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact Us</a>
+                        </li>
+
+                        <li class="nav-item ms-lg-2">
+                            <button class="search-btn" aria-label="Search">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <div class="hero">
         <h1>Advancing Global Perspectives in Social Science</h1>
         <p>The International Social Sciences Studies Association is a premier academic body dedicated to fostering interdisciplinary research, scholarly excellence, and collaborative progress across the globe.</p>
-        <a href="#membership" class="btn">Join the Association</a>
+        <a href="#membership" class="btn-custom">Join the Association</a>
     </div>
 
     <section id="about">
@@ -216,7 +326,7 @@
                 <br>
                 <p>Publishing quarterly, INJASSS accepts high-quality empirical and theoretical papers across all branches of the social sciences. We are currently accepting submissions for our upcoming volume.</p>
                 <br>
-                <a href="journal.html" class="btn" style="background-color: var(--primary-color); color: #fff;">Visit INJASSS Portal</a>
+                <a href="journal.html" class="btn-custom" style="background-color: var(--primary-color); color: #fff;">Visit INJASSS Portal</a>
             </div>
         </div>
     </section>
@@ -226,5 +336,6 @@
         <p>Headquartered in Varanasi, Uttar Pradesh, India</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
