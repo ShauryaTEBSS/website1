@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conferences & Events | ISSSA</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        /* Core Variables & Reset */
+        :root {
+            --primary-color: #002b5e; 
+            --secondary-color: #f4a261; 
+            --text-main: #333333;
+            --bg-light: #f8f9fa;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', system-ui, sans-serif; color: var(--text-main); line-height: 1.6; background-color: var(--bg-light); }
+        h1, h2, h3, h4, h5, .logo { font-family: 'Merriweather', 'Times New Roman', serif; color: var(--primary-color); }
+
+        /* Navigation Styles */
+        header { background-color: #ffffff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0.5rem 2rem; }
+        .logo { font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--primary-color) !important; }
+        .navbar-nav .nav-link { color: var(--text-main) !important; font-weight: 600; font-size: 15px; padding: 8px 16px !important; transition: color 0.3s ease; }
+        .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active { color: var(--primary-color) !important; }
+        .dropdown-menu { border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 4px; margin-top: 10px; }
+        .dropdown-item { padding: 10px 20px; font-size: 15px; color: var(--text-main); }
+        .dropdown-item:hover { background-color: var(--bg-light); color: var(--primary-color); font-weight: 600; }
+        .search-btn { background: transparent; border: none; color: var(--text-main); font-size: 1.1rem; padding: 8px 15px; transition: transform 0.2s ease; }
+        .search-btn:hover { transform: scale(1.1); color: var(--primary-color); }
+
+        /* Page Header */
+        .page-header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .page-header h1 { color: #ffffff; font-size: 2.5rem; margin-bottom: 1rem; }
+        .page-header p { font-size: 1.1rem; opacity: 0.9; max-width: 700px; margin: 0 auto; }
+
+        /* Event Sections */
+        section { padding: 4rem 0; }
+        .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 3rem; position: relative; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 3px; background-color: var(--secondary-color); margin: 15px auto 0; }
+
+        /* Featured Event Card */
+        .featured-event {
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-left: 6px solid var(--secondary-color);
+        }
+        .featured-event-img {
+            background-color: var(--primary-color);
+            background-image: linear-gradient(rgba(0, 43, 94, 0.8), rgba(0, 43, 94, 0.8)), url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        .featured-content { padding: 3rem; }
+        .event-badge { background-color: var(--secondary-color); color: #fff; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 1rem; }
+        .event-meta { font-size: 0.95rem; color: #666; margin-bottom: 1.5rem; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .event-meta i { color: var(--primary-color); margin-right: 8px; }
+
+        /* Standard Event Cards */
+        .event-card {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .event-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .event-date-block {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px 8px 0 0;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+        .event-date-block .month { font-size: 0.9rem; text-transform: uppercase; font-weight: bold; letter-spacing: 2px; display: block; }
+        .event-date-block .day { font-size: 2rem; font-weight: bold; line-height: 1; margin: 5px 0; display: block; font-family: 'Merriweather', serif; }
+        .event-body { padding: 1.5rem; flex-grow: 1; }
+        .event-body h4 { font-size: 1.25rem; margin-bottom: 1rem; }
+        .event-body p { font-size: 0.9rem; color: #666; margin-bottom: 1.5rem; }
+
+        /* Buttons */
+        .btn-custom { display: inline-block; padding: 0.6rem 1.5rem; background-color: var(--primary-color); color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 4px; transition: background-color 0.3s ease; }
+        .btn-custom:hover { background-color: var(--secondary-color); color: #ffffff; }
+        .btn-outline { background-color: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); }
+        .btn-outline:hover { background-color: var(--primary-color); color: #ffffff; }
+
+        /* Footer */
+        footer { background-color: var(--primary-color); color: #ffffff; padding: 4rem 0 2rem 0; }
+        .footer-heading { color: var(--secondary-color); font-family: 'Merriweather', serif; margin-bottom: 1.5rem; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: #ffffff; text-decoration: none; opacity: 0.8; transition: opacity 0.3s ease; }
+        .footer-links a:hover { opacity: 1; text-decoration: underline; }
+        .footer-bottom { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.9rem; opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid nav-container">
+                <a href="index.html" class="navbar-brand logo">ISSSA</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#isssaNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="isssaNav">
+                    <ul class="navbar-nav align-items-center gap-1">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="ec.html">EC</a></li>
+                        
+                        <li class="nav-item"><a class="nav-link active" href="events.html">Events</a></li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">INJASSS</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="journal.html">Current Issue</a></li>
+                                <li><a class="dropdown-item" href="#">Submit Paper</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#">Membership</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
+                        <li class="nav-item ms-lg-2">
+                            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Conferences & Seminars</h1>
+            <p>Join the ISSSA community for high-level academic discourse. Discover our upcoming summits, paper presentations, and specialized research workshops.</p>
+        </div>
+    </div>
+
+    <section class="container mt-4">
+        <div class="featured-event">
+            <div class="row g-0">
+                <div class="col-lg-5">
+                    <div class="featured-event-img">
+                        <div>
+                            <h2 class="text-white mb-0" style="font-size: 3rem;">2026</h2>
+                            <p class="mb-0 text-uppercase tracking-widest" style="letter-spacing: 3px; font-weight: 600;">Annual Summit</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="featured-content">
+                        <span class="event-badge">Flagship National Seminar</span>
+                        <h2 class="mb-3">Contribution of Geography to Progress in Human Resource Development: Challenges and Opportunities</h2>
+                        <h4 class="text-muted mb-4" style="font-family: 'Open Sans', sans-serif;">Theme: Viksit Bharat @2047</h4>
+                        
+                        <div class="event-meta">
+                            <span><i class="fa-solid fa-calendar-days"></i> August 12-14, 2026</span>
+                            <span><i class="fa-solid fa-location-dot"></i> Varanasi, Uttar Pradesh</span>
+                            <span><i class="fa-solid fa-microphone-lines"></i> Call for Papers: Open</span>
+                        </div>
+                        
+                        <p class="mb-4">This premier national seminar explores the critical intersection of geographical planning and human capital. Join leading academics as we address spatial inequalities, resource management, and strategic development frameworks necessary to achieve the vision of a developed nation by 2047.</p>
+                        
+                        <div class="d-flex gap-3">
+                            <a href="#" class="btn-custom">Register Now</a>
+                            <a href="#" class="btn-custom btn-outline">Submit Abstract</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container bg-light py-5 rounded-3 mb-5 px-4">
+        <h2 class="section-title">More Upcoming Events</h2>
+        <div class="row g-4">
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="event-card">
+                    <div class="event-date-block">
+                        <span class="month">September</span>
+                        <span class="day">05</span>
+                        <span class="year small">2026</span>
+                    </div>
+                    <div class="event-body">
+                        <h4>Digital Cartography & GIS Workshop</h4>
+                        <div class="text-muted small mb-3">
+                            <i class="fa-solid fa-clock me-1"></i> 10:00 AM - 4:00 PM <br>
+                            <i class="fa-solid fa-video me-1 mt-1"></i> Virtual Format
+                        </div>
+                        <p>A hands-on methodology workshop for researchers looking to integrate advanced spatial mapping and open-source GIS tools into their social science publications.</p>
+                        <a href="#" class="text-decoration-none fw-bold" style="color: var(--primary-color);">View Details &rarr;</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="event-card">
+                    <div class="event-date-block">
+                        <span class="month">October</span>
+                        <span class="day">18</span>
+                        <span class="year small">2026</span>
+                    </div>
+                    <div class="event-body">
+                        <h4>Symposium on Urban Demographics</h4>
+                        <div class="text-muted small mb-3">
+                            <i class="fa-solid fa-clock me-1"></i> 2-Day Event <br>
+                            <i class="fa-solid fa-building-columns me-1 mt-1"></i> Main Auditorium
+                        </div>
+                        <p>Reviewing recent shifts in regional planning, migration patterns, and the economic geography of rapidly expanding metropolitan zones.</p>
+                        <a href="#" class="text-decoration-none fw-bold" style="color: var(--primary-color);">View Details &rarr;</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="event-card">
+                    <div class="event-date-block">
+                        <span class="month">December</span>
+                        <span class="day">10</span>
+                        <span class="year small">2026</span>
+                    </div>
+                    <div class="event-body">
+                        <h4>INJASSS Author Networking Mixer</h4>
+                        <div class="text-muted small mb-3">
+                            <i class="fa-solid fa-clock me-1"></i> 5:00 PM - 8:00 PM <br>
+                            <i class="fa-solid fa-mug-hot me-1 mt-1"></i> University Guest House
+                        </div>
+                        <p>An informal gathering connecting previously published INJASSS authors with prospective researchers, the editorial board, and peer reviewers.</p>
+                        <a href="#" class="text-decoration-none fw-bold" style="color: var(--primary-color);">View Details &rarr;</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <h3 class="logo text-white mb-3">ISSSA</h3>
+                    <p class="small opacity-75">Dedicated to the advancement, discourse, and publication of high-quality research across all spectrums of the social sciences.</p>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-heading">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">About ISSSA</a></li>
+                        <li><a href="ec.html">Executive Committee</a></li>
+                        <li><a href="journal.html">INJASSS Portal</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-heading">Contact Us</h5>
+                    <ul class="footer-links">
+                        <li class="small"><i class="fa-solid fa-location-dot me-2"></i> Varanasi, Uttar Pradesh, India</li>
+                        <li class="small"><i class="fa-solid fa-envelope me-2"></i> events@injasss.org</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-heading">Newsletter</h5>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Email Address">
+                        <button class="btn" style="background-color: var(--secondary-color); color: white;" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 International Social Sciences Studies Association (ISSSA). All Rights Reserved.</p>
+                <p class="mb-0">Designed & Managed by Shaurya Digital Services</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
