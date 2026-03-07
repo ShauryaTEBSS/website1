@@ -6,9 +6,7 @@
     <title>INJASS @RTIX Submission Portal</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <style>
@@ -139,7 +137,7 @@
                 
                 <div class="form-wrapper">
                     
-                    <div id="statusAlert" class="alert d-none" role="alert"></div>
+                    <div id="statusAlert" class="alert d-none mt-3 mb-4" role="alert"></div>
 
                     <form id="injasssSubmitForm">
                         
@@ -280,7 +278,7 @@
 
         // Handle Form Submission
         document.getElementById('injasssSubmitForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent default page reload
+            e.preventDefault(); 
             
             // UI Loading State
             const submitBtn = document.getElementById('submitBtn');
@@ -299,7 +297,7 @@
             // File conversion to base64 for Google Apps Script
             const reader = new FileReader();
             reader.onload = function(event) {
-                const base64Data = event.target.result.split(',')[1]; // Extract base64 part
+                const base64Data = event.target.result.split(',')[1]; 
                 
                 // Construct Payload
                 const payload = {
@@ -316,11 +314,10 @@
                     fileData: base64Data
                 };
 
-                // --- GOOGLE APPS SCRIPT WEB APP URL GOES HERE ---
+                // Live Google Apps Script Web App URL
                 const scriptURL = 'https://script.google.com/a/~/macros/s/AKfycbyklUOQ3j9YkEHzYXVRqBzG94yxHTlfxHmXwqxQUFMd3ig4x1PWfznuAIKcinda_qNC/exec'; 
                 
-                /*
-                // Example Fetch Request to Apps Script
+                // Live Fetch Request to Apps Script
                 fetch(scriptURL, {
                     method: 'POST',
                     body: JSON.stringify(payload)
@@ -328,16 +325,20 @@
                 .then(response => response.json())
                 .then(data => {
                     // Success UI updates
-                    statusAlert.className = "alert alert-success";
-                    statusAlert.innerHTML = "<i class='fa-solid fa-circle-check me-2'></i>Manuscript submitted successfully! Your tracking ID is: " + data.id;
-                    document.getElementById('injasssSubmitForm').reset();
-                    document.getElementById('fileNameDisplay').textContent = "";
+                    if (data.status === "success") {
+                        statusAlert.className = "alert alert-success mt-3 mb-4";
+                        statusAlert.innerHTML = "<i class='fa-solid fa-circle-check me-2'></i>Manuscript submitted successfully! Your tracking ID is: <strong>" + data.id + "</strong>";
+                        document.getElementById('injasssSubmitForm').reset();
+                        document.getElementById('fileNameDisplay').textContent = "";
+                    } else {
+                        throw new Error(data.message || "Unknown error occurred.");
+                    }
                 })
                 .catch(error => {
                     // Error UI updates
-                    statusAlert.className = "alert alert-danger";
-                    statusAlert.innerHTML = "<i class='fa-solid fa-triangle-exclamation me-2'></i>Submission failed. Please try again or contact the editor.";
-                    console.error('Error!', error.message);
+                    statusAlert.className = "alert alert-danger mt-3 mb-4";
+                    statusAlert.innerHTML = "<i class='fa-solid fa-triangle-exclamation me-2'></i>Submission failed. Please try again or contact the editor. Details: " + error.message;
+                    console.error('Error!', error);
                 })
                 .finally(() => {
                     // Reset Button
@@ -345,17 +346,6 @@
                     btnText.textContent = "Submit Manuscript to INJASSS";
                     btnSpinner.classList.add('d-none');
                 });
-                */
-               
-               // Temporary simulation for front-end testing (Remove this once GAS is connected)
-               setTimeout(() => {
-                    statusAlert.className = "alert alert-success";
-                    statusAlert.innerHTML = "<i class='fa-solid fa-circle-check me-2'></i><strong>Success!</strong> Form front-end is working perfectly. Ready to connect to Google Apps Script.";
-                    
-                    submitBtn.disabled = false;
-                    btnText.textContent = "Submit Manuscript to INJASSS";
-                    btnSpinner.classList.add('d-none');
-               }, 2000);
             };
             
             if(file) {
