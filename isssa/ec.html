@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Committee | ISSSA</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        /* Core Variables & Reset (Same as index) */
+        :root {
+            --primary-color: #002b5e; 
+            --secondary-color: #f4a261; 
+            --text-main: #333333;
+            --bg-light: #f8f9fa;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', system-ui, sans-serif; color: var(--text-main); line-height: 1.6; background-color: var(--bg-light); }
+        h1, h2, h3, h4, h5, .logo { font-family: 'Merriweather', 'Times New Roman', serif; color: var(--primary-color); }
+
+        /* Navigation Styles */
+        header { background-color: #ffffff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0.5rem 2rem; }
+        .logo { font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--primary-color) !important; }
+        .navbar-nav .nav-link { color: var(--text-main) !important; font-weight: 600; font-size: 15px; padding: 8px 16px !important; transition: color 0.3s ease; }
+        .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active { color: var(--primary-color) !important; }
+        .dropdown-menu { border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 4px; margin-top: 10px; }
+        .dropdown-item { padding: 10px 20px; font-size: 15px; color: var(--text-main); }
+        .dropdown-item:hover { background-color: var(--bg-light); color: var(--primary-color); font-weight: 600; }
+        .search-btn { background: transparent; border: none; color: var(--text-main); font-size: 1.1rem; padding: 8px 15px; transition: transform 0.2s ease; }
+        .search-btn:hover { transform: scale(1.1); color: var(--primary-color); }
+
+        /* Page Header */
+        .page-header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .page-header h1 { color: #ffffff; font-size: 2.5rem; margin-bottom: 1rem; }
+        .page-header p { font-size: 1.1rem; opacity: 0.9; max-width: 700px; margin: 0 auto; }
+
+        /* Committee Sections */
+        section { padding: 4rem 0; }
+        .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 3rem; position: relative; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 3px; background-color: var(--secondary-color); margin: 15px auto 0; }
+
+        /* Profile Cards */
+        .profile-card {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            border-top: 4px solid var(--primary-color);
+        }
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .profile-icon {
+            width: 90px;
+            height: 90px;
+            background-color: var(--bg-light);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem auto;
+            border: 2px solid var(--border-color);
+        }
+        .profile-name { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .profile-role { color: var(--secondary-color); font-weight: 600; font-size: 0.95rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .profile-bio { font-size: 0.9rem; color: #666; margin-bottom: 1.5rem; }
+        .profile-contact a { color: var(--primary-color); margin: 0 10px; font-size: 1.1rem; transition: color 0.2s; }
+        .profile-contact a:hover { color: var(--secondary-color); }
+
+        /* Footer */
+        footer { background-color: var(--primary-color); color: #ffffff; padding: 4rem 0 2rem 0; }
+        .footer-heading { color: var(--secondary-color); font-family: 'Merriweather', serif; margin-bottom: 1.5rem; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: #ffffff; text-decoration: none; opacity: 0.8; transition: opacity 0.3s ease; }
+        .footer-links a:hover { opacity: 1; text-decoration: underline; }
+        .footer-bottom { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.9rem; opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid nav-container">
+                <a href="index.html" class="navbar-brand logo">ISSSA</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#isssaNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="isssaNav">
+                    <ul class="navbar-nav align-items-center gap-1">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="ec.html">EC</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Events</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Upcoming Seminars</a></li>
+                                <li><a class="dropdown-item" href="#">Annual Conference</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">INJASSS</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="journal.html">Current Issue</a></li>
+                                <li><a class="dropdown-item" href="#">Submit Paper</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#">Membership</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
+                        <li class="nav-item ms-lg-2">
+                            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Executive Committee & Advisory Board</h1>
+            <p>Meet the dedicated academics, researchers, and leaders who govern the ISSSA and uphold the peer-review standards of INJASSS.</p>
+        </div>
+    </div>
+
+    <section class="container">
+        <h2 class="section-title">ISSSA Executive Board</h2>
+        <div class="row justify-content-center g-4">
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="profile-card">
+                    <div class="profile-icon">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <h3 class="profile-name">Shaurya Singh</h3>
+                    <div class="profile-role">Founder & President</div>
+                    <p class="profile-bio">Founder of the International Social Sciences Studies Association (ISSSA) and INJASSS, dedicated to advancing accessible geographical and social science research.</p>
+                    <div class="profile-contact">
+                        <a href="#"><i class="fa-solid fa-envelope"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="profile-card">
+                    <div class="profile-icon">
+                        <i class="fa-solid fa-pen-nib"></i>
+                    </div>
+                    <h3 class="profile-name">Editorial Director</h3>
+                    <div class="profile-role">Secretary, ISSSA</div>
+                    <p class="profile-bio">Oversees the daily administrative operations of the association and coordinates the double-blind peer review pipeline for INJASSS publications.</p>
+                    <div class="profile-contact">
+                        <a href="#"><i class="fa-solid fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <section class="container mb-5">
+        <h2 class="section-title">Peer Review & Advisory Council</h2>
+        <div class="row g-4">
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="profile-card">
+                    <div class="profile-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                    <h3 class="profile-name">Prof. P. Nag</h3>
+                    <div class="profile-role">Senior Advisory Member</div>
+                    <p class="profile-bio">Esteemed academic providing expert oversight and peer review for advanced geographical studies submitted to INJASSS.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="profile-card">
+                    <div class="profile-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                    <h3 class="profile-name">Prof. A. R. Siddiqui</h3>
+                    <div class="profile-role">Peer Review Committee</div>
+                    <p class="profile-bio">Guiding INJASSS through rigorous academic evaluation and promoting standards of excellence in social science.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="profile-card">
+                    <div class="profile-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                    <h3 class="profile-name">Prof. Haushila Prasad</h3>
+                    <div class="profile-role">Peer Review Committee</div>
+                    <p class="profile-bio">Contributing extensive field knowledge and research methodology expertise to the INJASSS editorial board.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="profile-card">
+                    <div class="profile-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                    <h3 class="profile-name">Prof. D. K. Singh</h3>
+                    <div class="profile-role">Peer Review Committee</div>
+                    <p class="profile-bio">Specializing in evaluating complex spatial and demographic research submissions for the journal.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <h3 class="logo text-white mb-3">ISSSA</h3>
+                    <p class="small opacity-75">Dedicated to the advancement, discourse, and publication of high-quality research across all spectrums of the social sciences.</p>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-heading">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">About ISSSA</a></li>
+                        <li><a href="ec.html">Executive Committee</a></li>
+                        <li><a href="journal.html">INJASSS Portal</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-heading">Contact Us</h5>
+                    <ul class="footer-links">
+                        <li class="small"><i class="fa-solid fa-location-dot me-2"></i> Varanasi, Uttar Pradesh, India</li>
+                        <li class="small"><i class="fa-solid fa-envelope me-2"></i> editor@injasss.org</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-heading">Newsletter</h5>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Email Address">
+                        <button class="btn" style="background-color: var(--secondary-color); color: white;" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 International Social Sciences Studies Association (ISSSA). All Rights Reserved.</p>
+                <p class="mb-0">Designed & Managed by Shaurya Digital Services</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
