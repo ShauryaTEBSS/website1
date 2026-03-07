@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INJASS @RTIX Submission Portal</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        /* Core Variables & Reset */
+        :root {
+            --primary-color: #002b5e; 
+            --secondary-color: #f4a261; 
+            --text-main: #333333;
+            --bg-light: #f8f9fa;
+            --border-color: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', system-ui, sans-serif; color: var(--text-main); line-height: 1.6; background-color: var(--bg-light); }
+        h1, h2, h3, h4, h5, .logo { font-family: 'Merriweather', 'Times New Roman', serif; color: var(--primary-color); }
+
+        /* Navigation Styles */
+        header { background-color: #ffffff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0.5rem 2rem; }
+        .logo { font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--primary-color) !important; }
+        .navbar-nav .nav-link { color: var(--text-main) !important; font-weight: 600; font-size: 15px; padding: 8px 16px !important; transition: color 0.3s ease; }
+        .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active { color: var(--primary-color) !important; }
+        .dropdown-menu { border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 4px; margin-top: 10px; }
+        .dropdown-item { padding: 10px 20px; font-size: 15px; color: var(--text-main); }
+        .dropdown-item:hover { background-color: var(--bg-light); color: var(--primary-color); font-weight: 600; }
+
+        /* Page Header */
+        .page-header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .page-header h1 { color: #ffffff; font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .page-header p { font-size: 1.1rem; opacity: 0.9; max-width: 700px; margin: 0 auto; }
+
+        /* Form Container */
+        .form-wrapper {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-top: 5px solid var(--secondary-color);
+            margin-top: -30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .form-section-title {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            margin-top: 30px;
+            font-family: 'Merriweather', serif;
+        }
+        .form-section-title:first-child { margin-top: 0; }
+
+        .form-label { font-weight: 600; color: var(--text-main); font-size: 0.95rem; }
+        .form-control, .form-select { padding: 0.75rem 1rem; border: 1px solid #ced4da; border-radius: 4px; font-size: 0.95rem; }
+        .form-control:focus, .form-select:focus { border-color: var(--primary-color); box-shadow: 0 0 0 0.25rem rgba(0, 43, 94, 0.1); }
+        
+        .file-upload-wrapper {
+            border: 2px dashed #ced4da;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-light);
+            transition: all 0.3s ease;
+        }
+        .file-upload-wrapper:hover { border-color: var(--primary-color); background-color: #f0f4f8; }
+
+        /* Buttons */
+        .btn-custom { display: inline-block; padding: 0.8rem 2.5rem; background-color: var(--primary-color); color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 4px; transition: background-color 0.3s ease; border: none; font-size: 1.1rem; width: 100%; }
+        .btn-custom:hover { background-color: var(--secondary-color); color: #ffffff; }
+
+        /* Footer */
+        footer { background-color: var(--primary-color); color: #ffffff; padding: 4rem 0 2rem 0; margin-top: 4rem;}
+        .footer-heading { color: var(--secondary-color); font-family: 'Merriweather', serif; margin-bottom: 1.5rem; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: #ffffff; text-decoration: none; opacity: 0.8; transition: opacity 0.3s ease; }
+        .footer-links a:hover { opacity: 1; text-decoration: underline; }
+        .footer-bottom { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.9rem; opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid nav-container">
+                <a href="index.html" class="navbar-brand logo">ISSSA</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#isssaNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="isssaNav">
+                    <ul class="navbar-nav align-items-center gap-1">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="ec.html">EC</a></li>
+                        <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown">INJASSS</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="injasss.html">About the Journal</a></li>
+                                <li><a class="dropdown-item active" href="submit.html">Submit Manuscript</a></li>
+                                <li><a class="dropdown-item" href="#">Archives</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#">Membership</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Manuscript Submission Portal</h1>
+            <p>Ensure your document is formatted according to INJASSS guidelines and stripped of all identifying information for double-blind peer review before uploading.</p>
+        </div>
+    </div>
+
+    <section class="container mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                
+                <div class="form-wrapper">
+                    
+                    <div id="statusAlert" class="alert d-none" role="alert"></div>
+
+                    <form id="injasssSubmitForm">
+                        
+                        <h4 class="form-section-title"><i class="fa-solid fa-user-pen me-2"></i> Corresponding Author Details</h4>
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label for="authorName" class="form-label">Full Name *</label>
+                                <input type="text" class="form-control" id="authorName" name="authorName" required placeholder="Dr. Jane Doe">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="authorEmail" class="form-label">Academic Email Address *</label>
+                                <input type="email" class="form-control" id="authorEmail" name="authorEmail" required placeholder="jane.doe@university.edu">
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label for="authorPhone" class="form-label">Phone Number *</label>
+                                <input type="tel" class="form-control" id="authorPhone" name="authorPhone" required placeholder="+91 XXXXX XXXXX">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="authorInstitution" class="form-label">Institution / Affiliation *</label>
+                                <input type="text" class="form-control" id="authorInstitution" name="authorInstitution" required placeholder="Department, University Name">
+                            </div>
+                        </div>
+
+                        <h4 class="form-section-title"><i class="fa-solid fa-file-lines me-2"></i> Manuscript Information</h4>
+                        <div class="mb-3">
+                            <label for="paperTitle" class="form-label">Title of the Manuscript *</label>
+                            <input type="text" class="form-control" id="paperTitle" name="paperTitle" required>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label for="paperDomain" class="form-label">Primary Research Domain *</label>
+                                <select class="form-select" id="paperDomain" name="paperDomain" required>
+                                    <option value="" selected disabled>Select subject area...</option>
+                                    <option value="Geography">Geography & Spatial Studies</option>
+                                    <option value="Political Science">Political Science & IR</option>
+                                    <option value="Economics">Economics & Development</option>
+                                    <option value="Sociology">Sociology & Demographics</option>
+                                    <option value="Interdisciplinary">Interdisciplinary</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="paperKeywords" class="form-label">Keywords *</label>
+                                <input type="text" class="form-control" id="paperKeywords" name="paperKeywords" required placeholder="Comma separated (e.g., GIS, Urbanization)">
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="paperAbstract" class="form-label">Abstract (Max 250 words) *</label>
+                            <textarea class="form-control" id="paperAbstract" name="paperAbstract" rows="5" required></textarea>
+                        </div>
+
+                        <h4 class="form-section-title"><i class="fa-solid fa-cloud-arrow-up me-2"></i> Document Upload</h4>
+                        <div class="file-upload-wrapper mb-4">
+                            <label for="manuscriptFile" class="form-label mb-2 d-block" style="cursor: pointer;">
+                                <i class="fa-solid fa-file-word fs-1 text-primary mb-2"></i><br>
+                                <strong>Click to select file</strong> or drag and drop<br>
+                                <span class="text-muted small">Only .doc or .docx formats accepted (Max 5MB).</span>
+                            </label>
+                            <input class="form-control d-none" type="file" id="manuscriptFile" name="manuscriptFile" accept=".doc,.docx" required>
+                            <div id="fileNameDisplay" class="mt-2 text-success fw-bold small"></div>
+                        </div>
+
+                        <h4 class="form-section-title"><i class="fa-solid fa-clipboard-check me-2"></i> Author Declarations</h4>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="checkOriginality" required>
+                            <label class="form-check-label small" for="checkOriginality">
+                                I certify that this manuscript is original, has not been published previously, and is not under consideration for publication elsewhere.
+                            </label>
+                        </div>
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="checkBlind" required>
+                            <label class="form-check-label small" for="checkBlind">
+                                I confirm that all author names, affiliations, and identifying information have been completely removed from the uploaded manuscript file to ensure a blind peer review.
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn-custom" id="submitBtn">
+                            <span id="btnText">Submit Manuscript to INJASSS</span>
+                            <span id="btnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        </button>
+                        
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <h3 class="logo text-white mb-3">ISSSA</h3>
+                    <p class="small opacity-75">Dedicated to the advancement, discourse, and publication of high-quality research across all spectrums of the social sciences.</p>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-heading">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">About ISSSA</a></li>
+                        <li><a href="ec.html">Executive Committee</a></li>
+                        <li><a href="events.html">Events & Seminars</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-heading">Contact Us</h5>
+                    <ul class="footer-links">
+                        <li class="small"><i class="fa-solid fa-location-dot me-2"></i> Varanasi, Uttar Pradesh, India</li>
+                        <li class="small"><i class="fa-solid fa-envelope me-2"></i> editor@injasss.org</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-heading">Newsletter</h5>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Email Address">
+                        <button class="btn" style="background-color: var(--secondary-color); color: white;" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 International Social Sciences Studies Association (ISSSA). All Rights Reserved.</p>
+                <p class="mb-0">Designed & Managed by Shaurya Digital Services</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Display selected file name
+        document.getElementById('manuscriptFile').addEventListener('change', function() {
+            var fileName = this.files[0] ? this.files[0].name : 'No file selected';
+            document.getElementById('fileNameDisplay').textContent = "Selected File: " + fileName;
+        });
+
+        // Handle Form Submission
+        document.getElementById('injasssSubmitForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default page reload
+            
+            // UI Loading State
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnSpinner = document.getElementById('btnSpinner');
+            const statusAlert = document.getElementById('statusAlert');
+            
+            submitBtn.disabled = true;
+            btnText.textContent = "Uploading... Please wait ";
+            btnSpinner.classList.remove('d-none');
+            statusAlert.classList.add('d-none');
+
+            const fileInput = document.getElementById('manuscriptFile');
+            const file = fileInput.files[0];
+            
+            // File conversion to base64 for Google Apps Script
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const base64Data = event.target.result.split(',')[1]; // Extract base64 part
+                
+                // Construct Payload
+                const payload = {
+                    authorName: document.getElementById('authorName').value,
+                    authorEmail: document.getElementById('authorEmail').value,
+                    authorPhone: document.getElementById('authorPhone').value,
+                    authorInstitution: document.getElementById('authorInstitution').value,
+                    paperTitle: document.getElementById('paperTitle').value,
+                    paperDomain: document.getElementById('paperDomain').value,
+                    paperKeywords: document.getElementById('paperKeywords').value,
+                    paperAbstract: document.getElementById('paperAbstract').value,
+                    fileName: file.name,
+                    mimeType: file.type,
+                    fileData: base64Data
+                };
+
+                // --- GOOGLE APPS SCRIPT WEB APP URL GOES HERE ---
+                const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL'; 
+                
+                /*
+                // Example Fetch Request to Apps Script
+                fetch(scriptURL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Success UI updates
+                    statusAlert.className = "alert alert-success";
+                    statusAlert.innerHTML = "<i class='fa-solid fa-circle-check me-2'></i>Manuscript submitted successfully! Your tracking ID is: " + data.id;
+                    document.getElementById('injasssSubmitForm').reset();
+                    document.getElementById('fileNameDisplay').textContent = "";
+                })
+                .catch(error => {
+                    // Error UI updates
+                    statusAlert.className = "alert alert-danger";
+                    statusAlert.innerHTML = "<i class='fa-solid fa-triangle-exclamation me-2'></i>Submission failed. Please try again or contact the editor.";
+                    console.error('Error!', error.message);
+                })
+                .finally(() => {
+                    // Reset Button
+                    submitBtn.disabled = false;
+                    btnText.textContent = "Submit Manuscript to INJASSS";
+                    btnSpinner.classList.add('d-none');
+                });
+                */
+               
+               // Temporary simulation for front-end testing (Remove this once GAS is connected)
+               setTimeout(() => {
+                    statusAlert.className = "alert alert-success";
+                    statusAlert.innerHTML = "<i class='fa-solid fa-circle-check me-2'></i><strong>Success!</strong> Form front-end is working perfectly. Ready to connect to Google Apps Script.";
+                    
+                    submitBtn.disabled = false;
+                    btnText.textContent = "Submit Manuscript to INJASSS";
+                    btnSpinner.classList.add('d-none');
+               }, 2000);
+            };
+            
+            if(file) {
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
