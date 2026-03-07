@@ -6,9 +6,7 @@
     <title>ISSSA | International Social Sciences Studies Association</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <style>
@@ -18,6 +16,7 @@
             --secondary-color: #f4a261; /* Subtle Accent */
             --text-main: #333333;
             --bg-light: #f8f9fa;
+            --border-color: #e0e0e0;
         }
         
         * {
@@ -32,8 +31,8 @@
             line-height: 1.6;
         }
 
-        h1, h2, h3, .logo {
-            font-family: 'Merriweather', 'Times New Roman', serif; /* Academic Serif */
+        h1, h2, h3, h4, h5, .logo {
+            font-family: 'Merriweather', 'Times New Roman', serif;
             color: var(--primary-color);
         }
 
@@ -49,7 +48,7 @@
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0.5rem 2rem; /* Adjusted for Bootstrap padding */
+            padding: 0.5rem 2rem; 
         }
 
         .logo {
@@ -59,7 +58,6 @@
             color: var(--primary-color) !important;
         }
 
-        /* Bootstrap Nav Override */
         .navbar-nav .nav-link {
             color: var(--text-main) !important;
             font-weight: 600;
@@ -115,6 +113,9 @@
             color: #ffffff;
             text-align: center;
             padding: 6rem 2rem;
+            background-image: linear-gradient(rgba(0, 43, 94, 0.9), rgba(0, 43, 94, 0.9)), url('https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
         }
 
         .hero h1 {
@@ -139,18 +140,18 @@
             font-weight: bold;
             border-radius: 4px;
             transition: background-color 0.3s ease;
+            border: 2px solid #ffffff;
         }
 
         .btn-custom:hover {
             background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
             color: #ffffff;
         }
 
         /* ----- Main Content Sections ----- */
         section {
-            padding: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 4.5rem 0;
         }
 
         .section-title {
@@ -166,55 +167,153 @@
             width: 60px;
             height: 3px;
             background-color: var(--secondary-color);
-            margin: 10px auto 0;
+            margin: 15px auto 0;
         }
 
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
+        /* Utility Backgrounds */
+        .bg-grey { background-color: var(--bg-light); }
 
+        /* Journal Box */
         .journal-box {
-            background-color: var(--bg-light);
+            background-color: #ffffff;
             padding: 2.5rem;
             border-left: 5px solid var(--primary-color);
             border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
-        .journal-box h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
+        /* Notice Board */
+        .notice-board {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .notice-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            font-family: 'Merriweather', serif;
+            font-size: 1.2rem;
         }
 
-        /* ----- Footer ----- */
+        .notice-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .notice-list li {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.3s ease;
+        }
+
+        .notice-list li:hover {
+            background-color: var(--bg-light);
+        }
+
+        .notice-date {
+            font-size: 0.85rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Multimedia Video/Audio */
+        .media-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            height: 100%;
+        }
+
+        .ratio-16x9 iframe {
+            border-radius: 5px;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        /* Cards for Quick Notes */
+        .feature-card {
+            background: #fff;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Legals */
+        .legal-box {
+            border-left: 4px solid #ccc;
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Expanded Footer */
         footer {
             background-color: var(--primary-color);
             color: #ffffff;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 2rem;
+            padding: 4rem 0 2rem 0;
         }
 
-        footer p {
-            font-size: 0.9rem;
+        .footer-heading {
+            color: var(--secondary-color);
+            font-family: 'Merriweather', serif;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li { margin-bottom: 10px; }
+        
+        .footer-links a {
+            color: #ffffff;
+            text-decoration: none;
             opacity: 0.8;
-            margin-bottom: 0.5rem;
+            transition: opacity 0.3s ease;
         }
 
-        /* Responsive Design overrides */
-        @media (max-width: 768px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            .navbar-nav {
-                margin-top: 1rem;
-            }
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
         }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
     </style>
 </head>
 <body>
@@ -222,81 +321,33 @@
     <header>
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid nav-container">
-                
                 <a href="#" class="navbar-brand logo">ISSSA</a>
-                
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#isssaNav" aria-controls="isssaNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#isssaNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="collapse navbar-collapse justify-content-end" id="isssaNav">
                     <ul class="navbar-nav align-items-center gap-1">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#about">EC</a>
-                        </li>
-                        
+                        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">EC</a></li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Events
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Events</a>
+                            <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Upcoming Seminars</a></li>
                                 <li><a class="dropdown-item" href="#">Annual Conference</a></li>
-                                <li><a class="dropdown-item" href="#">Past Events</a></li>
                             </ul>
                         </li>
-
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="injasssDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                INJASSS
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="injasssDropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">INJASSS</a>
+                            <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#journal">Current Issue</a></li>
-                                <li><a class="dropdown-item" href="#">Archives</a></li>
                                 <li><a class="dropdown-item" href="#">Author Guidelines</a></li>
                                 <li><a class="dropdown-item" href="#">Submit Paper</a></li>
                             </ul>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Cooperations</a>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="awardsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Awards
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="awardsDropdown">
-                                <li><a class="dropdown-item" href="#">Young Scholar Award</a></li>
-                                <li><a class="dropdown-item" href="#">Lifetime Achievement</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="membershipDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Membership
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="membershipDropdown">
-                                <li><a class="dropdown-item" href="#">Join ISSSA</a></li>
-                                <li><a class="dropdown-item" href="#">Renew Membership</a></li>
-                                <li><a class="dropdown-item" href="#">Member Directory</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Photo Gallery</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contact Us</a>
-                        </li>
-
+                        <li class="nav-item"><a class="nav-link" href="#">Membership</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
                         <li class="nav-item ms-lg-2">
-                            <button class="search-btn" aria-label="Search">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </button>
+                            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </li>
                     </ul>
                 </div>
@@ -305,35 +356,207 @@
     </header>
 
     <div class="hero">
-        <h1>Advancing Global Perspectives in Social Science</h1>
-        <p>The International Social Sciences Studies Association is a premier academic body dedicated to fostering interdisciplinary research, scholarly excellence, and collaborative progress across the globe.</p>
-        <a href="#membership" class="btn-custom">Join the Association</a>
+        <div class="container">
+            <h1>Advancing Global Perspectives in Social Science</h1>
+            <p>The International Social Sciences Studies Association is a premier academic body dedicated to fostering interdisciplinary research, scholarly excellence, and collaborative progress.</p>
+            <a href="#membership" class="btn-custom mt-3">Join the Association</a>
+            <a href="#journal" class="btn-custom mt-3 ms-2" style="background:transparent; color:#fff;">Submit Research</a>
+        </div>
     </div>
 
-    <section id="about">
+    <section id="about" class="container">
         <h2 class="section-title">Academic Excellence & Research</h2>
-        <div class="grid-2">
-            <div class="about-text">
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-6 mb-4 mb-lg-0">
                 <h3>Our Mission</h3>
                 <p>ISSSA bridges the gap between diverse fields of social science, from geography and political science to economics and sociology. We provide a rigorous platform for established scholars and emerging researchers to debate, discover, and disseminate knowledge that shapes our understanding of human society.</p>
-                <br>
                 <p>Governed by an esteemed advisory council of leading professors, our association upholds the highest standards of peer-reviewed academic integrity.</p>
             </div>
-            
-            <div class="journal-box" id="journal">
-                <h3>Flagship Publication</h3>
-                <p><strong>INJASSS</strong> (Indian National Journal of Advanced Social Science Studies) is the official peer-reviewed journal of the ISSSA.</p>
-                <br>
-                <p>Publishing quarterly, INJASSS accepts high-quality empirical and theoretical papers across all branches of the social sciences. We are currently accepting submissions for our upcoming volume.</p>
-                <br>
-                <a href="journal.html" class="btn-custom" style="background-color: var(--primary-color); color: #fff;">Visit INJASSS Portal</a>
+            <div class="col-lg-6">
+                <div class="journal-box" id="journal">
+                    <h3>Flagship Publication</h3>
+                    <p><strong>INJASSS</strong> (Indian National Journal of Advanced Social Science Studies) is the official peer-reviewed journal of the ISSSA.</p>
+                    <p>Publishing quarterly, INJASSS accepts high-quality empirical and theoretical papers across all branches of the social sciences. We are currently accepting submissions for our upcoming volume.</p>
+                    <a href="journal.html" class="btn-custom" style="background-color: var(--primary-color); color: #fff;">Visit INJASSS Portal</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <p>&copy; 2026 International Social Sciences Studies Association (ISSSA). All Rights Reserved.</p>
-        <p>Headquartered in Varanasi, Uttar Pradesh, India</p>
+    <section id="notices" class="bg-grey">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="notice-board">
+                        <div class="notice-header">
+                            <i class="fa-solid fa-bell me-2"></i> Latest Notices & Updates
+                        </div>
+                        <ul class="notice-list">
+                            <li>
+                                <span class="notice-date">March 05, 2026</span>
+                                <a href="#" class="text-decoration-none text-dark fw-bold">Call for Papers: INJASSS Volume 1, Issue 1</a>
+                                <p class="mb-0 text-muted small mt-1">Submissions are now open for the inaugural issue. Deadline for abstract submission is April 15, 2026.</p>
+                            </li>
+                            <li>
+                                <span class="notice-date">February 28, 2026</span>
+                                <a href="#" class="text-decoration-none text-dark fw-bold">Upcoming National Seminar: Viksit Bharat @2047</a>
+                                <p class="mb-0 text-muted small mt-1">Join us for a discussion on the Contribution of Geography to Progress in Human Resource Development.</p>
+                            </li>
+                            <li>
+                                <span class="notice-date">February 15, 2026</span>
+                                <a href="#" class="text-decoration-none text-dark fw-bold">ISSSA Membership Portal Now Live</a>
+                                <p class="mb-0 text-muted small mt-1">Academics and students can now register for annual and lifetime memberships via our new digital portal.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="multimedia" class="container">
+        <h2 class="section-title">Seminars & Podcasts</h2>
+        <div class="row g-4">
+            <div class="col-lg-7">
+                <div class="media-container">
+                    <h4><i class="fa-solid fa-video text-danger me-2"></i> Featured Keynote</h4>
+                    <p class="text-muted small mb-3">Watch the inaugural address on the changing frontiers of geographical research.</p>
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="ISSSA Video Player" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="media-container">
+                    <h4><i class="fa-solid fa-podcast text-warning me-2"></i> ISSSA Audio Archives</h4>
+                    <p class="text-muted small mb-3">Listen to recorded paper presentations and panel discussions from our esteemed peer-review committee.</p>
+                    
+                    <div class="card mb-3 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-title fw-bold">Episode 1: The Role of GIS in Modern Planning</h6>
+                            <p class="card-text small text-muted">Guest: Prof. A. R. Siddiqui</p>
+                            <audio controls>
+                                <source src="#" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="card-title fw-bold">Episode 2: Economics of Sustainable Agriculture</h6>
+                            <p class="card-text small text-muted">Panel Discussion Recording</p>
+                            <audio controls>
+                                <source src="#" type="audio/mpeg">
+                            </audio>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="resources" class="bg-grey">
+        <div class="container">
+            <h2 class="section-title">Researcher Note-Ups</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fa-solid fa-book-open feature-icon"></i>
+                        <h4>Submission Guidelines</h4>
+                        <p class="text-muted small">Access comprehensive formatting guides (APA/MLA), plagiarism policies, and template downloads for INJASSS.</p>
+                        <a href="#" class="btn btn-outline-primary btn-sm mt-2">Read Guide</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fa-solid fa-file-pen feature-icon"></i>
+                        <h4>Write a Proposal</h4>
+                        <p class="text-muted small">Download frameworks for drafting strong research abstracts, concept notes, and seminar proposals.</p>
+                        <a href="#" class="btn btn-outline-primary btn-sm mt-2">Download Templates</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fa-solid fa-database feature-icon"></i>
+                        <h4>Data Archives</h4>
+                        <p class="text-muted small">Access open-source census data, spatial maps, and demographic surveys curated by our members.</p>
+                        <a href="#" class="btn btn-outline-primary btn-sm mt-2">Browse Data</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="legal" class="container">
+        <h2 class="section-title">Policies & Governance</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="legal-box">
+                    <h5>Society Registration</h5>
+                    <p class="small text-muted">The International Social Sciences Studies Association (ISSSA) operates in accordance with the regulations set forth for educational and research societies. It is headquartered in Varanasi, Uttar Pradesh, India.</p>
+                </div>
+                <div class="legal-box">
+                    <h5>Open Access Policy</h5>
+                    <p class="small text-muted">ISSSA is committed to the free dissemination of knowledge. All research articles published in INJASSS are available online to readers immediately upon publication without subscription barriers.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="legal-box">
+                    <h5>Peer Review Ethics</h5>
+                    <p class="small text-muted">We adhere strictly to a double-blind peer review process. All submitted manuscripts are evaluated by independent academic experts on our advisory board to ensure validity, significance, and originality.</p>
+                </div>
+                <div class="legal-box">
+                    <h5>Plagiarism & Originality</h5>
+                    <p class="small text-muted">ISSSA utilizes industry-standard similarity checking software. Manuscripts found to contain unoriginal content without proper citation will be immediately rejected and the authors barred from future submissions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <h3 class="logo text-white mb-3">ISSSA</h3>
+                    <p class="small opacity-75">Dedicated to the advancement, discourse, and publication of high-quality research across all spectrums of the social sciences.</p>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-3 fs-5"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="#" class="text-white me-3 fs-5"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="text-white fs-5"><i class="fa-brands fa-facebook"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-heading">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="#about">About ISSSA</a></li>
+                        <li><a href="#">Executive Committee</a></li>
+                        <li><a href="#journal">INJASSS Portal</a></li>
+                        <li><a href="#">Membership Info</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-heading">Contact Us</h5>
+                    <ul class="footer-links">
+                        <li class="small"><i class="fa-solid fa-location-dot me-2"></i> Varanasi, Uttar Pradesh, India</li>
+                        <li class="small"><i class="fa-solid fa-envelope me-2"></i> editor@injasss.org</li>
+                        <li class="small"><i class="fa-solid fa-phone me-2"></i> +91 (Insert Number)</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-heading">Newsletter</h5>
+                    <p class="small opacity-75">Subscribe to receive Call for Papers and seminar notifications.</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Email Address">
+                        <button class="btn" style="background-color: var(--secondary-color); color: white;" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 International Social Sciences Studies Association (ISSSA). All Rights Reserved.</p>
+                <p class="mb-0">Designed & Managed by Shaurya Digital Services</p>
+            </div>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
