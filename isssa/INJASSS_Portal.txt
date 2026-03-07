@@ -1,0 +1,5 @@
+Admin Portal ID: https://script.google.com/macros/s/AKfycbyklUOQ3j9YkEHzYXVRqBzG94yxHTlfxHmXwqxQUFMd3ig4x1PWfznuAIKcinda_qNC/exec?
+Author Portal CHeck:https://script.google.com/macros/s/AKfycbyklUOQ3j9YkEHzYXVRqBzG94yxHTlfxHmXwqxQUFMd3ig4x1PWfznuAIKcinda_qNC/exec?page=author
+Reviewer Portal: https://script.google.com/macros/s/AKfycbyklUOQ3j9YkEHzYXVRqBzG94yxHTlfxHmXwqxQUFMd3ig4x1PWfznuAIKcinda_qNC/exec?page=reviewer
+
+(Reviewer ID embedded in code.gs code)
