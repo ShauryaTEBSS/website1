@@ -1,8 +1,230 @@
-<html>
-  <head>
-    <title>Development in Progress</title>
-  </head>
-  <body>
-    <h1>Development in Progress</h1>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISSSA | International Social Sciences Studies Association</title>
+    <style>
+        /* Core Variables & Reset */
+        :root {
+            --primary-color: #002b5e; /* Deep Academic Navy */
+            --secondary-color: #f4a261; /* Subtle Accent */
+            --text-main: #333333;
+            --bg-light: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', system-ui, sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, .logo {
+            font-family: 'Merriweather', 'Times New Roman', serif; /* Academic Serif */
+            color: var(--primary-color);
+        }
+
+        /* Navigation */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .hero h1 {
+            color: #ffffff;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto 2rem auto;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: #ffffff;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            color: #ffffff;
+        }
+
+        /* Main Content Sections */
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary-color);
+            margin: 10px auto 0;
+        }
+
+        /* Flex Container for About & Journal */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .journal-box {
+            background-color: var(--bg-light);
+            padding: 2.5rem;
+            border-left: 5px solid var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .journal-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Add a hamburger menu JS script for mobile later */
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">ISSSA</a>
+            <ul class="nav-links">
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#journal">Publications (INJASSS)</a></li>
+                <li><a href="#membership">Membership</a></li>
+                <li><a href="#events">Conferences</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1>Advancing Global Perspectives in Social Science</h1>
+        <p>The International Social Sciences Studies Association is a premier academic body dedicated to fostering interdisciplinary research, scholarly excellence, and collaborative progress across the globe.</p>
+        <a href="#membership" class="btn">Join the Association</a>
+    </div>
+
+    <section id="about">
+        <h2 class="section-title">Academic Excellence & Research</h2>
+        <div class="grid-2">
+            <div class="about-text">
+                <h3>Our Mission</h3>
+                <p>ISSSA bridges the gap between diverse fields of social science, from geography and political science to economics and sociology. We provide a rigorous platform for established scholars and emerging researchers to debate, discover, and disseminate knowledge that shapes our understanding of human society.</p>
+                <br>
+                <p>Governed by an esteemed advisory council of leading professors, our association upholds the highest standards of peer-reviewed academic integrity.</p>
+            </div>
+            
+            <div class="journal-box" id="journal">
+                <h3>Flagship Publication</h3>
+                <p><strong>INJASSS</strong> (Indian National Journal of Advanced Social Science Studies) is the official peer-reviewed journal of the ISSSA.</p>
+                <br>
+                <p>Publishing quarterly, INJASSS accepts high-quality empirical and theoretical papers across all branches of the social sciences. We are currently accepting submissions for our upcoming volume.</p>
+                <br>
+                <a href="journal.html" class="btn" style="background-color: var(--primary-color); color: #fff;">Visit INJASSS Portal</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 International Social Sciences Studies Association (ISSSA). All Rights Reserved.</p>
+        <p>Headquartered in Varanasi, Uttar Pradesh, India</p>
+    </footer>
+
+</body>
 </html>
