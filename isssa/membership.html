@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership & Governance | ISSSA</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        /* Core Variables & Reset */
+        :root {
+            --primary-color: #002b5e; 
+            --secondary-color: #f4a261; 
+            --text-main: #333333;
+            --bg-light: #f8f9fa;
+            --border-color: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', system-ui, sans-serif; color: var(--text-main); line-height: 1.7; background-color: #ffffff; }
+        h1, h2, h3, h4, h5, .logo { font-family: 'Merriweather', 'Times New Roman', serif; color: var(--primary-color); }
+
+        /* Navigation Styles */
+        header { background-color: #ffffff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1050; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0.5rem 2rem; }
+        .logo { font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--primary-color) !important; }
+        .navbar-nav .nav-link { color: var(--text-main) !important; font-weight: 600; font-size: 15px; padding: 8px 16px !important; transition: color 0.3s ease; }
+        .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active { color: var(--primary-color) !important; }
+        .dropdown-menu { border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 4px; margin-top: 10px; }
+        .dropdown-item { padding: 10px 20px; font-size: 15px; color: var(--text-main); }
+        .dropdown-item:hover { background-color: var(--bg-light); color: var(--primary-color); font-weight: 600; }
+
+        /* Page Header */
+        .page-header {
+            background-color: var(--primary-color);
+            background-image: linear-gradient(rgba(0, 43, 94, 0.9), rgba(0, 43, 94, 0.9)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            color: #ffffff;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+        .page-header h1 { color: #ffffff; font-size: 2.8rem; margin-bottom: 0.5rem; }
+        .page-header p { font-size: 1.15rem; opacity: 0.9; max-width: 800px; margin: 0 auto; font-weight: 300; }
+
+        /* General Layout */
+        section { padding: 5rem 0; }
+        .bg-grey { background-color: var(--bg-light); }
+        .section-title { font-size: 2.2rem; margin-bottom: 3rem; text-align: center; color: var(--primary-color); position: relative; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 3px; background-color: var(--secondary-color); margin: 15px auto 0; }
+
+        /* Benefits Cards */
+        .benefit-card {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            height: 100%;
+            transition: transform 0.3s ease;
+            border-bottom: 4px solid var(--primary-color);
+            text-align: center;
+        }
+        .benefit-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .benefit-icon { font-size: 2.5rem; color: var(--secondary-color); margin-bottom: 1.5rem; }
+        .benefit-card h4 { font-size: 1.25rem; margin-bottom: 1rem; }
+        .benefit-card p { font-size: 0.95rem; color: #666; margin-bottom: 0; }
+
+        /* Pricing Tables */
+        .pricing-card {
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .pricing-card.featured { border: 2px solid var(--secondary-color); transform: scale(1.03); z-index: 10; position: relative; }
+        .pricing-header { padding: 2rem; text-align: center; background-color: var(--bg-light); border-bottom: 1px solid var(--border-color); }
+        .pricing-card.featured .pricing-header { background-color: var(--primary-color); color: white; border-bottom: none; }
+        .pricing-card.featured .pricing-header h3 { color: white; }
+        .pricing-price { font-size: 2.5rem; font-weight: bold; color: var(--primary-color); font-family: 'Merriweather', serif; }
+        .pricing-card.featured .pricing-price { color: var(--secondary-color); }
+        .pricing-features { padding: 2rem; list-style: none; margin: 0; flex-grow: 1; }
+        .pricing-features li { margin-bottom: 1rem; font-size: 0.95rem; color: #555; }
+        .pricing-features li i { color: var(--secondary-color); margin-right: 10px; width: 20px; text-align: center; }
+        .pricing-footer { padding: 2rem; text-align: center; background: #ffffff; border-top: 1px solid var(--bg-light); }
+
+        /* Governance Section */
+        .gov-block { display: flex; align-items: flex-start; margin-bottom: 2rem; }
+        .gov-icon { background-color: rgba(0, 43, 94, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary-color); flex-shrink: 0; margin-right: 1.5rem; }
+        .gov-content h4 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .gov-content p { color: #555; font-size: 1rem; }
+
+        /* Buttons */
+        .btn-custom { display: inline-block; padding: 0.8rem 2rem; background-color: var(--primary-color); color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 4px; transition: background-color 0.3s ease; border: none; width: 100%; }
+        .btn-custom:hover { background-color: var(--secondary-color); color: #ffffff; }
+        .btn-featured { background-color: var(--secondary-color); color: #ffffff; }
+        .btn-featured:hover { background-color: var(--primary-color); }
+
+        /* Footer */
+        footer { background-color: var(--primary-color); color: #ffffff; padding: 4rem 0 2rem 0; }
+        .footer-heading { color: var(--secondary-color); font-family: 'Merriweather', serif; margin-bottom: 1.5rem; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: #ffffff; text-decoration: none; opacity: 0.8; transition: opacity 0.3s ease; }
+        .footer-links a:hover { opacity: 1; text-decoration: underline; }
+        .footer-bottom { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.9rem; opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid nav-container">
+                <a href="index.html" class="navbar-brand logo">ISSSA</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#isssaNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="isssaNav">
+                    <ul class="navbar-nav align-items-center gap-1">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="ec.html">EC</a></li>
+                        <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">INJASSS</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="injasss.html">About the Journal</a></li>
+                                <li><a class="dropdown-item" href="guidelines.html">Author Guidelines</a></li>
+                                <li><a class="dropdown-item" href="submit.html">Submit Manuscript</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link active" href="membership.html">Membership</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Join the ISSSA Community</h1>
+            <p>Become a part of a premier academic society dedicated to the advancement of social sciences, geographical planning, and scholarly excellence.</p>
+        </div>
+    </div>
+
+    <section class="container">
+        <h2 class="section-title">Membership Opportunities</h2>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="benefit-card">
+                    <i class="fa-solid fa-book-open benefit-icon"></i>
+                    <h4>INJASSS Publishing</h4>
+                    <p>Enjoy priority desk-review processing and waivers on Article Processing Charges (APCs) when submitting research to our flagship journal.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="benefit-card">
+                    <i class="fa-solid fa-microphone-lines benefit-icon"></i>
+                    <h4>Event Discounts</h4>
+                    <p>Receive heavily discounted registration fees for all ISSSA-sponsored national seminars, workshops, and the Annual Academic Conference.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="benefit-card">
+                    <i class="fa-solid fa-check-to-slot benefit-icon"></i>
+                    <h4>Voting Rights</h4>
+                    <p>Life Members hold the right to vote in the triennial Executive Committee elections, shaping the future governance of the society.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="benefit-card">
+                    <i class="fa-solid fa-network-wired benefit-icon"></i>
+                    <h4>Global Networking</h4>
+                    <p>Connect with a prestigious network of professors, researchers, and policy-makers across various social science disciplines.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-grey">
+        <div class="container">
+            <h2 class="section-title">Membership Tiers</h2>
+            <div class="row align-items-center g-4 justify-content-center">
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3 class="mb-2">Student Scholar</h3>
+                            <p class="text-muted small mb-0">For Post-Graduates & PhD Scholars</p>
+                            <div class="pricing-price mt-3">₹1,500 <span class="fs-6 text-muted fw-normal">/ yr</span></div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fa-solid fa-check"></i> Digital Access to INJASSS Archives</li>
+                            <li><i class="fa-solid fa-check"></i> 50% discount on Seminar Registrations</li>
+                            <li><i class="fa-solid fa-check"></i> Eligibility for Young Researcher Awards</li>
+                            <li><i class="fa-solid fa-xmark text-danger"></i> No voting rights in EC Elections</li>
+                        </ul>
+                        <div class="pricing-footer">
+                            <a href="#" class="btn-custom btn-outline-primary border">Register as Student</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="pricing-card featured">
+                        <div class="pricing-header">
+                            <span class="badge bg-light text-dark mb-2 rounded-pill px-3 py-1">Highly Recommended</span>
+                            <h3 class="mb-2">Professional Life Member</h3>
+                            <p class="text-light small mb-0 opacity-75">For Professors & Academics</p>
+                            <div class="pricing-price mt-3">₹5,000 <span class="fs-6 text-light fw-normal">/ lifetime</span></div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fa-solid fa-check"></i> Lifetime Digital & Print Access to INJASSS</li>
+                            <li><i class="fa-solid fa-check"></i> Full Voting Rights in Society Elections</li>
+                            <li><i class="fa-solid fa-check"></i> Eligible to stand for Executive Committee</li>
+                            <li><i class="fa-solid fa-check"></i> Priority Peer-Review Pipeline</li>
+                            <li><i class="fa-solid fa-check"></i> Free entry to Annual Networking Mixers</li>
+                        </ul>
+                        <div class="pricing-footer">
+                            <a href="#" class="btn-custom btn-featured">Become a Life Member</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3 class="mb-2">Institutional Member</h3>
+                            <p class="text-muted small mb-0">For Universities & Libraries</p>
+                            <div class="pricing-price mt-3">₹15,000 <span class="fs-6 text-muted fw-normal">/ 5 yrs</span></div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fa-solid fa-check"></i> 5 Print Copies of every INJASSS issue</li>
+                            <li><i class="fa-solid fa-check"></i> Campus-wide IP-based Digital Access</li>
+                            <li><i class="fa-solid fa-check"></i> Logo placement in INJASSS Sponsors section</li>
+                            <li><i class="fa-solid fa-xmark text-danger"></i> No voting rights in EC Elections</li>
+                        </ul>
+                        <div class="pricing-footer">
+                            <a href="#" class="btn-custom btn-outline-primary border">Register Institution</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-5">
+                <h2 style="font-family: 'Merriweather', serif; color: var(--primary-color); font-size: 2.2rem; margin-bottom: 1.5rem;">Society Governance & Elections</h2>
+                <p class="lead text-muted mb-4">ISSSA is a democratically governed academic society. We believe in transparent leadership elected by the very academics who contribute to our community.</p>
+                <div class="p-4 bg-light border-start border-4 border-warning rounded">
+                    <h5 class="fw-bold mb-2"><i class="fa-solid fa-scale-balanced me-2 text-warning"></i> Next Election Cycle:</h5>
+                    <p class="mb-0 text-dark">The next triennial Executive Committee elections will be held at the General Body Meeting in <strong>December 2026</strong>.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-7">
+                <div class="gov-block">
+                    <div class="gov-icon"><i class="fa-solid fa-sitemap"></i></div>
+                    <div class="gov-content">
+                        <h4>The Executive Committee (EC)</h4>
+                        <p>The daily administration of the society and the INJASSS editorial board is managed by the EC, consisting of the President, Vice-President, Secretary, Treasurer, and four Joint Members.</p>
+                    </div>
+                </div>
+                <div class="gov-block">
+                    <div class="gov-icon"><i class="fa-solid fa-check-to-slot"></i></div>
+                    <div class="gov-content">
+                        <h4>Electoral College & Voting</h4>
+                        <p>Only registered "Professional Life Members" are eligible to vote. Voting is conducted via secret ballot during the triennial General Body Meeting. Proxy voting is strictly prohibited.</p>
+                    </div>
+                </div>
+                <div class="gov-block mb-0">
+                    <div class="gov-icon"><i class="fa-solid fa-user-tie"></i></div>
+                    <div class="gov-content">
+                        <h4>Standing for Office</h4>
+                        <p>Any Life Member who has been in good standing with the society for a minimum of 3 consecutive years is eligible to submit a nomination to run for a position on the Executive Committee.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-primary text-white text-center py-5">
+        <div class="container">
+            <h2 class="mb-4" style="font-family: 'Merriweather', serif;">Membership Guidelines & Conduct</h2>
+            <p class="mb-5 mx-auto" style="max-width: 800px; font-size: 1.1rem; opacity: 0.9;">All members are expected to uphold the highest standards of academic integrity. Membership may be revoked by a two-thirds majority vote of the EC if a member is found guilty of plagiarism, research fabrication, or conduct detrimental to the society's reputation.</p>
+            <a href="#" class="btn btn-outline-light btn-lg px-5 fw-bold rounded-pill">Download Society Constitution (PDF)</a>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <h3 class="logo text-white mb-3">ISSSA</h3>
+                    <p class="small opacity-75">Dedicated to the advancement, discourse, and publication of high-quality research across all spectrums of the social sciences.</p>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-heading">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">About ISSSA</a></li>
+                        <li><a href="ec.html">Executive Committee</a></li>
+                        <li><a href="events.html">Events & Seminars</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-heading">Contact Us</h5>
+                    <ul class="footer-links">
+                        <li class="small"><i class="fa-solid fa-location-dot me-2"></i> Varanasi, Uttar Pradesh, India</li>
+                        <li class="small"><i class="fa-solid fa-envelope me-2"></i> members@injasss.org</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-heading">Newsletter</h5>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Email Address">
+                        <button class="btn" style="background-color: var(--secondary-color); color: white;" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 International Social Sciences Studies Association (ISSSA). All Rights Reserved.</p>
+                <p class="mb-0">Designed & Managed by Shaurya Digital Services</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
