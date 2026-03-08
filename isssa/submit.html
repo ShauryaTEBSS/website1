@@ -135,20 +135,20 @@
         <div class="row justify-content-center">
             <div class="col-lg-9">
                 
-                <div class="form-wrapper">
+                <div class="form-wrapper" id="formContainer">
                     
                     <div id="statusAlert" class="alert d-none mt-3 mb-4" role="alert"></div>
 
                     <form id="injasssSubmitForm">
                         <div class="mb-4">
-            <label for="volumeIssue" class="form-label">Select Volume/Edition *</label>
-            <select class="form-select" id="volumeIssue" name="volumeIssue" required>
-                <option value="" selected disabled>Select the issue you are submitting to...</option>
-                <option value="Volume 1, Issue 1 (Current)">Volume 1, Issue 1 (Current)</option>
-                <option value="Volume 1, Issue 2">Volume 1, Issue 2</option>
-                <option value="Special Edition: Viksit Bharat @2047">Special Edition: Viksit Bharat @2047</option>
-            </select>
-        </div>
+                            <label for="volumeIssue" class="form-label">Select Volume/Edition *</label>
+                            <select class="form-select" id="volumeIssue" name="volumeIssue" required>
+                                <option value="" selected disabled>Select the issue you are submitting to...</option>
+                                <option value="Volume 1, Issue 1 (Current)">Volume 1, Issue 1 (Current)</option>
+                                <option value="Volume 1, Issue 2">Volume 1, Issue 2</option>
+                                <option value="Special Edition: Viksit Bharat @2047">Special Edition: Viksit Bharat @2047</option>
+                            </select>
+                        </div>
                         <h4 class="form-section-title"><i class="fa-solid fa-user-pen me-2"></i> Corresponding Author Details</h4>
                         <div class="row mb-3">
                             <div class="col-md-6 mb-3 mb-md-0">
@@ -208,7 +208,7 @@
                                 <strong>Click to select file</strong> or drag and drop<br>
                                 <span class="text-muted small">Only .doc or .docx formats accepted (Max 5MB).</span>
                             </label>
-                            <input class="form-control d-none" type="file" id="manuscriptFile" name="manuscriptFile" accept=".doc,.docx" required>
+                            <input class="form-control visually-hidden" type="file" id="manuscriptFile" name="manuscriptFile" accept=".doc,.docx" required>
                             <div id="fileNameDisplay" class="mt-2 text-success fw-bold small"></div>
                         </div>
 
@@ -232,24 +232,25 @@
                         </button>
                         
                     </form>
-
                 </div>
+                
                 <div class="form-wrapper d-none text-center py-5" id="successContainer">
-    <i class="fa-solid fa-circle-check text-success mb-3" style="font-size: 5rem;"></i>
-    <h2 style="color: var(--primary-color); font-family: 'Merriweather', serif;">Manuscript Submitted</h2>
-    <p class="text-muted mb-4">Your paper has been successfully securely uploaded to the INJASSS database.</p>
-    
-    <div class="p-4 bg-light border rounded mb-4 d-inline-block">
-        <span class="d-block text-muted small text-uppercase fw-bold mb-1">Your Official Tracking ID</span>
-        <span id="displayTrackingId" class="fw-bold fs-2 text-primary"></span>
-    </div>
+                    <i class="fa-solid fa-circle-check text-success mb-3" style="font-size: 5rem;"></i>
+                    <h2 style="color: var(--primary-color); font-family: 'Merriweather', serif;">Manuscript Submitted</h2>
+                    <p class="text-muted mb-4">Your paper has been successfully securely uploaded to the INJASSS database.</p>
+                    
+                    <div class="p-4 bg-light border rounded mb-4 d-inline-block">
+                        <span class="d-block text-muted small text-uppercase fw-bold mb-1">Your Official Tracking ID</span>
+                        <span id="displayTrackingId" class="fw-bold fs-2 text-primary"></span>
+                    </div>
 
-    <p class="small text-danger fw-bold"><i class="fa-solid fa-triangle-exclamation me-1"></i> Please copy and save this ID. You will need it to track your review status.</p>
-    
-    <div class="mt-4">
-        <a href="YOUR_APPS_SCRIPT_URL_HERE?page=author" class="btn btn-primary" style="background-color: var(--primary-color); padding: 10px 30px;">Go to Tracking Portal <i class="fa-solid fa-arrow-right ms-2"></i></a>
-    </div>
-</div>
+                    <p class="small text-danger fw-bold"><i class="fa-solid fa-triangle-exclamation me-1"></i> Please copy and save this ID. You will need it to track your review status.</p>
+                    
+                    <div class="mt-4">
+                        <a href="https://script.google.com/a/~/macros/s/AKfycbyklUOQ3j9YkEHzYXVRqBzG94yxHTlfxHmXwqxQUFMd3ig4x1PWfznuAIKcinda_qNC/exec?page=author" class="btn btn-primary" style="background-color: var(--primary-color); padding: 10px 30px;">Go to Tracking Portal <i class="fa-solid fa-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -304,28 +305,31 @@
         document.getElementById('injasssSubmitForm').addEventListener('submit', function(e) {
             e.preventDefault(); 
             
-            // UI Loading State
             const submitBtn = document.getElementById('submitBtn');
             const btnText = document.getElementById('btnText');
             const btnSpinner = document.getElementById('btnSpinner');
             const statusAlert = document.getElementById('statusAlert');
+            const fileInput = document.getElementById('manuscriptFile');
             
+            // Manual check just to be extra safe
+            if (!fileInput.files[0]) {
+                alert("Please attach your manuscript file.");
+                return;
+            }
+
             submitBtn.disabled = true;
             btnText.textContent = "Uploading... Please wait ";
             btnSpinner.classList.remove('d-none');
             statusAlert.classList.add('d-none');
 
-            const fileInput = document.getElementById('manuscriptFile');
             const file = fileInput.files[0];
-            
-            // File conversion to base64 for Google Apps Script
             const reader = new FileReader();
+            
             reader.onload = function(event) {
                 const base64Data = event.target.result.split(',')[1]; 
                 
-                // Construct Payload
                 const payload = {
-                    volumeIssue: document.getElementById('volumeIssue').value, // NEW FIELD
+                    volumeIssue: document.getElementById('volumeIssue').value, 
                     authorName: document.getElementById('authorName').value,
                     authorEmail: document.getElementById('authorEmail').value,
                     authorPhone: document.getElementById('authorPhone').value,
@@ -339,43 +343,33 @@
                     fileData: base64Data
                 };
 
-                // Live Google Apps Script Web App URL
                 const scriptURL = 'https://script.google.com/a/~/macros/s/AKfycbyklUOQ3j9YkEHzYXVRqBzG94yxHTlfxHmXwqxQUFMd3ig4x1PWfznuAIKcinda_qNC/exec'; 
                 
-                // Live Fetch Request to Apps Script
                 fetch(scriptURL, {
                     method: 'POST',
                     body: JSON.stringify(payload)
                 })
                 .then(response => response.json())
                 .then(data => {
-                    // Success UI updates
-                 if (data.status === "success") {
-                    // HIDE FORM, SHOW SUCCESS SCREEN
-                    document.getElementById('formContainer').classList.add('d-none');
-                    document.getElementById('successContainer').classList.remove('d-none');
-                    document.getElementById('displayTrackingId').textContent = data.id;
-                } else {
-                    throw new Error(data.message || "Unknown error occurred.");
-                }
+                    if (data.status === "success") {
+                        document.getElementById('formContainer').classList.add('d-none');
+                        document.getElementById('successContainer').classList.remove('d-none');
+                        document.getElementById('displayTrackingId').textContent = data.id;
+                    } else {
+                        throw new Error(data.message || "Unknown error occurred.");
+                    }
                 })
                 .catch(error => {
-                    // Error UI updates
                     statusAlert.className = "alert alert-danger mt-3 mb-4";
                     statusAlert.innerHTML = "<i class='fa-solid fa-triangle-exclamation me-2'></i>Submission failed. Please try again or contact the editor. Details: " + error.message;
                     console.error('Error!', error);
-                })
-                .finally(() => {
-                    // Reset Button
                     submitBtn.disabled = false;
                     btnText.textContent = "Submit Manuscript to INJASSS";
                     btnSpinner.classList.add('d-none');
                 });
             };
             
-            if(file) {
-                reader.readAsDataURL(file);
-            }
+            reader.readAsDataURL(file);
         });
     </script>
 </body>
