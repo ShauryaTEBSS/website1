@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author Guidelines | INJASSS</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        /* Core Variables & Reset */
+        :root {
+            --primary-color: #002b5e; 
+            --secondary-color: #f4a261; 
+            --text-main: #333333;
+            --bg-light: #f8f9fa;
+            --border-color: #e0e0e0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { font-family: 'Open Sans', system-ui, sans-serif; color: var(--text-main); line-height: 1.7; background-color: #ffffff; }
+        h1, h2, h3, h4, h5, .logo { font-family: 'Merriweather', 'Times New Roman', serif; color: var(--primary-color); }
+
+        /* Navigation Styles */
+        header { background-color: #ffffff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1050; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0.5rem 2rem; }
+        .logo { font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--primary-color) !important; }
+        .navbar-nav .nav-link { color: var(--text-main) !important; font-weight: 600; font-size: 15px; padding: 8px 16px !important; transition: color 0.3s ease; }
+        .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active { color: var(--primary-color) !important; }
+        .dropdown-menu { border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 4px; margin-top: 10px; }
+        .dropdown-item { padding: 10px 20px; font-size: 15px; color: var(--text-main); }
+        .dropdown-item:hover { background-color: var(--bg-light); color: var(--primary-color); font-weight: 600; }
+
+        /* Page Header */
+        .page-header {
+            background-color: var(--primary-color);
+            background-image: linear-gradient(rgba(0, 43, 94, 0.95), rgba(0, 43, 94, 0.95)), url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            color: #ffffff;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .page-header h1 { color: #ffffff; font-size: 2.8rem; margin-bottom: 0.5rem; }
+        .page-header p { font-size: 1.1rem; opacity: 0.9; max-width: 800px; margin: 0 auto; font-weight: 300; }
+
+        /* Sidebar Table of Contents */
+        .toc-sidebar {
+            position: sticky;
+            top: 100px;
+            background-color: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .toc-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 1rem; color: var(--primary-color); }
+        .toc-list { list-style: none; padding-left: 0; }
+        .toc-list li { margin-bottom: 0.5rem; }
+        .toc-list a { color: var(--text-main); text-decoration: none; font-size: 0.95rem; transition: color 0.2s; display: block; padding: 5px 0; border-bottom: 1px solid #eaeaea; }
+        .toc-list a:hover { color: var(--primary-color); font-weight: 600; padding-left: 5px; }
+        .toc-list a:last-child { border-bottom: none; }
+
+        /* Content Sections */
+        .content-section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        .content-section h2 { font-size: 1.8rem; color: var(--primary-color); margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--bg-light); }
+        .content-section h3 { font-size: 1.3rem; margin-top: 2rem; margin-bottom: 1rem; color: #444; }
+        .content-section p { font-size: 1.05rem; color: #555; margin-bottom: 1.2rem; }
+        .content-section ul, .content-section ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+        .content-section li { margin-bottom: 0.5rem; color: #555; }
+        
+        .guideline-box { background-color: #f0f4f8; border-left: 4px solid var(--primary-color); padding: 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .guideline-box h4 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .guideline-box p { margin-bottom: 0; font-size: 0.95rem; }
+
+        /* Buttons */
+        .btn-custom { display: inline-block; padding: 0.8rem 2.5rem; background-color: var(--primary-color); color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 4px; transition: background-color 0.3s ease; border: none; font-size: 1.1rem; }
+        .btn-custom:hover { background-color: var(--secondary-color); color: #ffffff; }
+        .btn-outline { border: 2px solid var(--primary-color); color: var(--primary-color); background: transparent; }
+        .btn-outline:hover { background-color: var(--primary-color); color: #ffffff; }
+
+        /* Footer */
+        footer { background-color: var(--primary-color); color: #ffffff; padding: 4rem 0 2rem 0; margin-top: 4rem;}
+        .footer-heading { color: var(--secondary-color); font-family: 'Merriweather', serif; margin-bottom: 1.5rem; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: #ffffff; text-decoration: none; opacity: 0.8; transition: opacity 0.3s ease; }
+        .footer-links a:hover { opacity: 1; text-decoration: underline; }
+        .footer-bottom { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.9rem; opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid nav-container">
+                <a href="index.html" class="navbar-brand logo">ISSSA</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#isssaNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="isssaNav">
+                    <ul class="navbar-nav align-items-center gap-1">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="ec.html">EC</a></li>
+                        <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown">INJASSS</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="injasss.html">About the Journal</a></li>
+                                <li><a class="dropdown-item active" href="guidelines.html">Author Guidelines</a></li>
+                                <li><a class="dropdown-item" href="submit.html">Submit Manuscript</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#">Membership</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Comprehensive Author Guidelines</h1>
+            <p>Ensure your manuscript meets the stringent formatting, ethical, and structural standards of INJASSS prior to submission.</p>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <div class="row g-5">
+            
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="toc-sidebar">
+                    <div class="toc-title"><i class="fa-solid fa-list-ul me-2"></i> Table of Contents</div>
+                    <ul class="toc-list">
+                        <li><a href="#sec-scope">1. Aims & Scope</a></li>
+                        <li><a href="#sec-types">2. Types of Manuscripts</a></li>
+                        <li><a href="#sec-formatting">3. General Formatting</a></li>
+                        <li><a href="#sec-structure">4. Manuscript Structure</a></li>
+                        <li><a href="#sec-citations">5. Citations & References</a></li>
+                        <li><a href="#sec-visuals">6. Tables & Figures</a></li>
+                        <li><a href="#sec-ethics">7. Ethical Policies</a></li>
+                        <li><a href="#sec-review">8. Peer Review Process</a></li>
+                    </ul>
+                    <div class="mt-4 pt-3 border-top text-center">
+                        <a href="submit.html" class="btn btn-sm btn-primary w-100" style="background-color: var(--primary-color);">Proceed to Submission</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                
+                <div class="content-section" id="sec-scope">
+                    <h2>1. Aims and Scope</h2>
+                    <p>The <strong>Indian National Journal of Advanced Social Science Studies (INJASSS)</strong>, published under the aegis of the International Social Sciences Studies Association (ISSSA), accepts high-quality, unpublished, and original research spanning the diverse domains of social sciences.</p>
+                    <p>We specifically encourage submissions addressing geographical spatial planning, human resource development, political governance, economic strategies, and socio-demographic shifts. Research that bridges the gap between theoretical frameworks and real-world policy application is highly favored.</p>
+                </div>
+
+                <div class="content-section" id="sec-types">
+                    <h2>2. Types of Manuscripts Accepted</h2>
+                    <p>Authors may submit their work under one of the following categories. Please indicate the category during the submission process:</p>
+                    <ul>
+                        <li><strong>Original Research Articles:</strong> Full-length empirical or theoretical papers presenting new data and findings. <em>(Length: 3,000 – 6,000 words)</em></li>
+                        <li><strong>Review Papers:</strong> Comprehensive, critical evaluations of existing literature on a specific, highly relevant social science topic. <em>(Length: 4,000 – 7,000 words)</em></li>
+                        <li><strong>Case Studies:</strong> In-depth analyses of specific regional phenomena, policy implementations, or institutional frameworks. <em>(Length: 2,500 – 4,000 words)</em></li>
+                        <li><strong>Short Communications:</strong> Brief reports outlining preliminary findings from ongoing large-scale research projects. <em>(Length: 1,500 – 2,500 words)</em></li>
+                    </ul>
+                    <div class="guideline-box">
+                        <h4><i class="fa-solid fa-circle-info"></i> Word Count Policy</h4>
+                        <p>The stated word limits are strictly inclusive of the abstract, main text, and footnotes. References and appendices are excluded from the final word count.</p>
+                    </div>
+                </div>
+
+                <div class="content-section" id="sec-formatting">
+                    <h2>3. General Formatting Requirements</h2>
+                    <p>To facilitate the editorial and peer-review process, all manuscripts must adhere to the following typographical and formatting guidelines. Failure to comply may result in immediate desk rejection.</p>
+                    <ul>
+                        <li><strong>File Format:</strong> Submissions must be uploaded as Microsoft Word documents (<code>.doc</code> or <code>.docx</code>). PDFs will not be accepted for the initial review stage.</li>
+                        <li><strong>Font & Size:</strong> The entire manuscript must be typed in <strong>Times New Roman, 12-point font</strong>.</li>
+                        <li><strong>Spacing:</strong> The text should be <strong>1.5 spaced</strong> throughout, including the abstract and references.</li>
+                        <li><strong>Margins:</strong> Maintain standard 1-inch (2.54 cm) margins on all sides of an A4 page layout.</li>
+                        <li><strong>Language:</strong> Manuscripts must be written in clear, grammatically correct US or UK English. Authors for whom English is a second language are strongly encouraged to utilize professional academic proofreading services prior to submission.</li>
+                    </ul>
+                </div>
+
+                <div class="content-section" id="sec-structure">
+                    <h2>4. Manuscript Structure</h2>
+                    <p>To guarantee the integrity of our Double-Blind Peer Review process, authors must structure their documents carefully to separate identifying information from the core research.</p>
+                    
+                    <h3>4.1. Anonymization (Crucial Step)</h3>
+                    <p>The manuscript file uploaded to our portal <strong>must not contain any author names, affiliations, or identifying metadata</strong>. Do not include a title page in the primary document. You will provide your author details exclusively through the digital forms on our submission portal.</p>
+
+                    <h3>4.2. Main Text Sequence</h3>
+                    <p>Your uploaded document should follow this sequence:</p>
+                    <ol>
+                        <li><strong>Title:</strong> Centered, bold, Title Case, maximum 15 words.</li>
+                        <li><strong>Abstract:</strong> A concise summary of the research background, methodology, results, and conclusion. Maximum 250 words. Do not use citations in the abstract.</li>
+                        <li><strong>Keywords:</strong> Provide 4 to 6 keywords separated by commas directly beneath the abstract.</li>
+                        <li><strong>Introduction:</strong> Establish the context, literature gap, and explicit objectives of the study.</li>
+                        <li><strong>Methodology:</strong> Detail the study area, data collection procedures, statistical tools, and analytical frameworks utilized.</li>
+                        <li><strong>Results & Discussion:</strong> Present findings logically. Discuss the implications of the results in relation to existing literature and the original hypothesis.</li>
+                        <li><strong>Conclusion:</strong> Summarize the key findings, limitations of the study, and recommendations for future research or policy.</li>
+                    </ol>
+                </div>
+
+                <div class="content-section" id="sec-citations">
+                    <h2>5. Citations and References</h2>
+                    <p>INJASSS utilizes standardized referencing formats to maintain academic uniformity. Authors may choose between <strong>APA (American Psychological Association, 7th Edition)</strong> or <strong>MLA (Modern Language Association, 9th Edition)</strong>. Whichever style is chosen must be applied consistently throughout the manuscript.</p>
+                    
+                    <div class="guideline-box">
+                        <h4>In-Text Citation Examples (APA)</h4>
+                        <p>Single Author: (Singh, 2025)<br>
+                           Two Authors: (Nag & Siddiqui, 2024)<br>
+                           Three or more: (Prasad et al., 2023)</p>
+                    </div>
+                    
+                    <p><strong>Reference List:</strong> Place the reference list at the end of the document. Entries should be alphabetized by the last name of the first author. Ensure that every in-text citation has a corresponding entry in the reference list, and vice versa. <strong>Include DOIs (Digital Object Identifiers) for all electronic journal articles where available.</strong></p>
+                </div>
+
+                <div class="content-section" id="sec-visuals">
+                    <h2>6. Tables, Figures, and Spatial Maps</h2>
+                    <p>Visual data representations are highly encouraged, particularly for geography and economics submissions. Follow these formatting rules:</p>
+                    <ul>
+                        <li><strong>Placement:</strong> Insert tables and figures directly into the text where they are first mentioned, rather than grouping them at the end of the document.</li>
+                        <li><strong>Numbering:</strong> Number all tables (e.g., Table 1) and figures (e.g., Figure 1) consecutively.</li>
+                        <li><strong>Captions:</strong> Table captions should be placed <em>above</em> the table. Figure/Map captions should be placed <em>below</em> the image.</li>
+                        <li><strong>Quality:</strong> Maps generated via GIS software and data charts must be high resolution (minimum 300 DPI). Ensure text within images is legible.</li>
+                        <li><strong>Sourcing:</strong> If secondary data is used to create a table or map, the exact source must be cited immediately below the visual element.</li>
+                    </ul>
+                </div>
+
+                <div class="content-section" id="sec-ethics">
+                    <h2>7. Ethical Policies & Plagiarism</h2>
+                    <p>ISSSA and the INJASSS Editorial Board are committed to upholding the highest standards of publication ethics, aligning with the guidelines set forth by the Committee on Publication Ethics (COPE).</p>
+                    
+                    <h3>7.1. Originality and Plagiarism</h3>
+                    <p>All submissions are subjected to automated similarity checks using industry-standard software (e.g., Turnitin/iThenticate). <strong>The maximum acceptable overall similarity index is 10%, with no more than 2% from any single source.</strong> Submissions exceeding this threshold will be desk-rejected.</p>
+                    
+                    <h3>7.2. Simultaneous Submission</h3>
+                    <p>Manuscripts must not be under consideration, accepted for publication, or already published elsewhere. Authors found engaging in simultaneous submission will face a permanent ban from the journal.</p>
+                    
+                    <h3>7.3. Authorship & Conflict of Interest</h3>
+                    <p>All listed authors must have made a significant intellectual contribution to the research. During submission, the corresponding author must declare any financial or personal relationships with other people or organizations that could inappropriately influence (bias) their work.</p>
+                </div>
+
+                <div class="content-section" id="sec-review">
+                    <h2>8. The Peer Review Process</h2>
+                    <p>We pride ourselves on a rigorous, transparent, and constructive evaluation process.</p>
+                    <ol>
+                        <li><strong>Initial Desk Review (7-10 Days):</strong> The Editorial Secretary checks the manuscript for alignment with the journal's scope, formatting compliance, and plagiarism.</li>
+                        <li><strong>Double-Blind Peer Review (4-6 Weeks):</strong> Qualifying manuscripts are anonymized and assigned to at least two independent subject-matter experts from our Advisory Council (e.g., Prof. P. Nag, Prof. A. R. Siddiqui).</li>
+                        <li><strong>Editorial Decision:</strong> Based on the reviewers' feedback, the Editor will issue one of four decisions: <em>Accept, Minor Revisions, Major Revisions, or Reject</em>.</li>
+                        <li><strong>Author Tracking:</strong> Authors can view their real-time status and download secure reviewer feedback via the INJASSS Author Tracking Portal using their unique Tracking ID.</li>
+                    </ol>
+                </div>
+
+                <div class="text-center py-5 border-top mt-5">
+                    <h3 class="mb-4" style="font-family: 'Merriweather', serif; color: var(--primary-color);">Ready to Submit?</h3>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="#" class="btn-custom btn-outline"><i class="fa-solid fa-file-word me-2"></i> Download MS Word Template</a>
+                        <a href="submit.html" class="btn-custom">Proceed to Submission Portal <i class="fa-solid fa-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <h3 class="logo text-white mb-3">ISSSA</h3>
+                    <p class="small opacity-75">Dedicated to the advancement, discourse, and publication of high-quality research across all spectrums of the social sciences.</p>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-heading">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">About ISSSA</a></li>
+                        <li><a href="ec.html">Executive Committee</a></li>
+                        <li><a href="events.html">Events & Seminars</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-heading">Contact Us</h5>
+                    <ul class="footer-links">
+                        <li class="small"><i class="fa-solid fa-location-dot me-2"></i> Varanasi, Uttar Pradesh, India</li>
+                        <li class="small"><i class="fa-solid fa-envelope me-2"></i> editor@injasss.org</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-heading">Newsletter</h5>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Email Address">
+                        <button class="btn" style="background-color: var(--secondary-color); color: white;" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 International Social Sciences Studies Association (ISSSA). All Rights Reserved.</p>
+                <p class="mb-0">Designed & Managed by Shaurya Digital Services</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
