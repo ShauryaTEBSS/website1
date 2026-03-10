@@ -205,6 +205,12 @@
                             <button class="btn btn-outline-primary btn-sm w-100 mb-2 fw-bold text-start" onclick="generateReceipt()">
                                 <i class="fa-solid fa-file-invoice-dollar me-2 text-center" style="width: 20px;"></i> Fee Receipt (Tax)
                             </button>
+                            
+                            <div id="assignedDocsContainer" class="mt-3 pt-3 border-top d-none">
+                                <h6 class="fw-bold mb-2 text-muted small text-uppercase">Assigned Records</h6>
+                                <div id="dynamicVaultList"></div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -394,7 +400,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let currentUser = {};
-        let fullDirectory = []; // Stores members for search filter
+        let fullDirectory = []; 
 
         document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
@@ -458,6 +464,23 @@
             document.getElementById('editName').value = userData.name;
             document.getElementById('editInst').value = userData.institution;
             
+            // --- NEW: RENDER ASSIGNED DOCUMENTS ---
+            const vaultList = document.getElementById('dynamicVaultList');
+            const docsContainer = document.getElementById('assignedDocsContainer');
+            
+            if(userData.assignedDocs && userData.assignedDocs.length > 0) {
+                docsContainer.classList.remove('d-none');
+                vaultList.innerHTML = '';
+                userData.assignedDocs.forEach(doc => {
+                    vaultList.innerHTML += `
+                        <a href="${doc.url}" target="_blank" class="btn btn-outline-success btn-sm w-100 mb-2 text-start">
+                            <i class="fa-solid fa-link me-2" style="width: 20px;"></i> ${doc.title}
+                        </a>`;
+                });
+            } else {
+                docsContainer.classList.add('d-none');
+            }
+
             if(userData.status.includes('Pending')) {
                 document.getElementById('cardStatus').textContent = "Pending Verification";
                 document.getElementById('cardStatus').className = "badge bg-warning text-dark border border-dark";
@@ -476,7 +499,7 @@
 
             const voteBox = document.getElementById('votingStatus');
             if (userData.tier.includes('Life')) {
-                voteBox.innerHTML = '<span class="text-success"><i class="fa-solid fa-circle-check me-1"></i> Eligible to Vote</span>';
+                voteBox.innerHTML = '<span class="text-success"><i class="fa-solid fa-circle-check me-1"></i> Eligible to Vote in 2026</span>';
                 voteBox.className = "p-2 bg-success bg-opacity-10 rounded text-center small fw-bold mt-auto border border-success";
             } else {
                 voteBox.innerHTML = '<span class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i> Non-Voting Member</span>';
@@ -494,17 +517,16 @@
 
         function logout() { window.location.reload(); }
 
-        // --- TRACK MANUSCRIPT ---
         function quickTrack() {
             const idInput = document.getElementById('quickTrackId').value;
             if(!idInput) return alert("Please enter the Tracking ID.");
             let formattedId = idInput.toUpperCase();
             if(!formattedId.includes("INJASSS")) formattedId = `INJASSS-2026-${formattedId.padStart(3, '0')}`;
+            
             alert(`To protect peer-reviewer feedback, the system requires email verification for ${formattedId}.\n\nRedirecting to main Tracking Portal...`);
             window.location.href = "authorportal.html"; 
         }
 
-        // --- CITATION BUILDER ---
         function buildCitation() {
             const title = document.getElementById('citeTitle').value || "Untitled Paper";
             const year = document.getElementById('citeYear').value || "2026";
@@ -517,7 +539,6 @@
             document.getElementById('citationResults').classList.remove('d-none');
         }
 
-        // --- LIVE PROFILE UPDATER ---
         function saveProfile() {
             const btn = document.getElementById('saveProfileBtn');
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Saving...';
@@ -548,7 +569,6 @@
             }).catch(err => { alert("Save error: " + err.message); btn.innerHTML = 'Save Changes'; btn.disabled = false; });
         }
 
-        // --- LIVE DIRECTORY FETCH ---
         function loadDirectory() {
             const dirContainer = document.getElementById('directoryList');
             dirContainer.innerHTML = '<div class="text-center py-4 text-muted"><i class="fa-solid fa-spinner fa-spin mb-2 fs-3"></i><br>Connecting to ISSSA Registry...</div>';
@@ -585,7 +605,6 @@
             renderDirectory(filtered);
         }
 
-        // --- PRINTABLE DOCUMENTS ---
         function generateCertificate() {
             document.getElementById('printContent').innerHTML = `
                 <div class="cert-body shadow-lg">
@@ -615,7 +634,7 @@
                     <div style="margin-bottom: 40px;"><h5 style="color: #555;">Received From:</h5><p style="margin: 0; font-size: 1.2rem;"><strong>${currentUser.name}</strong></p><p style="margin: 0;">${currentUser.institution}</p><p style="margin: 0;">Member ID: ${currentUser.id}</p></div>
                     <table style="width: 100%; border-collapse: collapse; margin-bottom: 40px;">
                         <tr style="background-color: #002b5e; color: white; text-align: left;"><th style="padding: 10px;">Description</th><th style="padding: 10px; text-align: right;">Amount (INR)</th></tr>
-                        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 15px 10px;">ISSSA ${currentUser.tier} Membership Subscription</td><td style="padding: 15px 10px; text-align: right;">₹${amount}.00</td></tr>
+                        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 15px 10px;">ISSSA ${currentUser.tier} Membership Subscription Dues</td><td style="padding: 15px 10px; text-align: right;">₹${amount}.00</td></tr>
                         <tr><td style="padding: 15px 10px; text-align: right; font-weight: bold;">Total Paid:</td><td style="padding: 15px 10px; text-align: right; font-weight: bold; font-size: 1.2rem;">₹${amount}.00</td></tr>
                     </table>
                     <div style="text-align: center; color: #777; font-size: 0.9rem; border-top: 1px solid #eee; padding-top: 20px;"><p>This is a computer-generated receipt.</p></div>
