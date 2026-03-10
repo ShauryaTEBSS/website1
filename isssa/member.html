@@ -67,7 +67,7 @@
 
         /* --- Analytics Bar --- */
         .progress-slim { height: 6px; border-radius: 3px; background-color: var(--border-color); overflow: hidden; margin-top: 8px;}
-        .progress-slim .progress-bar { background-color: var(--secondary-color); width: 20%;}
+        .progress-slim .progress-bar { background-color: var(--secondary-color); transition: width 1s ease-in-out;}
 
         /* --- Buttons --- */
         .btn-custom { display: inline-block; padding: 0.6rem 1.5rem; background-color: #002b5e; color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 6px; transition: 0.3s; border: none; }
@@ -86,7 +86,6 @@
             .modal-footer, .btn-close { display: none !important; }
         }
         
-        /* Certificate Styling */
         .cert-body { border: 10px solid #002b5e; padding: 40px; text-align: center; background: white; position: relative; }
         .cert-body::after { content: ''; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; border: 2px solid #f4a261; pointer-events: none;}
         .cert-title { font-family: 'Merriweather', serif; font-size: 2.5rem; color: #002b5e; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;}
@@ -147,7 +146,6 @@
         </nav>
 
         <div class="container py-4 py-md-5">
-            
             <div class="d-flex justify-content-between align-items-end mb-4">
                 <div>
                     <p class="text-muted mb-0 small text-uppercase fw-bold"><span id="currentDate"></span></p>
@@ -161,7 +159,6 @@
             </div>
 
             <div class="row g-4">
-                
                 <div class="col-lg-4">
                     <div class="id-card mb-4 shadow">
                         <div class="id-card-header">
@@ -190,12 +187,12 @@
                         <h6 class="fw-bold mb-3 border-bottom pb-2"><i class="fa-solid fa-chart-simple me-2 text-primary"></i> Academic Footprint</h6>
                         <div class="d-flex justify-content-between small fw-bold mb-1">
                             <span class="text-muted">INJASSS Publications</span>
-                            <span class="text-primary">1 / 5</span>
+                            <span class="text-primary" id="pubCountText">0 / 5</span>
                         </div>
-                        <div class="progress-slim mb-3"><div class="progress-bar w-20"></div></div>
+                        <div class="progress-slim mb-3"><div class="progress-bar w-0" id="pubProgressBar"></div></div>
                         <div class="d-flex justify-content-between small fw-bold mb-1">
                             <span class="text-muted">Peer Reviews Completed</span>
-                            <span class="text-success">0</span>
+                            <span class="text-success">N/A</span>
                         </div>
                     </div>
 
@@ -207,9 +204,6 @@
                             </button>
                             <button class="btn btn-outline-primary btn-sm w-100 mb-2 fw-bold text-start" onclick="generateReceipt()">
                                 <i class="fa-solid fa-file-invoice-dollar me-2 text-center" style="width: 20px;"></i> Fee Receipt (Tax)
-                            </button>
-                            <button class="btn btn-outline-secondary btn-sm w-100 fw-bold text-start" onclick="alert('No seminar attendance records found for this academic year.')">
-                                <i class="fa-solid fa-award me-2 text-center" style="width: 20px;"></i> Seminar Certificates
                             </button>
                         </div>
                     </div>
@@ -277,7 +271,7 @@
                         </div>
 
                         <div class="col-md-6 col-xl-4">
-                            <div class="card-custom action-card text-center" data-bs-toggle="modal" data-bs-target="#directoryModal">
+                            <div class="card-custom action-card text-center" data-bs-toggle="modal" data-bs-target="#directoryModal" onclick="loadDirectory()">
                                 <div class="action-icon mx-auto"><i class="fa-solid fa-network-wired"></i></div>
                                 <h4>Member Directory</h4>
                                 <p class="text-muted small">Connect and collaborate with other verified ISSSA academics nationwide.</p>
@@ -336,27 +330,16 @@
     </div>
 
     <div class="modal fade" id="directoryModal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content" style="background-color: var(--card-bg);">
                 <div class="modal-header bg-light">
                     <h5 class="modal-title brand"><i class="fa-solid fa-network-wired me-2"></i> Verified Members</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <input type="text" class="form-control mb-3" placeholder="Search by name or institution..." onkeyup="alert('Global search API connecting in v2.0')">
-                    <div class="list-group">
-                        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                            <div><strong>Prof. P. Nag</strong><br><span class="small text-muted">Banaras Hindu University</span></div>
-                            <span class="badge bg-primary rounded-pill">Senior Advisory</span>
-                        </div>
-                        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                            <div><strong>Prof. A. R. Siddiqui</strong><br><span class="small text-muted">Allahabad University</span></div>
-                            <span class="badge bg-success rounded-pill">Life Member</span>
-                        </div>
-                        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                            <div><strong>Shaurya Singh</strong><br><span class="small text-muted">INJASSS Editorial Tech Desk</span></div>
-                            <span class="badge bg-warning text-dark rounded-pill">Admin</span>
-                        </div>
+                    <input type="text" id="dirSearch" class="form-control mb-3" placeholder="Search by name or institution..." onkeyup="filterDirectory()">
+                    <div class="list-group" id="directoryList">
+                        <div class="text-center py-4 text-muted"><i class="fa-solid fa-spinner fa-spin mb-2 fs-3"></i><br>Connecting to ISSSA Registry...</div>
                     </div>
                 </div>
             </div>
@@ -405,30 +388,25 @@
     </div>
 
     <div id="printContainer" class="d-none bg-white w-100 h-100" style="color: black !important;">
-        <div class="container py-5" id="printContent">
-            </div>
+        <div class="container py-5" id="printContent"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Store user globally for the new tools
         let currentUser = {};
+        let fullDirectory = []; // Stores members for search filter
 
-        // Display Current Date
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-        // Dark Mode Toggle Logic
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             localStorage.setItem('isssaDarkMode', document.body.classList.contains('dark-mode'));
         }
         if(localStorage.getItem('isssaDarkMode') === 'true') document.body.classList.add('dark-mode');
 
-        // Use your actual Web App URL
         const SCRIPT_URL = 'https://script.google.com/a/~/macros/s/AKfycbwMrD4BLDk_qZRqz_NqlDwb7K5i67JsWhpHay7vEbqxf9GfafkconJv5TuiBwVEFTAE/exec';
 
-        // --- Authentication ---
+        // --- AUTH & LOGIN ---
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             document.getElementById('loginBtn').disabled = true;
@@ -436,13 +414,10 @@
             document.getElementById('loginSpinner').classList.remove('d-none');
             document.getElementById('loginAlert').classList.add('d-none');
 
-            const payload = {
-                formType: "memberLogin",
-                email: document.getElementById('loginEmail').value,
-                password: document.getElementById('loginPass').value
-            };
-
-            fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ formType: "memberLogin", email: document.getElementById('loginEmail').value, password: document.getElementById('loginPass').value })
+            })
             .then(res => res.json())
             .then(data => {
                 if(data.success) {
@@ -463,7 +438,7 @@
         });
 
         function handleLoginSuccess(userData) {
-            currentUser = userData; // Save for Modals
+            currentUser = userData; 
             
             document.getElementById('navName').textContent = userData.name;
             document.getElementById('welcomeName').textContent = userData.name.split(' ')[0]; 
@@ -473,21 +448,26 @@
             document.getElementById('cardInst').textContent = userData.institution;
             document.getElementById('cardBarcode').textContent = "*" + userData.id + "*";
             
-            // Pre-fill Profile Edit Modal
+            // Dynamic Analytics Integration
+            let pubText = userData.publications >= 5 ? "5+ (Elite)" : `${userData.publications} / 5`;
+            document.getElementById('pubCountText').textContent = pubText;
+            let pubPercent = (userData.publications / 5) * 100;
+            if(pubPercent > 100) pubPercent = 100;
+            document.getElementById('pubProgressBar').style.width = pubPercent + "%";
+            
             document.getElementById('editName').value = userData.name;
             document.getElementById('editInst').value = userData.institution;
             
-            const statusBadge = document.getElementById('cardStatus');
             if(userData.status.includes('Pending')) {
-                statusBadge.textContent = "Pending Verification";
-                statusBadge.className = "badge bg-warning text-dark border border-dark";
+                document.getElementById('cardStatus').textContent = "Pending Verification";
+                document.getElementById('cardStatus').className = "badge bg-warning text-dark border border-dark";
                 document.getElementById('pendingAlert').classList.remove('d-none');
                 document.getElementById('announcementBar').classList.add('d-none');
                 document.getElementById('featuresGrid').classList.add('blur-overlay');
                 document.getElementById('sideFeatures').classList.add('blur-overlay');
             } else {
-                statusBadge.textContent = "Active Member";
-                statusBadge.className = "badge bg-success border border-light";
+                document.getElementById('cardStatus').textContent = "Active Member";
+                document.getElementById('cardStatus').className = "badge bg-success border border-light";
                 document.getElementById('pendingAlert').classList.add('d-none');
                 document.getElementById('announcementBar').classList.remove('d-none');
                 document.getElementById('featuresGrid').classList.remove('blur-overlay');
@@ -496,7 +476,7 @@
 
             const voteBox = document.getElementById('votingStatus');
             if (userData.tier.includes('Life')) {
-                voteBox.innerHTML = '<span class="text-success"><i class="fa-solid fa-circle-check me-1"></i> Eligible to Vote in 2026</span>';
+                voteBox.innerHTML = '<span class="text-success"><i class="fa-solid fa-circle-check me-1"></i> Eligible to Vote</span>';
                 voteBox.className = "p-2 bg-success bg-opacity-10 rounded text-center small fw-bold mt-auto border border-success";
             } else {
                 voteBox.innerHTML = '<span class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i> Non-Voting Member</span>';
@@ -512,26 +492,22 @@
             document.getElementById('loginSpinner').classList.add('d-none');
         }
 
-        function logout() {
-            window.location.reload(); // Hard reset for security
-        }
+        function logout() { window.location.reload(); }
 
+        // --- TRACK MANUSCRIPT ---
         function quickTrack() {
             const idInput = document.getElementById('quickTrackId').value;
             if(!idInput) return alert("Please enter the Tracking ID.");
             let formattedId = idInput.toUpperCase();
             if(!formattedId.includes("INJASSS")) formattedId = `INJASSS-2026-${formattedId.padStart(3, '0')}`;
-            
             alert(`To protect peer-reviewer feedback, the system requires email verification for ${formattedId}.\n\nRedirecting to main Tracking Portal...`);
             window.location.href = "authorportal.html"; 
         }
 
-        // --- NEW MODAL LOGIC ---
-        
+        // --- CITATION BUILDER ---
         function buildCitation() {
             const title = document.getElementById('citeTitle').value || "Untitled Paper";
             const year = document.getElementById('citeYear').value || "2026";
-            // Get last name for citation
             const nameParts = currentUser.name.split(' ');
             const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : currentUser.name;
             const initial = nameParts[0].charAt(0);
@@ -541,30 +517,77 @@
             document.getElementById('citationResults').classList.remove('d-none');
         }
 
+        // --- LIVE PROFILE UPDATER ---
         function saveProfile() {
             const btn = document.getElementById('saveProfileBtn');
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Saving...';
-            setTimeout(() => {
-                currentUser.name = document.getElementById('editName').value;
-                currentUser.institution = document.getElementById('editInst').value;
-                
-                // Update UI instantly
-                document.getElementById('navName').textContent = currentUser.name;
-                document.getElementById('welcomeName').textContent = currentUser.name.split(' ')[0];
-                document.getElementById('cardName').textContent = currentUser.name;
-                document.getElementById('cardInst').textContent = currentUser.institution;
-                
-                btn.innerHTML = '<i class="fa-solid fa-check me-2"></i> Saved';
-                btn.classList.replace('btn-success', 'btn-primary');
-                setTimeout(() => { bootstrap.Modal.getInstance(document.getElementById('profileModal')).hide(); btn.innerHTML = '<i class="fa-solid fa-floppy-disk me-2"></i> Save Changes'; btn.classList.replace('btn-primary', 'btn-success'); }, 1000);
-            }, 1000);
+            btn.disabled = true;
+
+            const newName = document.getElementById('editName').value;
+            const newInst = document.getElementById('editInst').value;
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ formType: "updateProfile", memberId: currentUser.id, name: newName, institution: newInst })
+            }).then(res => res.json()).then(data => {
+                if(data.success) {
+                    currentUser.name = newName; currentUser.institution = newInst;
+                    document.getElementById('navName').textContent = newName;
+                    document.getElementById('welcomeName').textContent = newName.split(' ')[0];
+                    document.getElementById('cardName').textContent = newName;
+                    document.getElementById('cardInst').textContent = newInst;
+                    
+                    btn.innerHTML = '<i class="fa-solid fa-check me-2"></i> Saved';
+                    btn.classList.replace('btn-success', 'btn-primary');
+                    setTimeout(() => { 
+                        bootstrap.Modal.getInstance(document.getElementById('profileModal')).hide(); 
+                        btn.innerHTML = '<i class="fa-solid fa-floppy-disk me-2"></i> Save Changes'; 
+                        btn.classList.replace('btn-primary', 'btn-success'); btn.disabled = false;
+                    }, 1000);
+                } else { throw new Error("Database failed to update."); }
+            }).catch(err => { alert("Save error: " + err.message); btn.innerHTML = 'Save Changes'; btn.disabled = false; });
         }
 
-        // --- PRINTABLE DOCUMENTS LOGIC ---
-        
+        // --- LIVE DIRECTORY FETCH ---
+        function loadDirectory() {
+            const dirContainer = document.getElementById('directoryList');
+            dirContainer.innerHTML = '<div class="text-center py-4 text-muted"><i class="fa-solid fa-spinner fa-spin mb-2 fs-3"></i><br>Connecting to ISSSA Registry...</div>';
+            
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ formType: "getDirectory" })
+            }).then(res => res.json()).then(data => {
+                if(data.success) {
+                    fullDirectory = data.directory;
+                    renderDirectory(fullDirectory);
+                }
+            }).catch(err => { dirContainer.innerHTML = `<div class="text-danger p-3">Error loading directory.</div>`; });
+        }
+
+        function renderDirectory(arr) {
+            const dirContainer = document.getElementById('directoryList');
+            dirContainer.innerHTML = '';
+            if(arr.length === 0) { dirContainer.innerHTML = '<div class="p-3 text-muted">No matching members found.</div>'; return; }
+            
+            arr.forEach(m => {
+                let badgeColor = m.tier.includes('Life') ? 'bg-success' : 'bg-primary';
+                dirContainer.innerHTML += `
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div><strong>${m.name}</strong><br><span class="small text-muted">${m.institution}</span></div>
+                        <span class="badge ${badgeColor} rounded-pill">${m.tier}</span>
+                    </div>`;
+            });
+        }
+
+        function filterDirectory() {
+            const term = document.getElementById('dirSearch').value.toLowerCase();
+            const filtered = fullDirectory.filter(m => m.name.toLowerCase().includes(term) || m.institution.toLowerCase().includes(term));
+            renderDirectory(filtered);
+        }
+
+        // --- PRINTABLE DOCUMENTS ---
         function generateCertificate() {
-            const printBox = document.getElementById('printContent');
-            printBox.innerHTML = `
+            document.getElementById('printContent').innerHTML = `
                 <div class="cert-body shadow-lg">
                     <h1 class="cert-title">International Social Sciences Studies Association</h1>
                     <h3 style="color: #f4a261; font-family: 'Merriweather', serif; letter-spacing: 2px;">CERTIFICATE OF MEMBERSHIP</h3>
@@ -573,66 +596,34 @@
                     <p style="font-size: 1.2rem; color: #555;">from <strong>${currentUser.institution}</strong></p>
                     <p style="font-size: 1.1rem; color: #555;">is a registered and verified <strong>${currentUser.tier} Member</strong> of ISSSA.</p>
                     <p style="margin-top: 30px; font-family: monospace; font-size: 1.2rem;">Official Registration ID: <strong style="color: #002b5e;">${currentUser.id}</strong></p>
-                    
                     <div style="margin-top: 60px; display: flex; justify-content: space-around;">
                         <div style="border-top: 1px solid #333; width: 200px; padding-top: 10px;">Date of Issue: ${new Date().toLocaleDateString()}</div>
                         <div style="border-top: 1px solid #333; width: 200px; padding-top: 10px;">President, ISSSA</div>
                     </div>
-                </div>
-            `;
+                </div>`;
             triggerPrint();
         }
 
         function generateReceipt() {
             let amount = currentUser.tier.includes('Life') ? "5,000" : (currentUser.tier.includes('Inst') ? "15,000" : "1,500");
-            const printBox = document.getElementById('printContent');
-            printBox.innerHTML = `
+            document.getElementById('printContent').innerHTML = `
                 <div style="max-width: 800px; margin: 0 auto; border: 1px solid #ccc; padding: 40px; background: white;">
                     <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #002b5e; padding-bottom: 20px; margin-bottom: 30px;">
-                        <div>
-                            <h2 style="color: #002b5e; margin: 0; font-family: 'Merriweather', serif;">ISSSA TREASURY</h2>
-                            <p style="margin: 0; color: #666;">Varanasi, Uttar Pradesh, India</p>
-                        </div>
-                        <div style="text-align: right;">
-                            <h1 style="margin: 0; color: #f4a261;">RECEIPT</h1>
-                            <p style="margin: 0; font-weight: bold;">Date: ${new Date().toLocaleDateString()}</p>
-                            <p style="margin: 0;">Receipt No: REC-${currentUser.id.split('-')[2]}</p>
-                        </div>
+                        <div><h2 style="color: #002b5e; margin: 0; font-family: 'Merriweather', serif;">ISSSA TREASURY</h2><p style="margin: 0; color: #666;">Varanasi, Uttar Pradesh, India</p></div>
+                        <div style="text-align: right;"><h1 style="margin: 0; color: #f4a261;">RECEIPT</h1><p style="margin: 0; font-weight: bold;">Date: ${new Date().toLocaleDateString()}</p><p style="margin: 0;">Receipt No: REC-${currentUser.id.split('-')[2]}</p></div>
                     </div>
-                    
-                    <div style="margin-bottom: 40px;">
-                        <h5 style="color: #555;">Received From:</h5>
-                        <p style="margin: 0; font-size: 1.2rem;"><strong>${currentUser.name}</strong></p>
-                        <p style="margin: 0;">${currentUser.institution}</p>
-                        <p style="margin: 0;">Member ID: ${currentUser.id}</p>
-                    </div>
-
+                    <div style="margin-bottom: 40px;"><h5 style="color: #555;">Received From:</h5><p style="margin: 0; font-size: 1.2rem;"><strong>${currentUser.name}</strong></p><p style="margin: 0;">${currentUser.institution}</p><p style="margin: 0;">Member ID: ${currentUser.id}</p></div>
                     <table style="width: 100%; border-collapse: collapse; margin-bottom: 40px;">
-                        <tr style="background-color: #002b5e; color: white; text-align: left;">
-                            <th style="padding: 10px;">Description</th>
-                            <th style="padding: 10px; text-align: right;">Amount (INR)</th>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #eee;">
-                            <td style="padding: 15px 10px;">ISSSA ${currentUser.tier} Membership Subscription Dues</td>
-                            <td style="padding: 15px 10px; text-align: right;">₹${amount}.00</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 15px 10px; text-align: right; font-weight: bold;">Total Paid:</td>
-                            <td style="padding: 15px 10px; text-align: right; font-weight: bold; font-size: 1.2rem;">₹${amount}.00</td>
-                        </tr>
+                        <tr style="background-color: #002b5e; color: white; text-align: left;"><th style="padding: 10px;">Description</th><th style="padding: 10px; text-align: right;">Amount (INR)</th></tr>
+                        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 15px 10px;">ISSSA ${currentUser.tier} Membership Subscription</td><td style="padding: 15px 10px; text-align: right;">₹${amount}.00</td></tr>
+                        <tr><td style="padding: 15px 10px; text-align: right; font-weight: bold;">Total Paid:</td><td style="padding: 15px 10px; text-align: right; font-weight: bold; font-size: 1.2rem;">₹${amount}.00</td></tr>
                     </table>
-
-                    <div style="text-align: center; color: #777; font-size: 0.9rem; border-top: 1px solid #eee; padding-top: 20px;">
-                        <p>This is a computer-generated receipt and does not require a physical signature.</p>
-                        <p>Thank you for supporting the advancement of social sciences.</p>
-                    </div>
-                </div>
-            `;
+                    <div style="text-align: center; color: #777; font-size: 0.9rem; border-top: 1px solid #eee; padding-top: 20px;"><p>This is a computer-generated receipt.</p></div>
+                </div>`;
             triggerPrint();
         }
 
         function triggerPrint() {
-            // Unhide print container, call browser print, then hide it again
             document.getElementById('printContainer').classList.remove('d-none');
             window.print();
             setTimeout(() => { document.getElementById('printContainer').classList.add('d-none'); }, 1000);
