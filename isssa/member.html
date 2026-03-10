@@ -19,17 +19,15 @@
             --text-main: #333333;
             --card-bg: #ffffff;
             --border-color: #e0e0e0;
-            --glass-bg: rgba(255, 255, 255, 0.9);
         }
 
         body.dark-mode {
-            --primary-color: #6bb0ff;
+            --primary-color: #4da3ff;
             --secondary-color: #ffb703;
-            --bg-light: #0d1117;
+            --bg-light: #121212;
             --text-main: #e0e0e0;
-            --card-bg: #161b22;
-            --border-color: #30363d;
-            --glass-bg: rgba(22, 27, 34, 0.9);
+            --card-bg: #1e1e1e;
+            --border-color: #333333;
         }
         
         body { background-color: var(--bg-light); font-family: 'Open Sans', sans-serif; color: var(--text-main); transition: all 0.3s ease; }
@@ -37,70 +35,61 @@
         
         /* --- Login Screen --- */
         .login-wrapper { height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(rgba(0, 43, 94, 0.9), rgba(0, 43, 94, 0.9)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80') center/cover; position: fixed; width: 100%; z-index: 9999; top: 0; left: 0;}
-        .login-card { background: white; padding: 3rem; border-radius: 16px; box-shadow: 0 25px 50px rgba(0,0,0,0.5); width: 100%; max-width: 420px; text-align: center; border-top: 6px solid var(--secondary-color); }
-        body.dark-mode .login-card { background: #161b22; border-color: #30363d; }
-        .login-brand { font-size: 2.8rem; color: #002b5e; font-weight: bold; margin-bottom: 5px; }
-        body.dark-mode .login-brand { color: #6bb0ff; }
+        .login-card { background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); width: 100%; max-width: 400px; text-align: center; border-top: 5px solid var(--secondary-color); }
+        .login-brand { font-size: 2.5rem; color: #002b5e; font-weight: bold; margin-bottom: 5px; }
 
-        /* --- Dashboard Nav & Announcements --- */
-        .dashboard-nav { background-color: var(--card-bg); padding: 15px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color);}
-        .dashboard-nav .brand { font-size: 1.6rem; font-weight: bold; text-decoration: none;}
+        /* --- Dashboard Nav --- */
+        .dashboard-nav { background-color: var(--card-bg); padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color);}
+        .dashboard-nav .brand { font-size: 1.5rem; font-weight: bold; text-decoration: none;}
         
-        .announcement-bar { background-color: #001f44; color: white; padding: 10px 0; font-size: 0.85rem; font-weight: 600; overflow: hidden; white-space: nowrap; border-bottom: 2px solid var(--secondary-color);}
-        .announcement-text { display: inline-block; animation: scrollText 30s linear infinite; }
+        /* --- Announcements Bar --- */
+        .announcement-bar { background-color: #002b5e; color: white; padding: 10px 0; font-size: 0.85rem; font-weight: 600; overflow: hidden; white-space: nowrap; }
+        .announcement-text { display: inline-block; animation: scrollText 25s linear infinite; }
         @keyframes scrollText { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
 
         /* --- Digital ID Card --- */
-        .id-card { background: linear-gradient(135deg, #001f44, #003b82); color: white; border-radius: 20px; padding: 30px; position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 43, 94, 0.3); transition: transform 0.3s;}
-        .id-card:hover { transform: translateY(-5px); }
+        .id-card { background: linear-gradient(135deg, #001f44, #003b82); color: white; border-radius: 16px; padding: 30px; position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); }
         .id-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%); transform: rotate(30deg); pointer-events: none;}
         .id-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 15px; }
-        .id-card-header h4 { margin: 0; font-size: 1.5rem; color: #f4a261; letter-spacing: 2px; text-transform: uppercase;}
-        .id-data-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: #a0c4ff; margin-bottom: 3px; font-weight: 600;}
-        .id-data-val { font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; text-shadow: 0 1px 2px rgba(0,0,0,0.3);}
-        .barcode { font-family: 'Libre Barcode 39', monospace; font-size: 3.5rem; color: rgba(255,255,255,0.8); margin-top: 15px; letter-spacing: -2px; overflow: hidden; text-align: center;}
+        .id-card-header h4 { margin: 0; font-size: 1.4rem; color: #f4a261; letter-spacing: 1px; }
+        .id-data-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: #a0c4ff; margin-bottom: 3px; }
+        .id-data-val { font-size: 1.15rem; font-weight: 700; margin-bottom: 15px; text-shadow: 0 1px 2px rgba(0,0,0,0.2);}
+        .barcode { font-family: 'Libre Barcode 39', monospace; font-size: 3rem; color: rgba(255,255,255,0.8); margin-top: 15px; letter-spacing: -2px; overflow: hidden;}
         
         /* --- Action Cards & Vault --- */
-        .card-custom { background: var(--card-bg); border-radius: 16px; padding: 25px; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: all 0.3s ease;}
+        .card-custom { background: var(--card-bg); border-radius: 12px; padding: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.02); transition: all 0.3s ease;}
         .action-card { display: flex; flex-direction: column; height: 100%; cursor: pointer;}
-        .action-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-color: var(--primary-color); }
-        .action-icon { width: 60px; height: 60px; background: rgba(244, 162, 97, 0.15); color: var(--secondary-color); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 20px; transition: transform 0.3s;}
-        .action-card:hover .action-icon { transform: scale(1.1) rotate(5deg); }
-        .action-card h4 { font-size: 1.2rem; margin-bottom: 10px; font-weight: 700;}
-        .action-card p { flex-grow: 1; color: #666; line-height: 1.5;}
+        .action-card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px rgba(0,0,0,0.08); border-color: var(--primary-color); }
+        .action-icon { width: 55px; height: 55px; background: rgba(244, 162, 97, 0.15); color: var(--secondary-color); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 15px; }
+        .action-card h4 { font-size: 1.15rem; margin-bottom: 8px; }
+        .action-card p { flex-grow: 1; color: #666; }
         body.dark-mode .action-card p { color: #aaa; }
 
         /* --- Analytics Bar --- */
-        .progress-slim { height: 8px; border-radius: 4px; background-color: var(--border-color); overflow: hidden; margin-top: 10px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);}
-        .progress-slim .progress-bar { background: linear-gradient(90deg, var(--secondary-color), #ffcc00); transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);}
-
-        /* --- Floating Chat Widget --- */
-        .chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 1050; }
-        .chat-btn { width: 60px; height: 60px; border-radius: 30px; background: var(--primary-color); color: white; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.2); transition: 0.3s;}
-        .chat-btn:hover { transform: scale(1.1); background: var(--secondary-color); }
-        .chat-panel { display: none; position: absolute; bottom: 80px; right: 0; width: 350px; background: var(--card-bg); border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); border: 1px solid var(--border-color); overflow: hidden;}
-        .chat-header { background: var(--primary-color); color: white; padding: 15px 20px; font-weight: bold; display: flex; justify-content: space-between;}
-        .chat-body { height: 250px; padding: 15px; overflow-y: auto; background: var(--bg-light); font-size: 0.9rem;}
-        .chat-input { display: flex; border-top: 1px solid var(--border-color); padding: 10px;}
+        .progress-slim { height: 6px; border-radius: 3px; background-color: var(--border-color); overflow: hidden; margin-top: 8px;}
+        .progress-slim .progress-bar { background-color: var(--secondary-color); transition: width 1s ease-in-out;}
 
         /* --- Buttons --- */
-        .btn-custom { display: inline-block; padding: 0.8rem 1.8rem; background-color: #002b5e; color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 8px; transition: 0.3s; border: none; letter-spacing: 0.5px;}
-        .btn-custom:hover { background-color: #f4a261; color: #ffffff; box-shadow: 0 5px 15px rgba(244, 162, 97, 0.4);}
+        .btn-custom { display: inline-block; padding: 0.6rem 1.5rem; background-color: #002b5e; color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 6px; transition: 0.3s; border: none; }
+        .btn-custom:hover { background-color: #f4a261; color: #ffffff; }
         body.dark-mode .btn-custom { background-color: var(--primary-color); color: #000; }
         body.dark-mode .btn-custom:hover { background-color: var(--secondary-color); }
 
-        .blur-overlay { filter: blur(8px) grayscale(50%); pointer-events: none; user-select: none; opacity: 0.4; transition: all 0.5s ease;}
-        #welcomeLoader { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--bg-light); z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--text-main); transition: opacity 0.5s; }
-        
-        .pulse-badge { animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
+        .blur-overlay { filter: blur(6px); pointer-events: none; user-select: none; opacity: 0.5; transition: filter 0.5s ease;}
+        #welcomeLoader { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--primary-color); z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; transition: opacity 0.5s; }
 
-        /* --- Print Styles --- */
-        @media print { body * { visibility: hidden; } #printContainer, #printContainer * { visibility: visible; } #printContainer { position: absolute; left: 0; top: 0; width: 100%; padding: 20px;} .modal-footer, .btn-close { display: none !important; } }
-        .cert-body { border: 15px solid #002b5e; padding: 50px; text-align: center; background: white; position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.1);}
-        .cert-body::after { content: ''; position: absolute; top: 8px; left: 8px; right: 8px; bottom: 8px; border: 3px solid #f4a261; pointer-events: none;}
-        .cert-title { font-family: 'Merriweather', serif; font-size: 3rem; color: #002b5e; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 3px;}
-        .cert-name { font-family: 'Pinyon Script', cursive; font-size: 4.5rem; color: #000; margin: 30px 0; border-bottom: 2px solid #ccc; display: inline-block; padding: 0 50px;}
+        /* --- Print Styles for Documents --- */
+        @media print {
+            body * { visibility: hidden; }
+            #printContainer, #printContainer * { visibility: visible; }
+            #printContainer { position: absolute; left: 0; top: 0; width: 100%; padding: 20px;}
+            .modal-footer, .btn-close { display: none !important; }
+        }
+        
+        .cert-body { border: 10px solid #002b5e; padding: 40px; text-align: center; background: white; position: relative; }
+        .cert-body::after { content: ''; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; border: 2px solid #f4a261; pointer-events: none;}
+        .cert-title { font-family: 'Merriweather', serif; font-size: 2.5rem; color: #002b5e; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;}
+        .cert-name { font-family: 'Pinyon Script', cursive; font-size: 3.5rem; color: #000; margin: 20px 0; border-bottom: 1px solid #ccc; display: inline-block; padding: 0 40px;}
     </style>
 </head>
 <body>
@@ -108,53 +97,50 @@
     <div id="loginScreen" class="login-wrapper">
         <div class="login-card">
             <div class="login-brand brand">ISSSA</div>
-            <p class="text-muted mb-4 fw-bold">Secure Academic Portal</p>
-            <div id="loginAlert" class="alert alert-danger d-none small py-2 fw-bold" role="alert"></div>
+            <p class="text-muted mb-4 small" style="color: #666 !important;">Secure Member Portal</p>
+            <div id="loginAlert" class="alert alert-danger d-none small py-2" role="alert"></div>
             <form id="loginForm">
                 <div class="mb-3 text-start">
-                    <label class="small fw-bold mb-1 text-muted">University Email</label>
-                    <input type="email" class="form-control form-control-lg bg-light border-0" id="loginEmail" placeholder="name@institution.edu" required style="color: #333;">
+                    <input type="email" class="form-control bg-light" id="loginEmail" placeholder="Registered Email" required style="color: #333;">
                 </div>
                 <div class="mb-4 text-start">
-                    <label class="small fw-bold mb-1 text-muted">Passcode</label>
-                    <input type="password" class="form-control form-control-lg bg-light border-0" id="loginPass" placeholder="••••••••" required style="color: #333;">
+                    <input type="password" class="form-control bg-light" id="loginPass" placeholder="Password" required style="color: #333;">
                 </div>
-                <button type="submit" class="btn-custom w-100 py-3 fs-5" id="loginBtn">
-                    <span id="loginText">Authenticate</span>
-                    <span id="loginSpinner" class="spinner-border spinner-border-sm d-none ms-2" role="status"></span>
+                <button type="submit" class="btn-custom w-100 py-2 fs-5" id="loginBtn">
+                    <span id="loginText">Access Dashboard</span>
+                    <span id="loginSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
                 </button>
             </form>
-            <div class="mt-4 border-top pt-4">
-                <p class="small text-muted mb-0">Not an active member? <a href="register.html" style="color: var(--primary-color); font-weight: 800; text-decoration: none;">Apply for Membership</a></p>
+            <div class="mt-4 border-top pt-3">
+                <p class="small text-muted mb-0" style="color: #888 !important;">Not a member yet? <a href="register.html" style="color: #002b5e; font-weight: bold;">Apply Here</a></p>
             </div>
         </div>
     </div>
 
     <div id="welcomeLoader" class="d-none">
-        <i class="fa-solid fa-shield-halved mb-4" style="font-size: 5rem; color: var(--secondary-color);"></i>
-        <h2 class="brand">Decrypting Credentials...</h2>
-        <div class="spinner-grow text-primary mt-3" role="status" style="width: 3rem; height: 3rem;"></div>
-        <p class="mt-3 fw-bold text-muted" id="loaderText">Establishing secure connection to ISSSA servers.</p>
+        <i class="fa-solid fa-fingerprint mb-3" style="font-size: 4rem; color: var(--secondary-color);"></i>
+        <h2 class="brand text-white">Decrypting Credentials...</h2>
+        <p class="opacity-75">Establishing secure connection to ISSSA servers.</p>
     </div>
 
     <div id="dashboardScreen" class="d-none">
         
         <div class="announcement-bar d-none" id="announcementBar">
             <div class="container-fluid">
-                <span class="announcement-text"><i class="fa-solid fa-bullhorn me-2 text-warning pulse-badge"></i> <strong>Official Alert:</strong> Call for Papers for "Volume 2, Issue 1" is now active. | <strong>Grant Cycle:</strong> Applications open in August. | Abstract submissions for Viksit Bharat @2047 close soon!</span>
+                <span class="announcement-text"><i class="fa-solid fa-bullhorn me-2 text-warning"></i> <strong>Official Alert:</strong> Call for Papers for "Volume 2, Issue 1" is now active. | Abstract submissions for the Viksit Bharat @2047 Seminar close soon. Active members receive a 50% fee waiver.</span>
             </div>
         </div>
 
         <nav class="dashboard-nav">
             <div class="container d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center gap-3">
-                    <a href="#" class="brand mb-0 fs-3">ISSSA</a>
-                    <span class="badge bg-secondary d-none d-md-inline px-2 py-1">Nexus Hub</span>
+                    <a href="#" class="brand mb-0">ISSSA</a>
+                    <span class="badge bg-secondary d-none d-md-inline">Member Hub</span>
                 </div>
                 <div class="d-flex align-items-center gap-3">
-                    <button class="btn btn-sm btn-outline-secondary rounded-circle p-2" onclick="toggleDarkMode()" title="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+                    <button class="btn btn-sm btn-outline-secondary rounded-circle" onclick="toggleDarkMode()" title="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
                     <span class="fw-bold d-none d-md-inline" id="navName"></span>
-                    <button class="btn btn-sm btn-danger fw-bold px-3" onclick="logout()"><i class="fa-solid fa-power-off me-1"></i> Exit</button>
+                    <button class="btn btn-sm btn-danger fw-bold" onclick="logout()"><i class="fa-solid fa-power-off"></i></button>
                 </div>
             </div>
         </nav>
@@ -162,146 +148,98 @@
         <div class="container py-4 py-md-5">
             <div class="d-flex justify-content-between align-items-end mb-4">
                 <div>
-                    <p class="text-muted mb-1 small text-uppercase fw-bold letter-spacing-1"><i class="fa-regular fa-calendar me-1"></i> <span id="currentDate"></span></p>
-                    <h2 style="color: var(--primary-color); font-weight: 700;">Welcome back, <span id="welcomeName">Member</span>! 
-                        <span id="gamificationBadge" class="badge bg-warning text-dark fs-6 align-middle ms-2 d-none shadow-sm"><i class="fa-solid fa-crown me-1"></i> Elite Scholar</span>
-                    </h2>
-                </div>
-                <div class="text-end d-none d-md-block">
-                    <div class="p-2 bg-primary bg-opacity-10 rounded text-primary fw-bold small"><i class="fa-solid fa-star text-warning me-1"></i> <span id="prestigePoints">0</span> Prestige Points</div>
+                    <p class="text-muted mb-0 small text-uppercase fw-bold"><span id="currentDate"></span></p>
+                    <h2 style="color: var(--primary-color);">Welcome back, <span id="welcomeName">Member</span></h2>
                 </div>
             </div>
 
-            <div id="pendingAlert" class="alert alert-warning border-warning shadow-sm d-none mb-4 p-4 rounded-4" role="alert">
-                <div class="d-flex align-items-center">
-                    <i class="fa-solid fa-clock-rotate-left fs-1 me-4 text-warning opacity-75"></i>
-                    <div>
-                        <h5 class="alert-heading fw-bold mb-1">Account Pending Verification</h5>
-                        <p class="mb-0 text-dark opacity-75">The treasury is currently verifying your payment UTR. Full dashboard features and document vaults will securely unlock once your status changes to <strong>Active</strong>.</p>
-                    </div>
-                </div>
+            <div id="pendingAlert" class="alert alert-warning border-warning shadow-sm d-none mb-4" role="alert">
+                <h5 class="alert-heading fw-bold"><i class="fa-solid fa-clock me-2"></i> Account Pending Verification</h5>
+                <p class="mb-0">We have received your application. The treasury is currently verifying your payment UTR. Full dashboard features will be unlocked once your status changes to <strong>Active</strong>.</p>
             </div>
 
             <div class="row g-4">
-                
                 <div class="col-lg-4">
-                    
-                    <div class="id-card mb-4">
-                        <div class="d-flex justify-content-between align-items-start mb-3 border-bottom pb-3 border-secondary">
-                            <h4 class="brand m-0 text-white" style="text-shadow: 0 2px 4px rgba(0,0,0,0.5);"><i class="fa-solid fa-globe me-2 text-warning"></i>ISSSA</h4>
-                            <span class="badge bg-warning text-dark border border-dark px-3 py-2 shadow" id="cardStatus">Active</span>
+                    <div class="id-card mb-4 shadow">
+                        <div class="id-card-header">
+                            <h4 class="brand">ISSSA</h4>
+                            <span class="badge bg-warning text-dark border border-dark" id="cardStatus">Active</span>
                         </div>
-                        <div class="row align-items-center">
+                        <div class="row">
                             <div class="col-8">
-                                <div class="id-data-label">Verified Member</div>
+                                <div class="id-data-label">Member Name</div>
                                 <div class="id-data-val" id="cardName">Loading...</div>
-                                <div class="id-data-label">Membership Class</div>
-                                <div class="id-data-val text-warning mb-0" id="cardTier">Loading...</div>
+                                <div class="id-data-label">Membership Tier</div>
+                                <div class="id-data-val text-warning" id="cardTier">Loading...</div>
                             </div>
-                            <div class="col-4 text-end qr-code-box" id="qrContainer" title="Scan to verify ID">
-                                </div>
-                        </div>
-                        <div class="mt-4 pt-3 border-top border-secondary">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <div class="id-data-label">Global ID</div>
-                                    <div class="id-data-val text-info mb-0 fs-6" id="cardId" style="font-family: monospace;">Loading...</div>
-                                </div>
-                                <div class="text-end">
-                                    <div class="id-data-label">Valid Thru</div>
-                                    <div class="id-data-val text-white mb-0 fs-6">Lifetime</div>
-                                </div>
+                            <div class="col-4 text-end">
+                                <i class="fa-solid fa-microchip text-white opacity-50" style="font-size: 2.5rem;"></i>
                             </div>
                         </div>
-                        <div class="barcode" id="cardBarcode">||||||||||||||||</div>
+                        <div class="id-data-label mt-2">ISSSA Official ID</div>
+                        <div class="id-data-val text-info mb-3" id="cardId" style="font-family: monospace; letter-spacing: 2px;">Loading...</div>
+                        <div class="id-data-label">Primary Affiliation</div>
+                        <div class="id-data-val mb-0 fs-6 fw-normal opacity-75" id="cardInst">Loading...</div>
+                        <div class="barcode text-center" id="cardBarcode">||||||||||||||||||||||</div>
                     </div>
 
-                    <div class="card-custom mb-4 position-relative overflow-hidden">
-                        <div class="position-absolute top-0 end-0 p-3 opacity-10"><i class="fa-solid fa-chart-line fs-1"></i></div>
-                        <h6 class="fw-bold mb-4"><i class="fa-solid fa-chart-pie me-2 text-primary"></i> Academic Footprint</h6>
-                        
+                    <div class="card-custom mb-4">
+                        <h6 class="fw-bold mb-3 border-bottom pb-2"><i class="fa-solid fa-chart-simple me-2 text-primary"></i> Academic Footprint</h6>
                         <div class="d-flex justify-content-between small fw-bold mb-1">
                             <span class="text-muted">INJASSS Publications</span>
-                            <span class="text-primary fs-6" id="pubCountText">0 / 5</span>
+                            <span class="text-primary" id="pubCountText">0 / 5</span>
                         </div>
-                        <div class="progress-slim mb-4"><div class="progress-bar w-0" id="pubProgressBar"></div></div>
-                        
-                        <div class="d-flex justify-content-between small fw-bold mb-3 border-bottom pb-3">
-                            <span class="text-muted">Simulated h-index</span>
-                            <span class="text-success fs-5">1.2</span>
-                        </div>
-
-                        <button class="btn btn-outline-primary btn-sm w-100 fw-bold" onclick="alert('Detailed analytics engine launching in v3.0')"><i class="fa-solid fa-magnifying-glass-chart me-2"></i> View Deep Analytics</button>
-                    </div>
-
-                    <div id="sideFeatures" class="card-custom mb-4">
-                        <h6 class="fw-bold mb-3 border-bottom pb-3"><i class="fa-solid fa-vault me-2 text-secondary fs-5"></i> Secure Document Vault</h6>
-                        
-                        <button class="btn btn-light border w-100 mb-2 text-start p-3 fw-bold d-flex justify-content-between align-items-center" onclick="generateCertificate()">
-                            <span><i class="fa-solid fa-id-badge me-3 text-primary fs-5"></i> Official ID Certificate</span>
-                            <i class="fa-solid fa-download text-muted"></i>
-                        </button>
-                        <button class="btn btn-light border w-100 mb-4 text-start p-3 fw-bold d-flex justify-content-between align-items-center" onclick="generateReceipt()">
-                            <span><i class="fa-solid fa-file-invoice-dollar me-3 text-success fs-5"></i> Fee Receipt (Tax)</span>
-                            <i class="fa-solid fa-download text-muted"></i>
-                        </button>
-                        
-                        <div class="bg-light p-3 rounded border">
-                            <h6 class="fw-bold mb-2 text-dark small text-uppercase">Assigned Records</h6>
-                            <div id="dynamicVaultList">
-                                <p class="small text-muted fst-italic mb-0"><i class="fa-solid fa-folder-open me-2"></i> No special documents assigned yet.</p>
-                            </div>
+                        <div class="progress-slim mb-3"><div class="progress-bar w-0" id="pubProgressBar"></div></div>
+                        <div class="d-flex justify-content-between small fw-bold mb-1">
+                            <span class="text-muted">Peer Reviews Completed</span>
+                            <span class="text-success">N/A</span>
                         </div>
                     </div>
 
+                    <div id="sideFeatures">
+                        <div class="card-custom mb-3">
+                            <h6 class="fw-bold mb-3 border-bottom pb-2"><i class="fa-solid fa-vault me-2 text-secondary"></i> Document Vault</h6>
+                            <button class="btn btn-outline-primary btn-sm w-100 mb-2 fw-bold text-start" onclick="generateCertificate()">
+                                <i class="fa-solid fa-id-badge me-2 text-center" style="width: 20px;"></i> Official ID Certificate
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm w-100 mb-2 fw-bold text-start" onclick="generateReceipt()">
+                                <i class="fa-solid fa-file-invoice-dollar me-2 text-center" style="width: 20px;"></i> Fee Receipt (Tax)
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-lg-8" id="featuresGrid">
-                    
-                    <div class="card-custom py-2 px-3 mb-4 d-flex align-items-center gap-3">
-                        <span class="badge bg-primary pulse-badge">Live</span>
-                        <div class="text-muted small overflow-hidden text-truncate w-100" id="activityTicker">
-                            <em>System compiling recent regional academic activities...</em>
-                        </div>
-                    </div>
-
                     <div class="row g-4">
                         
                         <div class="col-md-6 col-xl-4">
                             <div class="card-custom action-card text-center border-top border-primary border-4" onclick="window.location.href='submit.html'">
                                 <div class="action-icon mx-auto"><i class="fa-solid fa-pen-nib"></i></div>
                                 <h4>Submit to INJASSS</h4>
-                                <p class="text-muted small">Route your research through the priority peer-review pipeline.</p>
+                                <p class="text-muted small">Route your research through the priority peer-review pipeline with APC waivers.</p>
+                                <span class="fw-bold text-primary small mt-auto">Open Portal <i class="fa-solid fa-arrow-right ms-1"></i></span>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-xl-4">
                             <div class="card-custom action-card text-center">
-                                <div class="action-icon mx-auto bg-info bg-opacity-10 text-info"><i class="fa-solid fa-magnifying-glass-location"></i></div>
+                                <div class="action-icon mx-auto"><i class="fa-solid fa-magnifying-glass-location"></i></div>
                                 <h4>Track Manuscript</h4>
-                                <p class="text-muted small mb-3">Check live editorial status and reviewer feedback.</p>
+                                <p class="text-muted small mb-3">Check the live editorial status and download reviewer feedback.</p>
                                 <div class="input-group input-group-sm mt-auto" onclick="event.stopPropagation();">
-                                    <input type="text" class="form-control border-info" placeholder="ID (e.g. 001)" id="quickTrackId">
-                                    <button class="btn btn-info text-white fw-bold" onclick="quickTrack()">Track</button>
+                                    <input type="text" class="form-control" placeholder="ID (e.g. 001)" id="quickTrackId">
+                                    <button class="btn btn-primary fw-bold" onclick="quickTrack()">Track</button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-xl-4">
-                            <div class="card-custom action-card text-center position-relative border-top border-dark border-4" data-bs-toggle="modal" data-bs-target="#aiModal">
-                                <span class="badge bg-dark position-absolute top-0 end-0 m-2">Beta</span>
-                                <div class="action-icon mx-auto bg-dark bg-opacity-10 text-dark"><i class="fa-solid fa-robot"></i></div>
-                                <h4>Originality Scan</h4>
-                                <p class="text-muted small">Run an AI and plagiarism check on your abstract before submitting.</p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card-custom action-card text-center border-top border-danger border-4" data-bs-toggle="modal" data-bs-target="#eventsModal">
-                                <span class="badge bg-danger position-absolute top-0 end-0 m-2 pulse-badge">Active</span>
-                                <div class="action-icon mx-auto bg-danger bg-opacity-10 text-danger"><i class="fa-solid fa-calendar-days"></i></div>
-                                <h4>Events Calendar</h4>
-                                <p class="text-muted small">View upcoming seminars and claim your member discount codes.</p>
+                            <div class="card-custom action-card text-center position-relative border-top border-danger border-4">
+                                <span class="badge bg-danger position-absolute top-0 end-0 m-2 pulse-badge">Live Event</span>
+                                <div class="action-icon mx-auto"><i class="fa-solid fa-microphone-lines"></i></div>
+                                <h4>National Seminar</h4>
+                                <p class="text-muted small">Register for Viksit Bharat @2047 using your exclusive member discount code.</p>
+                                <button class="btn btn-outline-dark btn-sm w-100 fw-bold mt-auto" onclick="event.stopPropagation(); alert('Your discount code is: ISSSA-MEMBER-50')">Reveal Promo Code</button>
                             </div>
                         </div>
 
@@ -309,15 +247,8 @@
                             <div class="card-custom action-card text-center" data-bs-toggle="modal" data-bs-target="#citationModal">
                                 <div class="action-icon mx-auto"><i class="fa-solid fa-quote-right"></i></div>
                                 <h4>Citation Tools</h4>
-                                <p class="text-muted small">Instantly generate APA, MLA, and Chicago citations for your papers.</p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card-custom action-card text-center border-top border-warning border-4" data-bs-toggle="modal" data-bs-target="#coverModal">
-                                <div class="action-icon mx-auto bg-warning bg-opacity-10 text-warning"><i class="fa-solid fa-image-portrait"></i></div>
-                                <h4>Cover Generator</h4>
-                                <p class="text-muted small">Generate a mock INJASSS magazine cover featuring your research title.</p>
+                                <p class="text-muted small">Instantly generate APA, MLA, and Chicago citations for your published papers.</p>
+                                <span class="fw-bold text-primary small mt-auto">Generate <i class="fa-solid fa-arrow-right ms-1"></i></span>
                             </div>
                         </div>
 
@@ -325,7 +256,17 @@
                             <div class="card-custom action-card text-center border-top border-success border-4" data-bs-toggle="modal" data-bs-target="#grantModal">
                                 <div class="action-icon mx-auto bg-success bg-opacity-10 text-success"><i class="fa-solid fa-hand-holding-dollar"></i></div>
                                 <h4>Research Grants</h4>
-                                <p class="text-muted small">Apply for ISSSA Seed Funding for field studies and data collection.</p>
+                                <p class="text-muted small">Apply for ISSSA Seed Funding for field studies and geographic data collection.</p>
+                                <span class="fw-bold text-success small mt-auto">Apply Now <i class="fa-solid fa-arrow-right ms-1"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card-custom action-card text-center border-warning" onclick="window.location.href='reupload.html'">
+                                <div class="action-icon mx-auto bg-warning bg-opacity-10 text-warning"><i class="fa-solid fa-file-pen"></i></div>
+                                <h4>Submit Revisions</h4>
+                                <p class="text-muted small">Upload corrected documents if the editorial board requested major or minor revisions.</p>
+                                <span class="fw-bold text-warning small mt-auto">Re-Upload Desk <i class="fa-solid fa-arrow-right ms-1"></i></span>
                             </div>
                         </div>
 
@@ -333,171 +274,32 @@
                             <div class="card-custom action-card text-center" data-bs-toggle="modal" data-bs-target="#directoryModal" onclick="loadDirectory()">
                                 <div class="action-icon mx-auto"><i class="fa-solid fa-network-wired"></i></div>
                                 <h4>Member Directory</h4>
-                                <p class="text-muted small">Search and collaborate with other verified ISSSA academics.</p>
+                                <p class="text-muted small">Connect and collaborate with other verified ISSSA academics nationwide.</p>
+                                <span class="fw-bold text-primary small mt-auto">Search Directory <i class="fa-solid fa-arrow-right ms-1"></i></span>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-xl-4">
-                            <div class="card-custom action-card text-center" onclick="shareProfile()">
-                                <div class="action-icon mx-auto bg-primary bg-opacity-10 text-primary"><i class="fa-brands fa-linkedin-in"></i></div>
-                                <h4>Share Profile</h4>
-                                <p class="text-muted small">Copy a formatted badge text to share your affiliation on LinkedIn.</p>
+                            <div class="card-custom action-card text-center">
+                                <div class="action-icon mx-auto"><i class="fa-solid fa-check-to-slot"></i></div>
+                                <h4>Electoral Rights</h4>
+                                <p class="text-muted small mb-2">Check your EC voting rights for the upcoming triennial elections.</p>
+                                <div id="votingStatus" class="p-2 bg-light rounded text-center small fw-bold mt-auto border">Checking...</div>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-xl-4">
-                            <div class="card-custom action-card text-center" onclick="window.location.href='reupload.html'">
-                                <div class="action-icon mx-auto"><i class="fa-solid fa-file-pen"></i></div>
-                                <h4>Submit Revisions</h4>
-                                <p class="text-muted small">Upload corrected documents required by the editorial board.</p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card-custom action-card text-center" data-bs-toggle="modal" data-bs-target="#profileModal">
+                            <div class="card-custom action-card text-center">
                                 <div class="action-icon mx-auto"><i class="fa-solid fa-user-gear"></i></div>
-                                <h4>Profile Settings</h4>
-                                <p class="text-muted small">Update your institutional affiliation and personal records.</p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card-custom action-card text-center bg-light" data-bs-toggle="modal" data-bs-target="#faqModal">
-                                <div class="action-icon mx-auto bg-secondary bg-opacity-10 text-secondary"><i class="fa-solid fa-circle-question"></i></div>
-                                <h4 class="text-secondary">Help & FAQ</h4>
-                                <p class="text-muted small">Read publication guidelines or view frequently asked questions.</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="chat-widget">
-        <div class="chat-btn" onclick="toggleChat()"><i class="fa-solid fa-message"></i></div>
-        <div class="chat-panel" id="chatPanel">
-            <div class="chat-header">
-                <span><i class="fa-solid fa-headset me-2"></i> Editorial Desk</span>
-                <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="toggleChat()"></i>
-            </div>
-            <div class="chat-body" id="chatBody">
-                <div class="mb-3 text-muted text-center small">Today</div>
-                <div class="bg-primary text-white p-2 rounded-3 mb-2 w-75">Hello! How can the ISSSA tech desk assist you today?</div>
-            </div>
-            <div class="chat-input">
-                <input type="text" class="form-control border-0 bg-light" id="chatInput" placeholder="Type a message...">
-                <button class="btn btn-primary ms-2" onclick="sendChat()"><i class="fa-solid fa-paper-plane"></i></button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="aiModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content" style="background-color: var(--card-bg);">
-                <div class="modal-header bg-dark text-white border-bottom-0"><h5 class="modal-title brand text-white"><i class="fa-solid fa-robot me-2"></i> AI Originality Scanner</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
-                <div class="modal-body p-4">
-                    <p class="small text-muted">Paste your abstract below. Our simulated API will check for AI-generated text and plagiarism markers.</p>
-                    <textarea class="form-control mb-3 bg-light" rows="5" id="aiText" placeholder="The geopolitical landscape of Varanasi represents a unique intersection of..."></textarea>
-                    <button class="btn btn-dark w-100 fw-bold mb-4" id="aiBtn" onclick="runAiScan()"><i class="fa-solid fa-fingerprint me-2"></i> Initiate Scan</button>
-                    
-                    <div id="aiResults" class="d-none">
-                        <h6 class="fw-bold border-bottom pb-2 mb-3">Scan Results</h6>
-                        <div class="row text-center g-3">
-                            <div class="col-4">
-                                <div class="p-3 bg-success bg-opacity-10 text-success rounded border border-success">
-                                    <h3 class="mb-0 fw-bold" id="aiHum">98%</h3><span class="small text-uppercase">Human</span>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="p-3 bg-danger bg-opacity-10 text-danger rounded border border-danger">
-                                    <h3 class="mb-0 fw-bold" id="aiBot">2%</h3><span class="small text-uppercase">AI Likelihood</span>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="p-3 bg-primary bg-opacity-10 text-primary rounded border border-primary">
-                                    <h3 class="mb-0 fw-bold" id="aiPlag">0%</h3><span class="small text-uppercase">Plagiarism</span>
+                                <h4>Account Settings</h4>
+                                <p class="text-muted small">Contact the editor or update your institutional profile details.</p>
+                                <div class="d-flex gap-2 mt-auto" onclick="event.stopPropagation();">
+                                    <button class="btn btn-outline-primary btn-sm w-50 fw-bold" title="Contact Editor" onclick="window.location.href='mailto:editor@injasss.org'"><i class="fa-solid fa-envelope"></i></button>
+                                    <button class="btn btn-outline-secondary btn-sm w-50 fw-bold" title="Edit Profile" data-bs-toggle="modal" data-bs-target="#profileModal"><i class="fa-solid fa-pen"></i></button>
                                 </div>
                             </div>
                         </div>
-                        <p class="text-center small mt-3 text-muted"><i class="fa-solid fa-circle-check text-success me-1"></i> Text is cleared for submission.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="modal fade" id="coverModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="background-color: var(--card-bg);">
-                <div class="modal-header bg-warning border-bottom-0"><h5 class="modal-title brand text-dark"><i class="fa-solid fa-image-portrait me-2"></i> Cover Generator</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-                <div class="modal-body p-4 text-center">
-                    <input type="text" id="coverTitle" class="form-control mb-3" placeholder="Enter your Research Title">
-                    <button class="btn btn-warning w-100 fw-bold mb-4" onclick="generateCover()">Generate Cover Art</button>
-                    
-                    <div id="coverResult" class="d-none mx-auto" style="width: 250px; height: 350px; background: linear-gradient(to bottom, #002b5e, #000); color: white; padding: 20px; border: 5px solid #f4a261; border-radius: 4px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); position: relative;">
-                        <h2 style="font-family: 'Merriweather', serif; color: #f4a261; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; margin-top: 10px;">INJASSS</h2>
-                        <p class="small text-uppercase text-info mb-4" style="letter-spacing: 2px;">Special Edition</p>
-                        <h5 class="fw-bold lh-base" id="renderedCoverTitle" style="text-shadow: 1px 1px 2px black;">Your Title Here</h5>
-                        <div style="position: absolute; bottom: 20px; left: 20px; text-align: left;">
-                            <p class="small mb-0 text-muted">Featured Author</p>
-                            <p class="fw-bold mb-0 text-warning" id="renderedCoverAuthor">Dr. Smith</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="eventsModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="background-color: var(--card-bg);">
-                <div class="modal-header border-bottom-0"><h5 class="modal-title brand">Upcoming Events</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-                <div class="modal-body pt-0">
-                    <div class="alert alert-danger border-danger">
-                        <h6 class="fw-bold mb-1">Viksit Bharat @2047: National Seminar</h6>
-                        <p class="small mb-2">Location: Varanasi | Date: Aug 2026</p>
-                        <hr class="my-2 border-danger">
-                        <span class="small fw-bold">Your VIP Promo Code: <code class="fs-6 text-dark bg-white p-1 rounded">ISSSA-MEMBER-50</code></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="faqModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content" style="background-color: var(--card-bg);">
-                <div class="modal-header bg-light"><h5 class="modal-title brand">Help Center</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-                <div class="modal-body p-4">
-                    <div class="accordion" id="faqAccordion">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header"><button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">How do I track my paper?</button></h2>
-                            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body small">Go to the 'Author Portal' and enter your Tracking ID and Email to bypass the firewall and view reviewer comments.</div></div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header"><button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">What does 'Revisions Required' mean?</button></h2>
-                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body small">The peer reviewers have approved your paper conditionally. You must use the Re-Upload Portal to send the corrected document.</div></div>
-                        </div>
-                    </div>
-                    <button class="btn btn-outline-primary w-100 mt-4 fw-bold" onclick="window.location.href='mailto:editor@injasss.org'"><i class="fa-solid fa-envelope me-2"></i> Direct Email to Editor</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="directoryModal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content" style="background-color: var(--card-bg);">
-                <div class="modal-header bg-light">
-                    <h5 class="modal-title brand"><i class="fa-solid fa-network-wired me-2"></i> Verified Members</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <input type="text" id="dirSearch" class="form-control form-control-lg bg-light border-0 mb-3" placeholder="Search by name or institution..." onkeyup="filterDirectory()">
-                    <div class="list-group shadow-sm" id="directoryList">
-                        <div class="text-center py-5 text-muted"><i class="fa-solid fa-spinner fa-spin mb-3 fs-1"></i><br>Connecting to ISSSA Master Registry...</div>
                     </div>
                 </div>
             </div>
@@ -511,18 +313,33 @@
                     <h5 class="modal-title brand"><i class="fa-solid fa-quote-right me-2"></i> Citation Builder</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body pt-0 p-4">
-                    <input type="text" id="citeTitle" class="form-control mb-2 bg-light" placeholder="Paper Title">
-                    <input type="text" id="citeYear" class="form-control mb-4 bg-light" placeholder="Publication Year (e.g. 2026)">
-                    <button class="btn btn-primary w-100 mb-3 fw-bold py-2" onclick="buildCitation()">Generate Bibliography</button>
+                <div class="modal-body pt-0">
+                    <input type="text" id="citeTitle" class="form-control mb-2" placeholder="Paper Title">
+                    <input type="text" id="citeYear" class="form-control mb-3" placeholder="Publication Year (e.g. 2026)">
+                    <button class="btn btn-primary w-100 mb-3" onclick="buildCitation()">Generate Formats</button>
                     
-                    <div id="citationResults" class="d-none mt-4 border-top pt-3">
-                        <label class="small fw-bold text-primary mb-1">APA (7th Edition)</label>
-                        <div class="p-3 bg-light border rounded small mb-3 fst-italic" id="resAPA" style="font-family: serif;"></div>
-                        <label class="small fw-bold text-danger mb-1">MLA (9th Edition)</label>
-                        <div class="p-3 bg-light border rounded small mb-3 fst-italic" id="resMLA" style="font-family: serif;"></div>
-                        <label class="small fw-bold text-success mb-1">Chicago</label>
-                        <div class="p-3 bg-light border rounded small fst-italic" id="resCHI" style="font-family: serif;"></div>
+                    <div id="citationResults" class="d-none">
+                        <label class="small fw-bold text-muted mt-2">APA (7th Ed.)</label>
+                        <div class="p-2 bg-light border rounded small mb-2" id="resAPA"></div>
+                        <label class="small fw-bold text-muted">MLA (9th Ed.)</label>
+                        <div class="p-2 bg-light border rounded small mb-2" id="resMLA"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="directoryModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content" style="background-color: var(--card-bg);">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title brand"><i class="fa-solid fa-network-wired me-2"></i> Verified Members</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="text" id="dirSearch" class="form-control mb-3" placeholder="Search by name or institution..." onkeyup="filterDirectory()">
+                    <div class="list-group" id="directoryList">
+                        <div class="text-center py-4 text-muted"><i class="fa-solid fa-spinner fa-spin mb-2 fs-3"></i><br>Connecting to ISSSA Registry...</div>
                     </div>
                 </div>
             </div>
@@ -532,16 +349,16 @@
     <div class="modal fade" id="profileModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="background-color: var(--card-bg);">
-                <div class="modal-header bg-light">
-                    <h5 class="modal-title brand"><i class="fa-solid fa-user-gear me-2"></i> Edit Profile</h5>
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title brand">Edit Profile</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-4">
-                    <label class="form-label small fw-bold text-muted">Full Legal Name</label>
-                    <input type="text" id="editName" class="form-control mb-3 bg-light">
-                    <label class="form-label small fw-bold text-muted">Primary Affiliation (Institution)</label>
-                    <input type="text" id="editInst" class="form-control mb-4 bg-light">
-                    <button class="btn btn-success w-100 py-2 fw-bold" id="saveProfileBtn" onclick="saveProfile()"><i class="fa-solid fa-floppy-disk me-2"></i> Commit Changes to DB</button>
+                <div class="modal-body pt-0">
+                    <label class="form-label small fw-bold">Full Name</label>
+                    <input type="text" id="editName" class="form-control mb-2">
+                    <label class="form-label small fw-bold">Institution</label>
+                    <input type="text" id="editInst" class="form-control mb-3">
+                    <button class="btn btn-success w-100" id="saveProfileBtn" onclick="saveProfile()"><i class="fa-solid fa-floppy-disk me-2"></i> Save Changes</button>
                 </div>
             </div>
         </div>
@@ -554,16 +371,15 @@
                     <h5 class="modal-title brand text-white"><i class="fa-solid fa-hand-holding-dollar me-2"></i> ISSSA Seed Grant</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-5 text-center">
-                    <i class="fa-solid fa-lock fs-1 text-success opacity-50 mb-3"></i>
-                    <h4 class="text-success mb-3 fw-bold">Funding Cycle: Closed</h4>
-                    <p class="text-muted mb-4">Applications for the 2026-2027 academic field research grants will open in <strong>August 2026</strong>.</p>
-                    <div class="alert alert-light text-start small border shadow-sm">
-                        <strong class="text-dark"><i class="fa-solid fa-list-check me-1"></i> Eligibility Requirements:</strong>
-                        <ul class="mb-0 mt-2 ps-3 text-muted">
-                            <li class="mb-1">Must be an active "Life Member".</li>
-                            <li class="mb-1">Must have at least 1 publication in INJASSS.</li>
-                            <li>Funding cap: ₹50,000 per verified project.</li>
+                <div class="modal-body p-4 text-center">
+                    <h4 class="text-success mb-3">Funding Cycle: Closed</h4>
+                    <p class="text-muted">Applications for the 2026-2027 academic field research grants will open in <strong>August 2026</strong>.</p>
+                    <div class="alert alert-light text-start small border">
+                        <strong>Eligibility Requirements:</strong>
+                        <ul class="mb-0 mt-2 ps-3">
+                            <li>Must be an active "Life Member".</li>
+                            <li>Must have at least 1 publication in INJASSS.</li>
+                            <li>Funding cap: ₹50,000 per project.</li>
                         </ul>
                     </div>
                 </div>
@@ -578,13 +394,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let currentUser = {};
-        let fullDirectory = []; 
+        let fullDirectory = []; // Stores members for search filter
 
         document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        
-        function toggleDarkMode() { 
-            document.body.classList.toggle('dark-mode'); 
-            localStorage.setItem('isssaDarkMode', document.body.classList.contains('dark-mode')); 
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('isssaDarkMode', document.body.classList.contains('dark-mode'));
         }
         if(localStorage.getItem('isssaDarkMode') === 'true') document.body.classList.add('dark-mode');
 
@@ -602,100 +418,78 @@
                 method: 'POST',
                 body: JSON.stringify({ formType: "memberLogin", email: document.getElementById('loginEmail').value, password: document.getElementById('loginPass').value })
             })
-            .then(res => res.json()).then(data => {
+            .then(res => res.json())
+            .then(data => {
                 if(data.success) {
                     document.getElementById('loginScreen').classList.add('d-none');
                     document.getElementById('welcomeLoader').classList.remove('d-none');
-                    setTimeout(() => { document.getElementById('loaderText').textContent = "Synchronizing Profile Data..."; }, 800);
                     setTimeout(() => {
                         document.getElementById('welcomeLoader').classList.add('d-none');
                         handleLoginSuccess(data.data);
-                    }, 1800); 
+                    }, 1200); 
                 } else { throw new Error(data.message); }
-            }).catch(error => { 
+            })
+            .catch(error => {
                 const alertBox = document.getElementById('loginAlert');
-                alertBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation me-1"></i> ${error.message}`;
+                alertBox.textContent = error.message;
                 alertBox.classList.remove('d-none');
-                document.getElementById('loginBtn').disabled = false;
-                document.getElementById('loginText').textContent = "Authenticate";
-                document.getElementById('loginSpinner').classList.add('d-none');
+                resetLoginBtn();
             });
         });
 
         function handleLoginSuccess(userData) {
             currentUser = userData; 
+            
             document.getElementById('navName').textContent = userData.name;
             document.getElementById('welcomeName').textContent = userData.name.split(' ')[0]; 
             document.getElementById('cardName').textContent = userData.name;
             document.getElementById('cardTier').textContent = userData.tier;
             document.getElementById('cardId').textContent = userData.id;
             document.getElementById('cardInst').textContent = userData.institution;
+            document.getElementById('cardBarcode').textContent = "*" + userData.id + "*";
             
-            // Generate True QR Code
-            document.getElementById('qrContainer').innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=ISSSA-ID:${userData.id}&bgcolor=001f44&color=ffffff" alt="QR" class="shadow-sm">`;
-            document.getElementById('cardBarcode').textContent = "*" + userData.id.replace(/-/g, '') + "*";
-
-            // Gamification & Prestige Points
-            let points = (userData.publications * 150) + (userData.tier.includes('Life') ? 500 : 100);
-            document.getElementById('prestigePoints').textContent = points.toLocaleString();
-
-            if(userData.publications >= 1 || userData.tier.includes('Life')) {
-                document.getElementById('gamificationBadge').classList.remove('d-none');
-            }
-
-            // Analytics
+            // Dynamic Analytics Integration
             let pubText = userData.publications >= 5 ? "5+ (Elite)" : `${userData.publications} / 5`;
             document.getElementById('pubCountText').textContent = pubText;
-            setTimeout(() => {
-                let pubPercent = (userData.publications / 5) * 100;
-                document.getElementById('pubProgressBar').style.width = (pubPercent > 100 ? 100 : pubPercent) + "%";
-            }, 500);
-
-            // Activity Ticker Logic
-            const tickerMsgs = [
-                "Dr. A. Sharma recently published a paper in INJASSS Vol 1.",
-                "Review Panel assignments for the Viksit Bharat edition are now complete.",
-                `${userData.name} successfully connected to the Member Hub.`,
-                "New society guidelines have been posted to the FAQ section."
-            ];
-            let tickIdx = 0;
-            setInterval(() => {
-                tickIdx = (tickIdx + 1) % tickerMsgs.length;
-                document.getElementById('activityTicker').style.opacity = 0;
-                setTimeout(() => {
-                    document.getElementById('activityTicker').innerHTML = `<em>${tickerMsgs[tickIdx]}</em>`;
-                    document.getElementById('activityTicker').style.opacity = 1;
-                }, 300);
-            }, 6000);
-
-            // Profile Pre-fill
+            let pubPercent = (userData.publications / 5) * 100;
+            if(pubPercent > 100) pubPercent = 100;
+            document.getElementById('pubProgressBar').style.width = pubPercent + "%";
+            
             document.getElementById('editName').value = userData.name;
             document.getElementById('editInst').value = userData.institution;
-
-            // Render Assigned Documents
-            const vaultList = document.getElementById('dynamicVaultList');
-            if(userData.assignedDocs && userData.assignedDocs.length > 0) {
-                vaultList.innerHTML = '';
-                userData.assignedDocs.forEach(doc => {
-                    vaultList.innerHTML += `<a href="${doc.url}" target="_blank" class="btn btn-light border btn-sm w-100 mb-2 text-start d-flex justify-content-between align-items-center"><span><i class="fa-solid fa-link text-primary me-2"></i> ${doc.title}</span><i class="fa-solid fa-arrow-up-right-from-square small text-muted"></i></a>`;
-                });
-            }
-
-            // Status Lock
+            
             if(userData.status.includes('Pending')) {
-                document.getElementById('cardStatus').textContent = "Pending";
+                document.getElementById('cardStatus').textContent = "Pending Verification";
+                document.getElementById('cardStatus').className = "badge bg-warning text-dark border border-dark";
                 document.getElementById('pendingAlert').classList.remove('d-none');
+                document.getElementById('announcementBar').classList.add('d-none');
                 document.getElementById('featuresGrid').classList.add('blur-overlay');
                 document.getElementById('sideFeatures').classList.add('blur-overlay');
             } else {
-                document.getElementById('cardStatus').textContent = "Active";
-                document.getElementById('cardStatus').className = "badge bg-success border border-light px-3 py-2 shadow";
+                document.getElementById('cardStatus').textContent = "Active Member";
+                document.getElementById('cardStatus').className = "badge bg-success border border-light";
+                document.getElementById('pendingAlert').classList.add('d-none');
                 document.getElementById('announcementBar').classList.remove('d-none');
                 document.getElementById('featuresGrid').classList.remove('blur-overlay');
                 document.getElementById('sideFeatures').classList.remove('blur-overlay');
             }
 
+            const voteBox = document.getElementById('votingStatus');
+            if (userData.tier.includes('Life')) {
+                voteBox.innerHTML = '<span class="text-success"><i class="fa-solid fa-circle-check me-1"></i> Eligible to Vote</span>';
+                voteBox.className = "p-2 bg-success bg-opacity-10 rounded text-center small fw-bold mt-auto border border-success";
+            } else {
+                voteBox.innerHTML = '<span class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i> Non-Voting Member</span>';
+                voteBox.className = "p-2 bg-light rounded text-center small fw-bold mt-auto border";
+            }
+
             document.getElementById('dashboardScreen').classList.remove('d-none');
+        }
+
+        function resetLoginBtn() {
+            document.getElementById('loginBtn').disabled = false;
+            document.getElementById('loginText').textContent = "Access Dashboard";
+            document.getElementById('loginSpinner').classList.add('d-none');
         }
 
         function logout() { window.location.reload(); }
@@ -706,90 +500,27 @@
             if(!idInput) return alert("Please enter the Tracking ID.");
             let formattedId = idInput.toUpperCase();
             if(!formattedId.includes("INJASSS")) formattedId = `INJASSS-2026-${formattedId.padStart(3, '0')}`;
-            alert(`Security Protocol: Please verify email against Tracking ID ${formattedId} on the public portal.`);
+            alert(`To protect peer-reviewer feedback, the system requires email verification for ${formattedId}.\n\nRedirecting to main Tracking Portal...`);
             window.location.href = "authorportal.html"; 
-        }
-
-        // --- NEW: CHAT WIDGET ---
-        function toggleChat() {
-            const panel = document.getElementById('chatPanel');
-            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-        }
-        function sendChat() {
-            const input = document.getElementById('chatInput');
-            const body = document.getElementById('chatBody');
-            if(!input.value.trim()) return;
-            
-            body.innerHTML += `<div class="d-flex justify-content-end mb-2"><div class="bg-light border text-dark p-2 rounded-3 w-75">${input.value}</div></div>`;
-            input.value = "";
-            body.scrollTop = body.scrollHeight;
-
-            setTimeout(() => {
-                body.innerHTML += `<div class="d-flex justify-content-start mb-2"><div class="bg-primary text-white p-2 rounded-3 w-75">Thank you for reaching out. A human editor will review this shortly.</div></div>`;
-                body.scrollTop = body.scrollHeight;
-            }, 1000);
-        }
-
-        // --- NEW: AI SCANNER ---
-        function runAiScan() {
-            const text = document.getElementById('aiText').value;
-            if(text.length < 50) return alert("Please paste at least 50 characters to run the AI scan.");
-            
-            const btn = document.getElementById('aiBtn');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Scanning Matrix...';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                // Fake logic for visual effect
-                let plag = Math.floor(Math.random() * 15);
-                let bot = Math.floor(Math.random() * 20);
-                let hum = 100 - bot;
-                
-                document.getElementById('aiHum').textContent = hum + "%";
-                document.getElementById('aiBot').textContent = bot + "%";
-                document.getElementById('aiPlag').textContent = plag + "%";
-                
-                document.getElementById('aiResults').classList.remove('d-none');
-                btn.innerHTML = '<i class="fa-solid fa-check me-2"></i> Scan Complete';
-                btn.classList.replace('btn-dark', 'btn-success');
-            }, 2000);
-        }
-
-        // --- NEW: COVER GENERATOR ---
-        function generateCover() {
-            const title = document.getElementById('coverTitle').value;
-            if(!title) return alert("Please enter your research title.");
-            
-            document.getElementById('renderedCoverTitle').textContent = title;
-            document.getElementById('renderedCoverAuthor').textContent = currentUser.name;
-            document.getElementById('coverResult').classList.remove('d-none');
-        }
-
-        // --- SOCIAL SHARE ---
-        function shareProfile() {
-            const text = `I am proud to be a verified ${currentUser.tier} Member of the International Social Sciences Studies Association (ISSSA). Excited to contribute to academic discourse! #ISSSA #Research #SocialSciences`;
-            navigator.clipboard.writeText(text).then(() => {
-                alert("Shareable text copied to clipboard! Paste it on LinkedIn or Twitter.");
-            });
         }
 
         // --- CITATION BUILDER ---
         function buildCitation() {
             const title = document.getElementById('citeTitle').value || "Untitled Paper";
             const year = document.getElementById('citeYear').value || "2026";
-            const parts = currentUser.name.split(' ');
-            const last = parts.length > 1 ? parts[parts.length - 1] : parts[0];
-            
-            document.getElementById('resAPA').innerHTML = `${last}, ${parts[0].charAt(0)}. (${year}). ${title}. <em>INJASSS</em>.`;
-            document.getElementById('resMLA').innerHTML = `${last}, ${parts[0]}. "${title}." <em>INJASSS</em>, ${year}.`;
-            document.getElementById('resCHI').innerHTML = `${last}, ${parts[0]}. "${title}." <em>Indian National Journal of Advanced Social Science Studies</em> (${year}).`;
+            const nameParts = currentUser.name.split(' ');
+            const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : currentUser.name;
+            const initial = nameParts[0].charAt(0);
+
+            document.getElementById('resAPA').innerHTML = `${lastName}, ${initial}. (${year}). ${title}. <em>Indian National Journal of Advanced Social Science Studies</em>.`;
+            document.getElementById('resMLA').innerHTML = `${lastName}, ${currentUser.name.split(' ')[0]}. "${title}." <em>Indian National Journal of Advanced Social Science Studies</em>, ${year}.`;
             document.getElementById('citationResults').classList.remove('d-none');
         }
 
         // --- LIVE PROFILE UPDATER ---
         function saveProfile() {
             const btn = document.getElementById('saveProfileBtn');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Writing to Database...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Saving...';
             btn.disabled = true;
 
             const newName = document.getElementById('editName').value;
@@ -806,11 +537,11 @@
                     document.getElementById('cardName').textContent = newName;
                     document.getElementById('cardInst').textContent = newInst;
                     
-                    btn.innerHTML = '<i class="fa-solid fa-check me-2"></i> Synced';
+                    btn.innerHTML = '<i class="fa-solid fa-check me-2"></i> Saved';
                     btn.classList.replace('btn-success', 'btn-primary');
                     setTimeout(() => { 
                         bootstrap.Modal.getInstance(document.getElementById('profileModal')).hide(); 
-                        btn.innerHTML = '<i class="fa-solid fa-floppy-disk me-2"></i> Commit Changes to DB'; 
+                        btn.innerHTML = '<i class="fa-solid fa-floppy-disk me-2"></i> Save Changes'; 
                         btn.classList.replace('btn-primary', 'btn-success'); btn.disabled = false;
                     }, 1000);
                 } else { throw new Error("Database failed to update."); }
@@ -820,27 +551,38 @@
         // --- LIVE DIRECTORY FETCH ---
         function loadDirectory() {
             const dirContainer = document.getElementById('directoryList');
-            dirContainer.innerHTML = '<div class="text-center py-5 text-muted"><i class="fa-solid fa-spinner fa-spin mb-3 fs-1"></i><br>Connecting to ISSSA Master Registry...</div>';
+            dirContainer.innerHTML = '<div class="text-center py-4 text-muted"><i class="fa-solid fa-spinner fa-spin mb-2 fs-3"></i><br>Connecting to ISSSA Registry...</div>';
             
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 body: JSON.stringify({ formType: "getDirectory" })
             }).then(res => res.json()).then(data => {
-                if(data.success) { fullDirectory = data.directory; renderDirectory(fullDirectory); }
+                if(data.success) {
+                    fullDirectory = data.directory;
+                    renderDirectory(fullDirectory);
+                }
             }).catch(err => { dirContainer.innerHTML = `<div class="text-danger p-3">Error loading directory.</div>`; });
         }
 
         function renderDirectory(arr) {
-            const dirContainer = document.getElementById('directoryList'); dirContainer.innerHTML = '';
-            if(arr.length === 0) { dirContainer.innerHTML = '<div class="p-4 text-center text-muted">No matching members found.</div>'; return; }
+            const dirContainer = document.getElementById('directoryList');
+            dirContainer.innerHTML = '';
+            if(arr.length === 0) { dirContainer.innerHTML = '<div class="p-3 text-muted">No matching members found.</div>'; return; }
+            
             arr.forEach(m => {
                 let badgeColor = m.tier.includes('Life') ? 'bg-success' : 'bg-primary';
-                dirContainer.innerHTML += `<div class="list-group-item d-flex justify-content-between align-items-center p-3"><div><strong class="text-dark fs-5">${m.name}</strong><br><span class="small text-muted"><i class="fa-solid fa-building-columns me-1"></i> ${m.institution}</span></div><span class="badge ${badgeColor} rounded-pill px-3 py-2 shadow-sm">${m.tier}</span></div>`;
+                dirContainer.innerHTML += `
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div><strong>${m.name}</strong><br><span class="small text-muted">${m.institution}</span></div>
+                        <span class="badge ${badgeColor} rounded-pill">${m.tier}</span>
+                    </div>`;
             });
         }
+
         function filterDirectory() {
             const term = document.getElementById('dirSearch').value.toLowerCase();
-            renderDirectory(fullDirectory.filter(m => m.name.toLowerCase().includes(term) || m.institution.toLowerCase().includes(term)));
+            const filtered = fullDirectory.filter(m => m.name.toLowerCase().includes(term) || m.institution.toLowerCase().includes(term));
+            renderDirectory(filtered);
         }
 
         // --- PRINTABLE DOCUMENTS ---
@@ -848,15 +590,15 @@
             document.getElementById('printContent').innerHTML = `
                 <div class="cert-body shadow-lg">
                     <h1 class="cert-title">International Social Sciences Studies Association</h1>
-                    <h3 style="color: #f4a261; font-family: 'Merriweather', serif; letter-spacing: 2px; margin-bottom: 50px;">CERTIFICATE OF MEMBERSHIP</h3>
-                    <p style="font-size: 1.3rem; color: #555;">This is to formally certify that</p>
+                    <h3 style="color: #f4a261; font-family: 'Merriweather', serif; letter-spacing: 2px;">CERTIFICATE OF MEMBERSHIP</h3>
+                    <p style="margin-top: 40px; font-size: 1.2rem; color: #555;">This is to formally certify that</p>
                     <div class="cert-name">${currentUser.name}</div>
-                    <p style="font-size: 1.3rem; color: #555; margin-bottom: 30px;">from <strong>${currentUser.institution}</strong></p>
-                    <p style="font-size: 1.2rem; color: #333; line-height: 1.8;">is a registered and verified <strong style="color: #002b5e;">${currentUser.tier} Member</strong> of the society in good standing, with all rights, privileges, and honors thereto appertaining.</p>
-                    <p style="margin-top: 40px; font-family: monospace; font-size: 1.3rem; background: #f0f4f8; display: inline-block; padding: 10px 20px; border-radius: 8px;">Official Registration ID: <strong style="color: #002b5e;">${currentUser.id}</strong></p>
-                    <div style="margin-top: 80px; display: flex; justify-content: space-around;">
-                        <div style="border-top: 2px solid #333; width: 250px; padding-top: 10px; font-weight: bold;">Date of Issue: ${new Date().toLocaleDateString()}</div>
-                        <div style="border-top: 2px solid #333; width: 250px; padding-top: 10px; font-weight: bold;">President, ISSSA</div>
+                    <p style="font-size: 1.2rem; color: #555;">from <strong>${currentUser.institution}</strong></p>
+                    <p style="font-size: 1.1rem; color: #555;">is a registered and verified <strong>${currentUser.tier} Member</strong> of ISSSA.</p>
+                    <p style="margin-top: 30px; font-family: monospace; font-size: 1.2rem;">Official Registration ID: <strong style="color: #002b5e;">${currentUser.id}</strong></p>
+                    <div style="margin-top: 60px; display: flex; justify-content: space-around;">
+                        <div style="border-top: 1px solid #333; width: 200px; padding-top: 10px;">Date of Issue: ${new Date().toLocaleDateString()}</div>
+                        <div style="border-top: 1px solid #333; width: 200px; padding-top: 10px;">President, ISSSA</div>
                     </div>
                 </div>`;
             triggerPrint();
@@ -865,28 +607,25 @@
         function generateReceipt() {
             let amount = currentUser.tier.includes('Life') ? "5,000" : (currentUser.tier.includes('Inst') ? "15,000" : "1,500");
             document.getElementById('printContent').innerHTML = `
-                <div style="max-width: 800px; margin: 0 auto; border: 1px solid #ccc; padding: 50px; background: white; font-family: Arial, sans-serif;">
-                    <div style="display: flex; justify-content: space-between; border-bottom: 3px solid #002b5e; padding-bottom: 20px; margin-bottom: 40px;">
-                        <div><h2 style="color: #002b5e; margin: 0; font-family: 'Merriweather', serif; font-size: 2rem;">ISSSA TREASURY</h2><p style="margin: 5px 0 0 0; color: #666;">Varanasi, Uttar Pradesh, India</p></div>
-                        <div style="text-align: right;"><h1 style="margin: 0; color: #f4a261; font-size: 2.5rem;">RECEIPT</h1><p style="margin: 10px 0 0 0; font-weight: bold;">Date: ${new Date().toLocaleDateString()}</p><p style="margin: 5px 0 0 0; color: #555;">Receipt No: REC-${currentUser.id.split('-')[2]}-${new Date().getFullYear()}</p></div>
+                <div style="max-width: 800px; margin: 0 auto; border: 1px solid #ccc; padding: 40px; background: white;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #002b5e; padding-bottom: 20px; margin-bottom: 30px;">
+                        <div><h2 style="color: #002b5e; margin: 0; font-family: 'Merriweather', serif;">ISSSA TREASURY</h2><p style="margin: 0; color: #666;">Varanasi, Uttar Pradesh, India</p></div>
+                        <div style="text-align: right;"><h1 style="margin: 0; color: #f4a261;">RECEIPT</h1><p style="margin: 0; font-weight: bold;">Date: ${new Date().toLocaleDateString()}</p><p style="margin: 0;">Receipt No: REC-${currentUser.id.split('-')[2]}</p></div>
                     </div>
-                    <div style="margin-bottom: 50px; background: #f8f9fa; padding: 20px; border-radius: 8px;">
-                        <h5 style="color: #555; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 10px;">Received From:</h5>
-                        <p style="margin: 0; font-size: 1.4rem; color: #002b5e;"><strong>${currentUser.name}</strong></p>
-                        <p style="margin: 5px 0 0 0;">${currentUser.institution}</p>
-                        <p style="margin: 5px 0 0 0; font-family: monospace;">Member ID: ${currentUser.id}</p>
-                    </div>
-                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 50px;">
-                        <tr style="background-color: #002b5e; color: white; text-align: left;"><th style="padding: 15px;">Description</th><th style="padding: 15px; text-align: right;">Amount (INR)</th></tr>
-                        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 20px 15px;">ISSSA <strong>${currentUser.tier}</strong> Membership Subscription Dues</td><td style="padding: 20px 15px; text-align: right; font-size: 1.1rem;">₹${amount}.00</td></tr>
-                        <tr><td style="padding: 20px 15px; text-align: right; font-weight: bold; font-size: 1.2rem;">Total Paid:</td><td style="padding: 20px 15px; text-align: right; font-weight: bold; font-size: 1.4rem; color: #002b5e;">₹${amount}.00</td></tr>
+                    <div style="margin-bottom: 40px;"><h5 style="color: #555;">Received From:</h5><p style="margin: 0; font-size: 1.2rem;"><strong>${currentUser.name}</strong></p><p style="margin: 0;">${currentUser.institution}</p><p style="margin: 0;">Member ID: ${currentUser.id}</p></div>
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 40px;">
+                        <tr style="background-color: #002b5e; color: white; text-align: left;"><th style="padding: 10px;">Description</th><th style="padding: 10px; text-align: right;">Amount (INR)</th></tr>
+                        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 15px 10px;">ISSSA ${currentUser.tier} Membership Subscription</td><td style="padding: 15px 10px; text-align: right;">₹${amount}.00</td></tr>
+                        <tr><td style="padding: 15px 10px; text-align: right; font-weight: bold;">Total Paid:</td><td style="padding: 15px 10px; text-align: right; font-weight: bold; font-size: 1.2rem;">₹${amount}.00</td></tr>
                     </table>
-                    <div style="text-align: center; color: #777; font-size: 0.9rem; border-top: 1px solid #eee; padding-top: 30px;"><p>This is a computer-generated official tax receipt and does not require a physical signature.</p><p>Thank you for supporting the advancement of social sciences.</p></div>
+                    <div style="text-align: center; color: #777; font-size: 0.9rem; border-top: 1px solid #eee; padding-top: 20px;"><p>This is a computer-generated receipt.</p></div>
                 </div>`;
             triggerPrint();
         }
+
         function triggerPrint() {
-            document.getElementById('printContainer').classList.remove('d-none'); window.print();
+            document.getElementById('printContainer').classList.remove('d-none');
+            window.print();
             setTimeout(() => { document.getElementById('printContainer').classList.add('d-none'); }, 1000);
         }
     </script>
