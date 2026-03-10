@@ -4,143 +4,209 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Member Dashboard | ISSSA</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
     <style>
         :root {
             --primary-color: #002b5e;
             --secondary-color: #f4a261;
             --bg-light: #f4f6f9;
             --text-main: #333333;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
         }
-        body { background-color: var(--bg-light); font-family: 'Open Sans', sans-serif; color: var(--text-main); }
-        h1, h2, h3, h4, h5, .brand { font-family: 'Merriweather', serif; }
+
+        /* --- Dark Mode Variables --- */
+        body.dark-mode {
+            --primary-color: #4da3ff;
+            --secondary-color: #ffb703;
+            --bg-light: #121212;
+            --text-main: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --border-color: #333333;
+        }
         
-        /* Login Screen */
-        .login-wrapper { height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(rgba(0, 43, 94, 0.9), rgba(0, 43, 94, 0.9)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80') center/cover; }
-        .login-card { background: white; padding: 3rem; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 100%; max-width: 400px; text-align: center; border-top: 5px solid var(--secondary-color); }
-        .login-brand { font-size: 2.5rem; color: var(--primary-color); font-weight: bold; margin-bottom: 5px; }
-
-        /* Dashboard Nav */
-        .dashboard-nav { background-color: #ffffff; padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000;}
-        .dashboard-nav .brand { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none;}
+        body { background-color: var(--bg-light); font-family: 'Open Sans', sans-serif; color: var(--text-main); transition: all 0.3s ease; }
+        h1, h2, h3, h4, h5, .brand { font-family: 'Merriweather', serif; color: var(--primary-color); }
         
-        /* Announcements Bar */
-        .announcement-bar { background-color: var(--primary-color); color: white; padding: 8px 0; font-size: 0.85rem; font-weight: 600; overflow: hidden; white-space: nowrap; }
-        .announcement-text { display: inline-block; animation: scrollText 20s linear infinite; }
-        @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        /* --- Login Screen --- */
+        .login-wrapper { height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(rgba(0, 43, 94, 0.9), rgba(0, 43, 94, 0.9)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80') center/cover; position: fixed; width: 100%; z-index: 9999; top: 0; left: 0;}
+        .login-card { background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); width: 100%; max-width: 400px; text-align: center; border-top: 5px solid var(--secondary-color); }
+        .login-brand { font-size: 2.5rem; color: #002b5e; font-weight: bold; margin-bottom: 5px; }
 
-        /* Digital ID Card */
-        .id-card { background: linear-gradient(135deg, #002b5e, #001836); color: white; border-radius: 12px; padding: 25px; position: relative; overflow: hidden; box-shadow: 0 10px 20px rgba(0, 43, 94, 0.2); }
-        .id-card::after { content: '\f19d'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; right: -20px; bottom: -20px; font-size: 8rem; opacity: 0.05; transform: rotate(-15deg); }
-        .id-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
-        .id-card-header h4 { margin: 0; font-size: 1.2rem; color: var(--secondary-color); letter-spacing: 1px; }
-        .id-data-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-bottom: 2px; }
-        .id-data-val { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; }
-        .barcode { font-family: 'Libre Barcode 39', cursive, monospace; font-size: 2.5rem; opacity: 0.6; margin-top: 10px; letter-spacing: -2px; overflow: hidden;}
+        /* --- Dashboard Nav --- */
+        .dashboard-nav { background-color: var(--card-bg); padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color);}
+        .dashboard-nav .brand { font-size: 1.5rem; font-weight: bold; text-decoration: none;}
         
-        /* Action Cards */
-        .action-card { background: white; border-radius: 8px; padding: 20px; height: 100%; border: 1px solid var(--border-color); transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; flex-direction: column; }
-        .action-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.08); border-color: var(--primary-color); }
-        .action-icon { width: 50px; height: 50px; background: rgba(244, 162, 97, 0.1); color: var(--secondary-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 15px; }
-        .action-card h4 { font-size: 1.1rem; color: var(--primary-color); margin-bottom: 10px; }
-        .action-card p { flex-grow: 1; }
+        /* --- Announcements Bar --- */
+        .announcement-bar { background-color: #002b5e; color: white; padding: 10px 0; font-size: 0.85rem; font-weight: 600; overflow: hidden; white-space: nowrap; }
+        .announcement-text { display: inline-block; animation: scrollText 25s linear infinite; }
+        @keyframes scrollText { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
 
-        /* Buttons */
-        .btn-custom { display: inline-block; padding: 0.6rem 1.5rem; background-color: var(--primary-color); color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 4px; transition: 0.3s; border: none; }
-        .btn-custom:hover { background-color: var(--secondary-color); color: #ffffff; }
+        /* --- Digital ID Card --- */
+        .id-card { background: linear-gradient(135deg, #001f44, #003b82); color: white; border-radius: 16px; padding: 30px; position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); }
+        .id-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%); transform: rotate(30deg); pointer-events: none;}
+        .id-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 15px; }
+        .id-card-header h4 { margin: 0; font-size: 1.4rem; color: #f4a261; letter-spacing: 1px; }
+        .id-data-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: #a0c4ff; margin-bottom: 3px; }
+        .id-data-val { font-size: 1.15rem; font-weight: 700; margin-bottom: 15px; text-shadow: 0 1px 2px rgba(0,0,0,0.2);}
+        .barcode { font-family: 'Libre Barcode 39', monospace; font-size: 3rem; color: rgba(255,255,255,0.8); margin-top: 15px; letter-spacing: -2px; overflow: hidden;}
+        
+        /* --- Action Cards & Vault --- */
+        .card-custom { background: var(--card-bg); border-radius: 12px; padding: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.02); transition: all 0.3s ease;}
+        .action-card { display: flex; flex-direction: column; height: 100%; cursor: pointer;}
+        .action-card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px rgba(0,0,0,0.08); border-color: var(--primary-color); }
+        .action-icon { width: 55px; height: 55px; background: rgba(244, 162, 97, 0.15); color: var(--secondary-color); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 15px; }
+        .action-card h4 { font-size: 1.15rem; margin-bottom: 8px; }
+        .action-card p { flex-grow: 1; color: #666; }
+        body.dark-mode .action-card p { color: #aaa; }
 
-        .blur-overlay { filter: blur(5px); pointer-events: none; user-select: none; opacity: 0.6; }
+        /* --- Analytics Bar --- */
+        .progress-slim { height: 6px; border-radius: 3px; background-color: var(--border-color); overflow: hidden; margin-top: 8px;}
+        .progress-slim .progress-bar { background-color: var(--secondary-color); }
+
+        /* --- Buttons --- */
+        .btn-custom { display: inline-block; padding: 0.6rem 1.5rem; background-color: #002b5e; color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 6px; transition: 0.3s; border: none; }
+        .btn-custom:hover { background-color: #f4a261; color: #ffffff; }
+        
+        body.dark-mode .btn-custom { background-color: var(--primary-color); color: #000; }
+        body.dark-mode .btn-custom:hover { background-color: var(--secondary-color); }
+
+        .blur-overlay { filter: blur(6px); pointer-events: none; user-select: none; opacity: 0.5; transition: filter 0.5s ease;}
+        
+        /* Loader Overlay */
+        #welcomeLoader { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--primary-color); z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; transition: opacity 0.5s; }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div id="loginScreen" class="login-wrapper">
         <div class="login-card">
             <div class="login-brand brand">ISSSA</div>
-            <p class="text-muted mb-4 small">Secure Member Portal</p>
+            <p class="text-muted mb-4 small" style="color: #666 !important;">Secure Member Portal</p>
             <div id="loginAlert" class="alert alert-danger d-none small py-2" role="alert"></div>
             <form id="loginForm">
                 <div class="mb-3 text-start">
-                    <input type="email" class="form-control" id="loginEmail" placeholder="Registered Email" required>
+                    <input type="email" class="form-control bg-light" id="loginEmail" placeholder="Registered Email" required style="color: #333;">
                 </div>
                 <div class="mb-4 text-start">
-                    <input type="password" class="form-control" id="loginPass" placeholder="Password" required>
+                    <input type="password" class="form-control bg-light" id="loginPass" placeholder="Password" required style="color: #333;">
                 </div>
-                <button type="submit" class="btn-custom w-100" id="loginBtn">
+                <button type="submit" class="btn-custom w-100 py-2 fs-5" id="loginBtn">
                     <span id="loginText">Access Dashboard</span>
                     <span id="loginSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
                 </button>
             </form>
             <div class="mt-4 border-top pt-3">
-                <p class="small text-muted mb-0">Not a member yet? <a href="register.html" style="color: var(--primary-color); font-weight: bold;">Apply Here</a></p>
+                <p class="small text-muted mb-0" style="color: #888 !important;">Not a member yet? <a href="register.html" style="color: #002b5e; font-weight: bold;">Apply Here</a></p>
             </div>
         </div>
+    </div>
+
+    <div id="welcomeLoader" class="d-none">
+        <i class="fa-solid fa-fingerprint mb-3" style="font-size: 4rem; color: var(--secondary-color);"></i>
+        <h2 class="brand text-white">Decrypting Credentials...</h2>
+        <p class="opacity-75">Establishing secure connection to ISSSA servers.</p>
     </div>
 
     <div id="dashboardScreen" class="d-none">
         
         <div class="announcement-bar d-none" id="announcementBar">
-            <div class="container">
-                <span class="announcement-text"><i class="fa-solid fa-bullhorn me-2 text-warning"></i> <strong>Official Alert:</strong> Abstract submissions for the Viksit Bharat @2047 Seminar are now open! Active members receive a 50% fee waiver.</span>
+            <div class="container-fluid">
+                <span class="announcement-text"><i class="fa-solid fa-bullhorn me-2 text-warning"></i> <strong>Official Alert:</strong> Call for Papers for "Volume 2, Issue 1" is now active. | Abstract submissions for the Viksit Bharat @2047 Seminar close soon. Active members receive a 50% fee waiver.</span>
             </div>
         </div>
 
         <nav class="dashboard-nav">
             <div class="container d-flex justify-content-between align-items-center">
-                <a href="#" class="brand">ISSSA Member Hub</a>
-                <div>
-                    <span class="me-3 fw-bold d-none d-md-inline" id="navName"></span>
-                    <button class="btn btn-sm btn-outline-danger" onclick="logout()"><i class="fa-solid fa-power-off me-1"></i> Logout</button>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="#" class="brand mb-0">ISSSA</a>
+                    <span class="badge bg-secondary d-none d-md-inline">Member Hub</span>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-sm btn-outline-secondary rounded-circle" onclick="toggleDarkMode()" title="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+                    <span class="fw-bold d-none d-md-inline" id="navName"></span>
+                    <button class="btn btn-sm btn-danger fw-bold" onclick="logout()"><i class="fa-solid fa-power-off"></i></button>
                 </div>
             </div>
         </nav>
 
-        <div class="container py-5">
+        <div class="container py-4 py-md-5">
             
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 style="color: var(--primary-color);">Welcome back, <span id="welcomeName">Member</span></h2>
+            <div class="d-flex justify-content-between align-items-end mb-4">
+                <div>
+                    <p class="text-muted mb-0 small text-uppercase fw-bold"><span id="currentDate"></span></p>
+                    <h2 style="color: var(--primary-color);">Welcome back, <span id="welcomeName">Member</span></h2>
+                </div>
             </div>
 
             <div id="pendingAlert" class="alert alert-warning border-warning shadow-sm d-none mb-4" role="alert">
                 <h5 class="alert-heading fw-bold"><i class="fa-solid fa-clock me-2"></i> Account Pending Verification</h5>
-                <p class="mb-0">We have received your application. The treasury is currently verifying your payment. Full dashboard features will be unlocked once your status changes to <strong>Active</strong>.</p>
+                <p class="mb-0">We have received your application. The treasury is currently verifying your payment UTR. Full dashboard features will be unlocked once your status changes to <strong>Active</strong>.</p>
             </div>
 
             <div class="row g-4">
                 
                 <div class="col-lg-4">
-                    <div class="id-card mb-4 shadow">
+                    
+                    <div class="id-card mb-4">
                         <div class="id-card-header">
                             <h4 class="brand">ISSSA</h4>
-                            <span class="badge bg-warning text-dark" id="cardStatus">Active</span>
+                            <span class="badge bg-warning text-dark border border-dark" id="cardStatus">Active</span>
                         </div>
-                        <div class="id-data-label">Member Name</div>
-                        <div class="id-data-val" id="cardName">Loading...</div>
                         
-                        <div class="id-data-label">Membership Tier</div>
-                        <div class="id-data-val text-warning" id="cardTier">Loading...</div>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="id-data-label">Member Name</div>
+                                <div class="id-data-val" id="cardName">Loading...</div>
+                                
+                                <div class="id-data-label">Membership Tier</div>
+                                <div class="id-data-val text-warning" id="cardTier">Loading...</div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <i class="fa-solid fa-microchip text-white opacity-50" style="font-size: 2.5rem;"></i>
+                            </div>
+                        </div>
                         
-                        <div class="id-data-label">ISSSA Official ID</div>
-                        <div class="id-data-val" id="cardId" style="font-family: monospace; letter-spacing: 2px;">Loading...</div>
+                        <div class="id-data-label mt-2">ISSSA Official ID</div>
+                        <div class="id-data-val text-info mb-3" id="cardId" style="font-family: monospace; letter-spacing: 2px;">Loading...</div>
 
-                        <div class="id-data-label">Institution</div>
-                        <div class="id-data-val mb-2 fs-6 fw-normal" id="cardInst">Loading...</div>
+                        <div class="id-data-label">Primary Affiliation</div>
+                        <div class="id-data-val mb-0 fs-6 fw-normal opacity-75" id="cardInst">Loading...</div>
 
-                        <div class="barcode" id="cardBarcode">||||||||||||||||||||||</div>
+                        <div class="barcode text-center" id="cardBarcode">||||||||||||||||||||||</div>
+                    </div>
+
+                    <div class="card-custom mb-4">
+                        <h6 class="fw-bold mb-3 border-bottom pb-2"><i class="fa-solid fa-chart-simple me-2 text-primary"></i> Academic Footprint</h6>
+                        <div class="d-flex justify-content-between small fw-bold mb-1">
+                            <span class="text-muted">INJASSS Publications</span>
+                            <span class="text-primary">0 / 5</span>
+                        </div>
+                        <div class="progress-slim mb-3"><div class="progress-bar w-0"></div></div>
+                        
+                        <div class="d-flex justify-content-between small fw-bold mb-1">
+                            <span class="text-muted">Peer Reviews Completed</span>
+                            <span class="text-success">0</span>
+                        </div>
                     </div>
 
                     <div id="sideFeatures">
-                        <div class="card border-0 shadow-sm mb-3">
-                            <div class="card-body text-center">
-                                <h6 class="fw-bold mb-3">Official Documents</h6>
-                                <button class="btn btn-outline-primary btn-sm w-100 mb-2 fw-bold" onclick="alert('Generating Certificate PDF...')">
-                                    <i class="fa-solid fa-certificate me-2"></i> Download ID Certificate
-                                </button>
-                                <button class="btn btn-outline-secondary btn-sm w-100 fw-bold" onclick="alert('Downloading Tax Invoice...')">
-                                    <i class="fa-solid fa-file-invoice-dollar me-2"></i> Download Fee Receipt
-                                </button>
-                            </div>
+                        <div class="card-custom mb-3">
+                            <h6 class="fw-bold mb-3 border-bottom pb-2"><i class="fa-solid fa-vault me-2 text-secondary"></i> Document Vault</h6>
+                            <button class="btn btn-outline-primary btn-sm w-100 mb-2 fw-bold text-start" onclick="alert('Generating Certificate PDF...')">
+                                <i class="fa-solid fa-id-badge me-2 text-center" style="width: 20px;"></i> Official ID Certificate
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm w-100 mb-2 fw-bold text-start" onclick="alert('Downloading Tax Invoice...')">
+                                <i class="fa-solid fa-file-invoice-dollar me-2 text-center" style="width: 20px;"></i> Fee Receipt (Tax)
+                            </button>
+                            <button class="btn btn-outline-secondary btn-sm w-100 fw-bold text-start" onclick="alert('No seminar certificates found on record.')">
+                                <i class="fa-solid fa-award me-2 text-center" style="width: 20px;"></i> Seminar Certificates
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -149,87 +215,90 @@
                     <div class="row g-4">
                         
                         <div class="col-md-6 col-xl-4">
-                            <div class="action-card text-center" style="border-top: 4px solid var(--primary-color);">
-                                <div class="action-icon mx-auto"><i class="fa-solid fa-book-journal-whills"></i></div>
-                                <h4>INJASSS Publishing</h4>
-                                <p class="text-muted small">Submit your research with priority peer-review and Article Processing Charge (APC) waivers.</p>
-                                <a href="submit.html" class="btn-custom btn-sm w-100 mt-2">Submit Manuscript</a>
+                            <div class="card-custom action-card text-center border-top border-primary border-4" onclick="window.location.href='submit.html'">
+                                <div class="action-icon mx-auto"><i class="fa-solid fa-pen-nib"></i></div>
+                                <h4>Submit to INJASSS</h4>
+                                <p class="text-muted small">Route your research through the priority peer-review pipeline with APC waivers.</p>
+                                <span class="fw-bold text-primary small mt-auto">Open Portal <i class="fa-solid fa-arrow-right ms-1"></i></span>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-xl-4">
-                            <div class="action-card text-center">
+                            <div class="card-custom action-card text-center">
                                 <div class="action-icon mx-auto"><i class="fa-solid fa-magnifying-glass-location"></i></div>
                                 <h4>Track Manuscript</h4>
-                                <p class="text-muted small mb-2">Check the live editorial status of your submitted papers.</p>
-                                <div class="input-group input-group-sm mt-auto">
-                                    <input type="text" class="form-control" placeholder="INJASSS ID" id="quickTrackId">
-                                    <button class="btn btn-outline-primary fw-bold" onclick="quickTrack()">Track</button>
+                                <p class="text-muted small mb-3">Check the live editorial status and download reviewer feedback.</p>
+                                <div class="input-group input-group-sm mt-auto" onclick="event.stopPropagation();">
+                                    <input type="text" class="form-control" placeholder="ID (e.g. 001)" id="quickTrackId">
+                                    <button class="btn btn-primary fw-bold" onclick="quickTrack()">Track</button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-xl-4">
-                            <div class="action-card text-center" style="border-top: 4px solid var(--secondary-color);">
-                                <span class="badge bg-danger position-absolute top-0 end-0 m-2">Live</span>
+                            <div class="card-custom action-card text-center position-relative border-top border-danger border-4">
+                                <span class="badge bg-danger position-absolute top-0 end-0 m-2 pulse-badge">Live Event</span>
                                 <div class="action-icon mx-auto"><i class="fa-solid fa-microphone-lines"></i></div>
-                                <h4>National Seminars</h4>
-                                <p class="text-muted small">Register for Viksit Bharat @2047 using your exclusive discount code.</p>
-                                <button class="btn btn-outline-dark btn-sm w-100 fw-bold mt-auto" onclick="alert('Your discount code is: ISSSA-MEMBER-50')">Reveal Promo Code</button>
+                                <h4>National Seminar</h4>
+                                <p class="text-muted small">Register for Viksit Bharat @2047 using your exclusive member discount code.</p>
+                                <button class="btn btn-outline-dark btn-sm w-100 fw-bold mt-auto" onclick="event.stopPropagation(); alert('Your discount code is: ISSSA-MEMBER-50')">Reveal Promo Code</button>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-xl-4">
-                            <div class="action-card text-center">
-                                <div class="action-icon mx-auto"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-                                <h4>Research Grants</h4>
-                                <p class="text-muted small">Apply for ISSSA Seed Funding for field studies and data collection.</p>
-                                <button class="btn btn-outline-success btn-sm w-100 fw-bold mt-auto" onclick="alert('Applications for the 2026 Grant Cycle open in August.')">Apply for Funding</button>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-xl-4">
-                            <div class="action-card text-center">
+                            <div class="card-custom action-card text-center" onclick="window.location.href='archives.html'">
                                 <div class="action-icon mx-auto"><i class="fa-solid fa-box-archive"></i></div>
                                 <h4>Premium Archives</h4>
-                                <p class="text-muted small">Access full-text PDFs of all past INJASSS volumes without paywalls.</p>
-                                <a href="archives.html" class="btn btn-outline-primary btn-sm w-100 fw-bold mt-auto">Browse Library</a>
+                                <p class="text-muted small">Bypass paywalls to access full-text PDFs of all past INJASSS journal volumes.</p>
+                                <span class="fw-bold text-primary small mt-auto">Browse Library <i class="fa-solid fa-arrow-right ms-1"></i></span>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-xl-4">
-                            <div class="action-card text-center">
+                            <div class="card-custom action-card text-center" onclick="alert('Citation generator tool will load your published works here.')">
+                                <div class="action-icon mx-auto"><i class="fa-solid fa-quote-right"></i></div>
+                                <h4>Citation Tools</h4>
+                                <p class="text-muted small">Instantly generate APA, MLA, and Chicago citations for your published papers.</p>
+                                <span class="fw-bold text-primary small mt-auto">Generate <i class="fa-solid fa-arrow-right ms-1"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card-custom action-card text-center border-top border-success border-4" onclick="alert('Applications for the 2026 Grant Cycle open in August. Requirements: Minimum 2 publications.')">
+                                <div class="action-icon mx-auto bg-success bg-opacity-10 text-success"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                                <h4>Research Grants</h4>
+                                <p class="text-muted small">Apply for ISSSA Seed Funding for field studies and geographic data collection.</p>
+                                <span class="fw-bold text-success small mt-auto">Check Eligibility <i class="fa-solid fa-arrow-right ms-1"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card-custom action-card text-center border-warning" onclick="window.location.href='reupload.html'">
+                                <div class="action-icon mx-auto bg-warning bg-opacity-10 text-warning"><i class="fa-solid fa-file-pen"></i></div>
+                                <h4>Submit Revisions</h4>
+                                <p class="text-muted small">Upload corrected documents if the editorial board requested major or minor revisions.</p>
+                                <span class="fw-bold text-warning small mt-auto">Re-Upload Desk <i class="fa-solid fa-arrow-right ms-1"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card-custom action-card text-center">
                                 <div class="action-icon mx-auto"><i class="fa-solid fa-check-to-slot"></i></div>
-                                <h4>Society Elections</h4>
+                                <h4>Electoral Rights</h4>
                                 <p class="text-muted small mb-2">Check your EC voting rights for the upcoming triennial elections.</p>
                                 <div id="votingStatus" class="p-2 bg-light rounded text-center small fw-bold mt-auto border">Checking...</div>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-xl-4">
-                            <div class="action-card text-center">
-                                <div class="action-icon mx-auto"><i class="fa-solid fa-network-wired"></i></div>
-                                <h4>Member Directory</h4>
-                                <p class="text-muted small">Connect and collaborate with other verified ISSSA academics nationwide.</p>
-                                <button class="btn btn-outline-secondary btn-sm w-100 fw-bold mt-auto" onclick="alert('Directory access is restricted due to privacy protocols. Contact admin to request a connection.')">Search Directory</button>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-xl-4">
-                            <div class="action-card text-center border-danger">
-                                <div class="action-icon mx-auto bg-danger text-white"><i class="fa-solid fa-file-pen"></i></div>
-                                <h4>Submit Revisions</h4>
-                                <p class="text-muted small">Upload corrected documents if the reviewers requested major/minor revisions.</p>
-                                <a href="reupload.html" class="btn btn-outline-danger btn-sm w-100 fw-bold mt-auto">Re-Upload Desk</a>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-xl-4">
-                            <div class="action-card text-center">
-                                <div class="action-icon mx-auto"><i class="fa-solid fa-user-gear"></i></div>
-                                <h4>Account Settings</h4>
-                                <p class="text-muted small">Update your institutional affiliation, password, and postal address.</p>
-                                <button class="btn btn-outline-secondary btn-sm w-100 fw-bold mt-auto" onclick="alert('Profile editor launching in v2.0 update.')"><i class="fa-solid fa-pen me-1"></i> Edit Profile</button>
+                            <div class="card-custom action-card text-center">
+                                <div class="action-icon mx-auto"><i class="fa-solid fa-headset"></i></div>
+                                <h4>Editorial Support</h4>
+                                <p class="text-muted small">Contact the Editor-in-Chief directly or update your institutional profile details.</p>
+                                <div class="d-flex gap-2 mt-auto" onclick="event.stopPropagation();">
+                                    <button class="btn btn-outline-primary btn-sm w-50 fw-bold" onclick="window.location.href='mailto:editor@injasss.org'"><i class="fa-solid fa-envelope"></i></button>
+                                    <button class="btn btn-outline-secondary btn-sm w-50 fw-bold" onclick="alert('Profile editor launching soon.')"><i class="fa-solid fa-gear"></i></button>
+                                </div>
                             </div>
                         </div>
 
@@ -241,6 +310,20 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Display Current Date
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+
+        // Dark Mode Toggle Logic
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('isssaDarkMode', isDark);
+        }
+        if(localStorage.getItem('isssaDarkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+
         // Use your actual Web App URL
         const SCRIPT_URL = 'https://script.google.com/a/~/macros/s/AKfycbwMrD4BLDk_qZRqz_NqlDwb7K5i67JsWhpHay7vEbqxf9GfafkconJv5TuiBwVEFTAE/exec';
 
@@ -267,61 +350,74 @@
                 body: JSON.stringify(payload)
             })
             .then(response => response.json())
-            .then(data => handleLogin(data))
+            .then(data => {
+                if(data.success) {
+                    // Trigger Cool Loader Animation
+                    document.getElementById('loginScreen').classList.add('d-none');
+                    document.getElementById('welcomeLoader').classList.remove('d-none');
+                    
+                    setTimeout(() => {
+                        document.getElementById('welcomeLoader').classList.add('d-none');
+                        handleLoginSuccess(data.data);
+                    }, 1500); // 1.5 second fake load for aesthetic
+                } else {
+                    throw new Error(data.message);
+                }
+            })
             .catch(error => {
-                alert("Connection Error: " + error.message);
+                const alertBox = document.getElementById('loginAlert');
+                alertBox.textContent = error.message;
+                alertBox.classList.remove('d-none');
                 resetLoginBtn();
             });
         });
 
-        function handleLogin(response) {
-            if(response.success) {
-                // Populate Dashboard Data
-                document.getElementById('navName').textContent = response.data.name;
-                document.getElementById('welcomeName').textContent = response.data.name.split(' ')[0]; // First name only
-                document.getElementById('cardName').textContent = response.data.name;
-                document.getElementById('cardTier').textContent = response.data.tier;
-                document.getElementById('cardId').textContent = response.data.id;
-                document.getElementById('cardInst').textContent = response.data.institution;
+        function handleLoginSuccess(userData) {
+            // Populate Dashboard Data
+            document.getElementById('navName').textContent = userData.name;
+            document.getElementById('welcomeName').textContent = userData.name.split(' ')[0]; // First name only
+            document.getElementById('cardName').textContent = userData.name;
+            document.getElementById('cardTier').textContent = userData.tier;
+            document.getElementById('cardId').textContent = userData.id;
+            document.getElementById('cardInst').textContent = userData.institution;
+            
+            // Generate Fake Barcode from ID
+            document.getElementById('cardBarcode').textContent = "*" + userData.id + "*";
+            
+            // Handle Status (Pending vs Active)
+            const statusBadge = document.getElementById('cardStatus');
+            if(userData.status.includes('Pending')) {
+                statusBadge.textContent = "Pending Verification";
+                statusBadge.className = "badge bg-warning text-dark border border-dark";
+                document.getElementById('pendingAlert').classList.remove('d-none');
+                document.getElementById('announcementBar').classList.add('d-none');
                 
-                // Handle Status (Pending vs Active)
-                const statusBadge = document.getElementById('cardStatus');
-                if(response.data.status.includes('Pending')) {
-                    statusBadge.textContent = "Pending";
-                    statusBadge.className = "badge bg-warning text-dark";
-                    document.getElementById('pendingAlert').classList.remove('d-none');
-                    document.getElementById('announcementBar').classList.add('d-none');
-                    // Blur premium features
-                    document.getElementById('featuresGrid').classList.add('blur-overlay');
-                    document.getElementById('sideFeatures').classList.add('blur-overlay');
-                } else {
-                    statusBadge.textContent = "Active";
-                    statusBadge.className = "badge bg-success";
-                    document.getElementById('pendingAlert').classList.add('d-none');
-                    document.getElementById('announcementBar').classList.remove('d-none');
-                    document.getElementById('featuresGrid').classList.remove('blur-overlay');
-                    document.getElementById('sideFeatures').classList.remove('blur-overlay');
-                }
-
-                // Handle Voting Rights Logic
-                const voteBox = document.getElementById('votingStatus');
-                if (response.data.tier.includes('Life')) {
-                    voteBox.innerHTML = '<span class="text-success"><i class="fa-solid fa-circle-check me-1"></i> Eligible to Vote</span>';
-                    voteBox.className = "p-2 bg-success bg-opacity-10 rounded text-center small fw-bold mt-auto border border-success";
-                } else {
-                    voteBox.innerHTML = '<span class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i> Non-Voting Member</span>';
-                    voteBox.className = "p-2 bg-light rounded text-center small fw-bold mt-auto border";
-                }
-
-                // Switch Screens
-                document.getElementById('loginScreen').classList.add('d-none');
-                document.getElementById('dashboardScreen').classList.remove('d-none');
+                // Blur premium features
+                document.getElementById('featuresGrid').classList.add('blur-overlay');
+                document.getElementById('sideFeatures').classList.add('blur-overlay');
             } else {
-                const alertBox = document.getElementById('loginAlert');
-                alertBox.textContent = response.message;
-                alertBox.classList.remove('d-none');
-                resetLoginBtn();
+                statusBadge.textContent = "Active Member";
+                statusBadge.className = "badge bg-success border border-light";
+                document.getElementById('pendingAlert').classList.add('d-none');
+                document.getElementById('announcementBar').classList.remove('d-none');
+                
+                // Remove Blur
+                document.getElementById('featuresGrid').classList.remove('blur-overlay');
+                document.getElementById('sideFeatures').classList.remove('blur-overlay');
             }
+
+            // Handle Voting Rights Logic
+            const voteBox = document.getElementById('votingStatus');
+            if (userData.tier.includes('Life')) {
+                voteBox.innerHTML = '<span class="text-success"><i class="fa-solid fa-circle-check me-1"></i> Eligible to Vote in 2026</span>';
+                voteBox.className = "p-2 bg-success bg-opacity-10 rounded text-center small fw-bold mt-auto border border-success";
+            } else {
+                voteBox.innerHTML = '<span class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i> Non-Voting Member</span>';
+                voteBox.className = "p-2 bg-light rounded text-center small fw-bold mt-auto border";
+            }
+
+            // Show Dashboard
+            document.getElementById('dashboardScreen').classList.remove('d-none');
         }
 
         function resetLoginBtn() {
@@ -338,10 +434,18 @@
         }
 
         function quickTrack() {
-            const id = document.getElementById('quickTrackId').value;
-            if(!id) return alert("Please enter an INJASSS Tracking ID.");
-            alert("To protect reviewer feedback, please use the main Author Tracking Portal to verify your email against ID: " + id);
-            window.location.href = "authorportal.html";
+            const idInput = document.getElementById('quickTrackId').value;
+            if(!idInput) return alert("Please enter the 3-digit Tracking ID number.");
+            
+            // Format ID automatically if they just typed numbers
+            let formattedId = idInput.toUpperCase();
+            if(!formattedId.includes("INJASSS")) {
+                formattedId = `INJASSS-2026-${formattedId.padStart(3, '0')}`;
+            }
+            
+            alert(`To protect peer-reviewer feedback, the system requires email verification for ${formattedId}.\n\nRedirecting to main Tracking Portal...`);
+            // Change this to your actual author portal URL if hosted externally
+            window.location.href = "authorportal.html"; 
         }
     </script>
 </body>
