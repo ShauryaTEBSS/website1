@@ -205,12 +205,14 @@
                             <button class="btn btn-outline-primary btn-sm w-100 mb-2 fw-bold text-start" onclick="generateReceipt()">
                                 <i class="fa-solid fa-file-invoice-dollar me-2 text-center" style="width: 20px;"></i> Fee Receipt (Tax)
                             </button>
+                            <button class="btn btn-outline-secondary btn-sm w-100 fw-bold text-start" onclick="alert('No seminar attendance records found for this academic year.')">
+                                <i class="fa-solid fa-award me-2 text-center" style="width: 20px;"></i> Seminar Certificates
+                            </button>
                             
                             <div id="assignedDocsContainer" class="mt-3 pt-3 border-top d-none">
                                 <h6 class="fw-bold mb-2 text-muted small text-uppercase">Assigned Records</h6>
                                 <div id="dynamicVaultList"></div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -464,7 +466,7 @@
             document.getElementById('editName').value = userData.name;
             document.getElementById('editInst').value = userData.institution;
             
-            // --- NEW: RENDER ASSIGNED DOCUMENTS ---
+            // --- ASSIGNED DOCUMENTS LOGIC ---
             const vaultList = document.getElementById('dynamicVaultList');
             const docsContainer = document.getElementById('assignedDocsContainer');
             
@@ -637,7 +639,7 @@
                         <tr style="border-bottom: 1px solid #eee;"><td style="padding: 15px 10px;">ISSSA ${currentUser.tier} Membership Subscription Dues</td><td style="padding: 15px 10px; text-align: right;">₹${amount}.00</td></tr>
                         <tr><td style="padding: 15px 10px; text-align: right; font-weight: bold;">Total Paid:</td><td style="padding: 15px 10px; text-align: right; font-weight: bold; font-size: 1.2rem;">₹${amount}.00</td></tr>
                     </table>
-                    <div style="text-align: center; color: #777; font-size: 0.9rem; border-top: 1px solid #eee; padding-top: 20px;"><p>This is a computer-generated receipt.</p></div>
+                    <div style="text-align: center; color: #777; font-size: 0.9rem; border-top: 1px solid #eee; padding-top: 20px;"><p>This is a computer-generated receipt and does not require a physical signature.</p><p>Thank you for supporting the advancement of social sciences.</p></div>
                 </div>`;
             triggerPrint();
         }
