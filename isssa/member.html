@@ -25,6 +25,11 @@
         .dashboard-nav { background-color: #ffffff; padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000;}
         .dashboard-nav .brand { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); text-decoration: none;}
         
+        /* Announcements Bar */
+        .announcement-bar { background-color: var(--primary-color); color: white; padding: 8px 0; font-size: 0.85rem; font-weight: 600; overflow: hidden; white-space: nowrap; }
+        .announcement-text { display: inline-block; animation: scrollText 20s linear infinite; }
+        @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
         /* Digital ID Card */
         .id-card { background: linear-gradient(135deg, #002b5e, #001836); color: white; border-radius: 12px; padding: 25px; position: relative; overflow: hidden; box-shadow: 0 10px 20px rgba(0, 43, 94, 0.2); }
         .id-card::after { content: '\f19d'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; right: -20px; bottom: -20px; font-size: 8rem; opacity: 0.05; transform: rotate(-15deg); }
@@ -32,17 +37,20 @@
         .id-card-header h4 { margin: 0; font-size: 1.2rem; color: var(--secondary-color); letter-spacing: 1px; }
         .id-data-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-bottom: 2px; }
         .id-data-val { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; }
+        .barcode { font-family: 'Libre Barcode 39', cursive, monospace; font-size: 2.5rem; opacity: 0.6; margin-top: 10px; letter-spacing: -2px; overflow: hidden;}
         
         /* Action Cards */
-        .action-card { background: white; border-radius: 8px; padding: 20px; height: 100%; border: 1px solid var(--border-color); transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .action-card { background: white; border-radius: 8px; padding: 20px; height: 100%; border: 1px solid var(--border-color); transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; flex-direction: column; }
         .action-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.08); border-color: var(--primary-color); }
         .action-icon { width: 50px; height: 50px; background: rgba(244, 162, 97, 0.1); color: var(--secondary-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 15px; }
+        .action-card h4 { font-size: 1.1rem; color: var(--primary-color); margin-bottom: 10px; }
+        .action-card p { flex-grow: 1; }
 
         /* Buttons */
         .btn-custom { display: inline-block; padding: 0.6rem 1.5rem; background-color: var(--primary-color); color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 4px; transition: 0.3s; border: none; }
         .btn-custom:hover { background-color: var(--secondary-color); color: #ffffff; }
 
-        .blur-overlay { filter: blur(4px); pointer-events: none; user-select: none; }
+        .blur-overlay { filter: blur(5px); pointer-events: none; user-select: none; opacity: 0.6; }
     </style>
 </head>
 <body>
@@ -50,7 +58,7 @@
     <div id="loginScreen" class="login-wrapper">
         <div class="login-card">
             <div class="login-brand brand">ISSSA</div>
-            <p class="text-muted mb-4 small">Member Portal Login</p>
+            <p class="text-muted mb-4 small">Secure Member Portal</p>
             <div id="loginAlert" class="alert alert-danger d-none small py-2" role="alert"></div>
             <form id="loginForm">
                 <div class="mb-3 text-start">
@@ -72,6 +80,12 @@
 
     <div id="dashboardScreen" class="d-none">
         
+        <div class="announcement-bar d-none" id="announcementBar">
+            <div class="container">
+                <span class="announcement-text"><i class="fa-solid fa-bullhorn me-2 text-warning"></i> <strong>Official Alert:</strong> Abstract submissions for the Viksit Bharat @2047 Seminar are now open! Active members receive a 50% fee waiver.</span>
+            </div>
+        </div>
+
         <nav class="dashboard-nav">
             <div class="container d-flex justify-content-between align-items-center">
                 <a href="#" class="brand">ISSSA Member Hub</a>
@@ -94,8 +108,9 @@
             </div>
 
             <div class="row g-4">
+                
                 <div class="col-lg-4">
-                    <div class="id-card">
+                    <div class="id-card mb-4 shadow">
                         <div class="id-card-header">
                             <h4 class="brand">ISSSA</h4>
                             <span class="badge bg-warning text-dark" id="cardStatus">Active</span>
@@ -110,53 +125,111 @@
                         <div class="id-data-val" id="cardId" style="font-family: monospace; letter-spacing: 2px;">Loading...</div>
 
                         <div class="id-data-label">Institution</div>
-                        <div class="id-data-val mb-0 fs-6 fw-normal" id="cardInst">Loading...</div>
+                        <div class="id-data-val mb-2 fs-6 fw-normal" id="cardInst">Loading...</div>
+
+                        <div class="barcode" id="cardBarcode">||||||||||||||||||||||</div>
                     </div>
 
-                    <div class="mt-3 text-center" id="certContainer">
-                        <button class="btn btn-outline-primary w-100 fw-bold" onclick="alert('Certificate Generation Module will be linked here.')">
-                            <i class="fa-solid fa-certificate me-2"></i> Download Official Certificate
-                        </button>
+                    <div id="sideFeatures">
+                        <div class="card border-0 shadow-sm mb-3">
+                            <div class="card-body text-center">
+                                <h6 class="fw-bold mb-3">Official Documents</h6>
+                                <button class="btn btn-outline-primary btn-sm w-100 mb-2 fw-bold" onclick="alert('Generating Certificate PDF...')">
+                                    <i class="fa-solid fa-certificate me-2"></i> Download ID Certificate
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm w-100 fw-bold" onclick="alert('Downloading Tax Invoice...')">
+                                    <i class="fa-solid fa-file-invoice-dollar me-2"></i> Download Fee Receipt
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-lg-8" id="featuresGrid">
                     <div class="row g-4">
                         
-                        <div class="col-md-6">
-                            <div class="action-card">
-                                <div class="action-icon"><i class="fa-solid fa-book-journal-whills"></i></div>
+                        <div class="col-md-6 col-xl-4">
+                            <div class="action-card text-center" style="border-top: 4px solid var(--primary-color);">
+                                <div class="action-icon mx-auto"><i class="fa-solid fa-book-journal-whills"></i></div>
                                 <h4>INJASSS Publishing</h4>
-                                <p class="text-muted small">Submit your research to the journal with priority peer-review processing and APC waivers.</p>
-                                <a href="submit.html" class="btn-custom btn-sm w-100 text-center mt-2">Submit Manuscript</a>
+                                <p class="text-muted small">Submit your research with priority peer-review and Article Processing Charge (APC) waivers.</p>
+                                <a href="submit.html" class="btn-custom btn-sm w-100 mt-2">Submit Manuscript</a>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="action-card" style="border-top: 4px solid var(--secondary-color);">
-                                <span class="badge bg-danger position-absolute top-0 end-0 m-3">Upcoming</span>
-                                <div class="action-icon"><i class="fa-solid fa-microphone-lines"></i></div>
-                                <h4>National Seminar 2047</h4>
-                                <p class="text-muted small">Register for the "Viksit Bharat @2047" seminar using your exclusive member discount code.</p>
-                                <button class="btn btn-outline-dark btn-sm w-100 fw-bold mt-2" onclick="alert('Your discount code is: ISSSA-MEMBER-50')">Get Discount Code</button>
+                        <div class="col-md-6 col-xl-4">
+                            <div class="action-card text-center">
+                                <div class="action-icon mx-auto"><i class="fa-solid fa-magnifying-glass-location"></i></div>
+                                <h4>Track Manuscript</h4>
+                                <p class="text-muted small mb-2">Check the live editorial status of your submitted papers.</p>
+                                <div class="input-group input-group-sm mt-auto">
+                                    <input type="text" class="form-control" placeholder="INJASSS ID" id="quickTrackId">
+                                    <button class="btn btn-outline-primary fw-bold" onclick="quickTrack()">Track</button>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="action-card">
-                                <div class="action-icon"><i class="fa-solid fa-check-to-slot"></i></div>
+                        <div class="col-md-6 col-xl-4">
+                            <div class="action-card text-center" style="border-top: 4px solid var(--secondary-color);">
+                                <span class="badge bg-danger position-absolute top-0 end-0 m-2">Live</span>
+                                <div class="action-icon mx-auto"><i class="fa-solid fa-microphone-lines"></i></div>
+                                <h4>National Seminars</h4>
+                                <p class="text-muted small">Register for Viksit Bharat @2047 using your exclusive discount code.</p>
+                                <button class="btn btn-outline-dark btn-sm w-100 fw-bold mt-auto" onclick="alert('Your discount code is: ISSSA-MEMBER-50')">Reveal Promo Code</button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-4">
+                            <div class="action-card text-center">
+                                <div class="action-icon mx-auto"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                                <h4>Research Grants</h4>
+                                <p class="text-muted small">Apply for ISSSA Seed Funding for field studies and data collection.</p>
+                                <button class="btn btn-outline-success btn-sm w-100 fw-bold mt-auto" onclick="alert('Applications for the 2026 Grant Cycle open in August.')">Apply for Funding</button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-4">
+                            <div class="action-card text-center">
+                                <div class="action-icon mx-auto"><i class="fa-solid fa-box-archive"></i></div>
+                                <h4>Premium Archives</h4>
+                                <p class="text-muted small">Access full-text PDFs of all past INJASSS volumes without paywalls.</p>
+                                <a href="archives.html" class="btn btn-outline-primary btn-sm w-100 fw-bold mt-auto">Browse Library</a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-4">
+                            <div class="action-card text-center">
+                                <div class="action-icon mx-auto"><i class="fa-solid fa-check-to-slot"></i></div>
                                 <h4>Society Elections</h4>
-                                <p class="text-muted small mb-2">View your voting eligibility for the upcoming triennial Executive Committee elections.</p>
-                                <div id="votingStatus" class="p-2 bg-light rounded text-center small fw-bold">Checking status...</div>
+                                <p class="text-muted small mb-2">Check your EC voting rights for the upcoming triennial elections.</p>
+                                <div id="votingStatus" class="p-2 bg-light rounded text-center small fw-bold mt-auto border">Checking...</div>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="action-card">
-                                <div class="action-icon"><i class="fa-solid fa-user-gear"></i></div>
-                                <h4>Update Profile</h4>
-                                <p class="text-muted small">Keep your postal address updated to ensure seamless delivery of the INJASSS print editions.</p>
-                                <button class="btn btn-outline-secondary btn-sm w-100 fw-bold mt-2" onclick="alert('Profile editor coming in next update.')">Edit Details</button>
+                        <div class="col-md-6 col-xl-4">
+                            <div class="action-card text-center">
+                                <div class="action-icon mx-auto"><i class="fa-solid fa-network-wired"></i></div>
+                                <h4>Member Directory</h4>
+                                <p class="text-muted small">Connect and collaborate with other verified ISSSA academics nationwide.</p>
+                                <button class="btn btn-outline-secondary btn-sm w-100 fw-bold mt-auto" onclick="alert('Directory access is restricted due to privacy protocols. Contact admin to request a connection.')">Search Directory</button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-4">
+                            <div class="action-card text-center border-danger">
+                                <div class="action-icon mx-auto bg-danger text-white"><i class="fa-solid fa-file-pen"></i></div>
+                                <h4>Submit Revisions</h4>
+                                <p class="text-muted small">Upload corrected documents if the reviewers requested major/minor revisions.</p>
+                                <a href="reupload.html" class="btn btn-outline-danger btn-sm w-100 fw-bold mt-auto">Re-Upload Desk</a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-4">
+                            <div class="action-card text-center">
+                                <div class="action-icon mx-auto"><i class="fa-solid fa-user-gear"></i></div>
+                                <h4>Account Settings</h4>
+                                <p class="text-muted small">Update your institutional affiliation, password, and postal address.</p>
+                                <button class="btn btn-outline-secondary btn-sm w-100 fw-bold mt-auto" onclick="alert('Profile editor launching in v2.0 update.')"><i class="fa-solid fa-pen me-1"></i> Edit Profile</button>
                             </div>
                         </div>
 
@@ -179,7 +252,7 @@
             const pass = document.getElementById('loginPass').value;
             
             document.getElementById('loginBtn').disabled = true;
-            document.getElementById('loginText').textContent = "Verifying...";
+            document.getElementById('loginText').textContent = "Authenticating...";
             document.getElementById('loginSpinner').classList.remove('d-none');
             document.getElementById('loginAlert').classList.add('d-none');
 
@@ -205,7 +278,7 @@
             if(response.success) {
                 // Populate Dashboard Data
                 document.getElementById('navName').textContent = response.data.name;
-                document.getElementById('welcomeName').textContent = response.data.name;
+                document.getElementById('welcomeName').textContent = response.data.name.split(' ')[0]; // First name only
                 document.getElementById('cardName').textContent = response.data.name;
                 document.getElementById('cardTier').textContent = response.data.tier;
                 document.getElementById('cardId').textContent = response.data.id;
@@ -217,23 +290,27 @@
                     statusBadge.textContent = "Pending";
                     statusBadge.className = "badge bg-warning text-dark";
                     document.getElementById('pendingAlert').classList.remove('d-none');
+                    document.getElementById('announcementBar').classList.add('d-none');
                     // Blur premium features
                     document.getElementById('featuresGrid').classList.add('blur-overlay');
-                    document.getElementById('certContainer').classList.add('d-none');
+                    document.getElementById('sideFeatures').classList.add('blur-overlay');
                 } else {
                     statusBadge.textContent = "Active";
                     statusBadge.className = "badge bg-success";
                     document.getElementById('pendingAlert').classList.add('d-none');
+                    document.getElementById('announcementBar').classList.remove('d-none');
                     document.getElementById('featuresGrid').classList.remove('blur-overlay');
-                    document.getElementById('certContainer').classList.remove('d-none');
+                    document.getElementById('sideFeatures').classList.remove('blur-overlay');
                 }
 
                 // Handle Voting Rights Logic
                 const voteBox = document.getElementById('votingStatus');
                 if (response.data.tier.includes('Life')) {
                     voteBox.innerHTML = '<span class="text-success"><i class="fa-solid fa-circle-check me-1"></i> Eligible to Vote</span>';
+                    voteBox.className = "p-2 bg-success bg-opacity-10 rounded text-center small fw-bold mt-auto border border-success";
                 } else {
                     voteBox.innerHTML = '<span class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i> Non-Voting Member</span>';
+                    voteBox.className = "p-2 bg-light rounded text-center small fw-bold mt-auto border";
                 }
 
                 // Switch Screens
@@ -258,6 +335,13 @@
             document.getElementById('dashboardScreen').classList.add('d-none');
             document.getElementById('loginScreen').classList.remove('d-none');
             resetLoginBtn();
+        }
+
+        function quickTrack() {
+            const id = document.getElementById('quickTrackId').value;
+            if(!id) return alert("Please enter an INJASSS Tracking ID.");
+            alert("To protect reviewer feedback, please use the main Author Tracking Portal to verify your email against ID: " + id);
+            window.location.href = "authorportal.html";
         }
     </script>
 </body>
