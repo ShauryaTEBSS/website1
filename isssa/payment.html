@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APC Payment Gateway | INJASSS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root { --primary-color: #002b5e; --secondary-color: #f4a261; --bg-light: #f4f6f9; }
+        body { background-color: var(--bg-light); font-family: 'Open Sans', sans-serif; padding-top: 40px; }
+        .brand { font-family: 'Merriweather', serif; color: var(--primary-color); }
+        .pricing-card { border: 2px solid transparent; transition: 0.3s; cursor: pointer; border-radius: 12px; background: white; }
+        .pricing-card:hover, .pricing-card.selected { border-color: var(--primary-color); box-shadow: 0 10px 25px rgba(0,43,94,0.15); transform: translateY(-5px); }
+        .tier-price { font-size: 2.5rem; font-weight: bold; color: var(--primary-color); }
+        .tier-popular { border-color: var(--secondary-color); position: relative; }
+        .badge-popular { position: absolute; top: -12px; right: 20px; background: var(--secondary-color); color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <div class="container pb-5">
+        <div class="text-center mb-5">
+            <h1 class="brand fs-1">INJASSS Treasury</h1>
+            <p class="text-muted text-uppercase fw-bold letter-spacing-1">Official Article Processing Charge (APC) Portal</p>
+        </div>
+
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0 p-4 rounded-4">
+                    <label class="fw-bold mb-2 text-dark">Enter your Tracking ID to begin:</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-file-lines text-muted"></i></span>
+                        <input type="text" class="form-control border-start-0" id="manuscriptId" placeholder="INJASSS-2026-001">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-4 col-md-6">
+                <div class="pricing-card p-4 h-100 d-flex flex-column" onclick="selectTier(this, 1500, 'Basic Publication')">
+                    <h5 class="text-muted fw-bold text-uppercase mb-1">Standard</h5>
+                    <h3 class="brand mb-3">Publication Only</h3>
+                    <div class="tier-price mb-4">₹1,500</div>
+                    <ul class="list-unstyled mb-4 flex-grow-1">
+                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Digital Publication</li>
+                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Open Access PDF</li>
+                        <li class="mb-2 text-muted"><i class="fa-solid fa-xmark me-2"></i> No Print Copy</li>
+                        <li class="mb-2 text-muted"><i class="fa-solid fa-xmark me-2"></i> No DOI Registration</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="pricing-card tier-popular p-4 h-100 d-flex flex-column" onclick="selectTier(this, 2500, 'Publication + Hard Copy')">
+                    <div class="badge-popular">Most Popular</div>
+                    <h5 class="text-secondary fw-bold text-uppercase mb-1">Premium</h5>
+                    <h3 class="brand mb-3">Print Edition</h3>
+                    <div class="tier-price mb-4">₹2,500</div>
+                    <ul class="list-unstyled mb-4 flex-grow-1">
+                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Digital Publication</li>
+                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Open Access PDF</li>
+                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> 1 Hard Copy Journal</li>
+                        <li class="mb-2 text-muted"><i class="fa-solid fa-xmark me-2"></i> No DOI Registration</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="pricing-card p-4 h-100 d-flex flex-column" onclick="selectTier(this, 3500, 'Full indexing Suite')">
+                    <h5 class="text-primary fw-bold text-uppercase mb-1">Elite</h5>
+                    <h3 class="brand mb-3">Full Suite</h3>
+                    <div class="tier-price mb-4">₹3,500</div>
+                    <ul class="list-unstyled mb-4 flex-grow-1">
+                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Digital & Print Publication</li>
+                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Official Crossref DOI</li>
+                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Global Indexing Submission</li>
+                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Priority Handling</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <button class="btn btn-lg w-100 text-white fw-bold shadow disabled" id="payBtn" style="max-width: 400px; background-color: var(--primary-color);" onclick="initiatePayment()">
+                Select a Tier to Continue
+            </button>
+            <p class="small text-muted mt-2"><i class="fa-solid fa-shield-halved me-1"></i> Secured by UroPay Environment</p>
+        </div>
+    </div>
+
+    <script>
+        let selectedAmount = 0;
+        let selectedPackage = "";
+
+        // Use your actual Script URL
+        const SCRIPT_URL = 'https://script.google.com/a/~/macros/s/AKfycbwMrD4BLDk_qZRqz_NqlDwb7K5i67JsWhpHay7vEbqxf9GfafkconJv5TuiBwVEFTAE/exec';
+
+        function selectTier(element, amount, packageName) {
+            // Remove 'selected' class from all cards
+            document.querySelectorAll('.pricing-card').forEach(card => card.classList.remove('selected'));
+            
+            // Add 'selected' to clicked card
+            element.classList.add('selected');
+            
+            selectedAmount = amount;
+            selectedPackage = packageName;
+
+            // Enable and update button
+            const btn = document.getElementById('payBtn');
+            btn.classList.remove('disabled');
+            btn.innerHTML = `Pay ₹${amount} Securely <i class="fa-solid fa-arrow-right ms-2"></i>`;
+        }
+
+        function initiatePayment() {
+            const manuscriptId = document.getElementById('manuscriptId').value.trim();
+            if(!manuscriptId) return alert("Please enter your INJASSS Tracking ID.");
+
+            const btn = document.getElementById('payBtn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Connecting to Gateway...';
+            btn.disabled = true;
+
+            const payload = {
+                formType: "initiateUroPay",
+                trackingId: manuscriptId,
+                amount: selectedAmount,
+                package: selectedPackage
+            };
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    // Redirect the user to the UroPay checkout page
+                    window.location.href = data.paymentUrl;
+                } else {
+                    alert("Error: " + data.message);
+                    btn.innerHTML = `Pay ₹${selectedAmount} Securely <i class="fa-solid fa-arrow-right ms-2"></i>`;
+                    btn.disabled = false;
+                }
+            })
+            .catch(err => {
+                alert("Server error. Please try again.");
+                btn.innerHTML = `Pay ₹${selectedAmount} Securely`;
+                btn.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>
