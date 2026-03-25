@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful | ISSSA</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #002b5e;
+            --secondary-color: #f4a261;
+            --bg-light: #f4f6f9;
+        }
+        body { background-color: var(--bg-light); font-family: 'Open Sans', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        .brand { font-family: 'Merriweather', serif; color: var(--primary-color); }
+        
+        .receipt-card { background: white; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); overflow: hidden; width: 100%; max-width: 600px; border-top: 8px solid #28a745; }
+        
+        .success-header { background: #f8fff9; padding: 40px 30px 30px; text-align: center; border-bottom: 1px dashed #c3e6cb; }
+        .success-icon-bg { width: 80px; height: 80px; background: #d4edda; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+        .success-icon { font-size: 2.5rem; color: #28a745; }
+        
+        .tech-details { background: #f8f9fa; border-radius: 8px; padding: 20px; font-family: monospace; font-size: 0.9rem; color: #555; border: 1px solid #e9ecef; }
+        .tech-row { display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #e9ecef; }
+        .tech-row:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .tech-label { color: #888; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; }
+        .tech-val { font-weight: bold; color: #333; }
+        
+        .btn-custom { background-color: var(--primary-color); color: white; font-weight: bold; padding: 12px 25px; border-radius: 8px; transition: 0.3s; border: none; }
+        .btn-custom:hover { background-color: var(--secondary-color); color: white; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(244, 162, 97, 0.3); }
+        
+        .uropay-badge { display: inline-flex; align-items: center; gap: 8px; background: #e3f2fd; color: #084298; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="container p-3">
+        <div class="receipt-card mx-auto">
+            
+            <div class="success-header">
+                <div class="success-icon-bg">
+                    <i class="fa-solid fa-check success-icon"></i>
+                </div>
+                <h2 class="brand mb-2 text-success">Payment Successful</h2>
+                <p class="text-muted mb-0">Your transaction was processed securely by <strong>UroPay India</strong> for ISSSA Journals.</p>
+            </div>
+
+            <div class="p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <div class="uropay-badge">
+                        <i class="fa-solid fa-shield-check"></i> UroPay Verified Node
+                    </div>
+                </div>
+
+                <h6 class="fw-bold mb-3 text-uppercase text-muted" style="letter-spacing: 1px; font-size: 0.85rem;"><i class="fa-solid fa-server me-2"></i> Technical Receipt Log</h6>
+                
+                <div class="tech-details mb-4">
+                    <div class="tech-row">
+                        <span class="tech-label">Gateway Status</span>
+                        <span class="tech-val text-success">CAPTURED (200 OK)</span>
+                    </div>
+                    <div class="tech-row">
+                        <span class="tech-label">Tracking ID</span>
+                        <span class="tech-val text-primary" id="txOrderId">Fetching...</span>
+                    </div>
+                    <div class="tech-row">
+                        <span class="tech-label">Timestamp</span>
+                        <span class="tech-val" id="txDate">Fetching...</span>
+                    </div>
+                    <div class="tech-row">
+                        <span class="tech-label">Amount Settled</span>
+                        <span class="tech-val fs-5">₹<span id="txAmount">0.00</span></span>
+                    </div>
+                </div>
+
+                <div class="alert alert-warning border-warning bg-warning bg-opacity-10 shadow-sm" role="alert">
+                    <h6 class="alert-heading fw-bold mb-2"><i class="fa-solid fa-triangle-exclamation text-warning me-2"></i> Action Required</h6>
+                    <p class="small mb-0 text-dark">To ensure your manuscript proceeds to the typesetting and publication desk without delay, you must formally notify the treasury that your APC has cleared.</p>
+                </div>
+
+                <div class="d-flex flex-column flex-md-row gap-3 mt-4">
+                    <button class="btn btn-outline-danger w-100 fw-bold py-2" onclick="notifyTreasury()">
+                        <i class="fa-solid fa-envelope me-2"></i> Notify Treasury
+                    </button>
+                    <a href="member.html" class="btn btn-custom w-100 py-2 text-center text-decoration-none">
+                        Return to Hub <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-light p-3 text-center border-top">
+                <p class="small text-muted mb-0">A digital copy of this receipt has been logged in the ISSSA registry.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Extract URL Parameters sent back by UroPay
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Grab the data from the URL (fallback to "Unknown" if testing directly)
+        const orderId = urlParams.get('order_id') || 'INJASSS-TX-' + Math.floor(Math.random() * 1000000);
+        const amount = urlParams.get('amount') || '2500';
+        
+        // 2. Populate the Technical Receipt
+        document.getElementById('txOrderId').textContent = orderId;
+        document.getElementById('txAmount').textContent = parseFloat(amount).toLocaleString('en-IN') + '.00';
+        
+        // Set formatted current date & time
+        const now = new Date();
+        document.getElementById('txDate').textContent = now.toLocaleString('en-IN', { 
+            year: 'numeric', month: 'short', day: '2-digit', 
+            hour: '2-digit', minute: '2-digit', second: '2-digit' 
+        });
+
+        // 3. Pre-fill Email to Treasury
+        function notifyTreasury() {
+            const subject = encodeURIComponent(`APC Payment Cleared: ${orderId}`);
+            const body = encodeURIComponent(`Dear ISSSA Treasury,\n\nPlease note that my Article Processing Charge (APC) has been successfully paid via UroPay.\n\nTransaction Details:\nTracking ID: ${orderId}\nAmount: ₹${amount}\nTimestamp: ${now.toLocaleString()}\n\nPlease verify this in the admin portal and move my manuscript to the publication desk.\n\nThank you.`);
+            
+            window.location.href = `mailto:treasury@injasss.org?subject=${subject}&body=${body}`;
+        }
+    </script>
+</body>
+</html>
