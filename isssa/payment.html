@@ -91,10 +91,11 @@
     </div>
 
     <script>
+<script>
         let selectedAmount = 0;
         let selectedPackage = "";
 
-        // Use your actual Script URL
+        // Ensure this is your live Google Apps Script Deployment URL
         const SCRIPT_URL = 'https://script.google.com/a/~/macros/s/AKfycbwMrD4BLDk_qZRqz_NqlDwb7K5i67JsWhpHay7vEbqxf9GfafkconJv5TuiBwVEFTAE/exec';
 
         function selectTier(element, amount, packageName) {
@@ -115,7 +116,11 @@
 
         function initiatePayment() {
             const manuscriptId = document.getElementById('manuscriptId').value.trim();
-            if(!manuscriptId) return alert("Please enter your INJASSS Tracking ID.");
+            if(!manuscriptId) {
+                alert("Please enter your INJASSS Tracking ID.");
+                document.getElementById('manuscriptId').focus();
+                return;
+            }
 
             const btn = document.getElementById('payBtn');
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Connecting to Gateway...';
@@ -130,23 +135,25 @@
 
             fetch(SCRIPT_URL, {
                 method: 'POST',
+                // UroPay requires a clean stringified payload
                 body: JSON.stringify(payload)
             })
             .then(res => res.json())
             .then(data => {
-                if(data.success) {
-                    // Redirect the user to the UroPay checkout page
+                if(data.success && data.paymentUrl) {
+                    // Success! Redirect the user to the UroPay checkout page
                     window.location.href = data.paymentUrl;
                 } else {
-                    alert("Error: " + data.message);
+                    alert("Error: " + (data.message || "Failed to generate payment link."));
                     btn.innerHTML = `Pay ₹${selectedAmount} Securely <i class="fa-solid fa-arrow-right ms-2"></i>`;
                     btn.disabled = false;
                 }
             })
             .catch(err => {
                 alert("Server error. Please try again.");
-                btn.innerHTML = `Pay ₹${selectedAmount} Securely`;
+                btn.innerHTML = `Pay ₹${selectedAmount} Securely <i class="fa-solid fa-arrow-right ms-2"></i>`;
                 btn.disabled = false;
+                console.error(err);
             });
         }
     </script>
