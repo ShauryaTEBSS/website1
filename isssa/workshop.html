@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshop: AI & Modern Tools in Education | ISSSA</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #002b5e; /* ISSSA Navy */
+            --secondary-color: #f4a261; /* ISSSA Orange */
+            --tech-blue: #0066cc;
+            --bg-light: #f8f9fa;
+            --icssr-color: #8b0000; /* Deep Red for ICSSR styling */
+        }
+
+        body { font-family: 'Open Sans', sans-serif; background-color: var(--bg-light); color: #333; }
+        h1, h2, h3, h4, h5, .brand { font-family: 'Merriweather', serif; }
+        
+        /* --- Navigation --- */
+        .navbar-custom { background-color: white; box-shadow: 0 2px 15px rgba(0,0,0,0.05); padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
+        .navbar-brand { color: var(--primary-color); font-weight: 900; font-size: 1.5rem; letter-spacing: 1px; }
+        
+        /* --- Hero Section --- */
+        .hero-section {
+            background: linear-gradient(rgba(0, 43, 94, 0.9), rgba(0, 102, 204, 0.8)), url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=2000') center/cover fixed;
+            color: white;
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sponsorship-badge {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 10px 25px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .hero-title { font-size: 3rem; font-weight: 900; margin-bottom: 20px; line-height: 1.3; text-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+        .hero-subtitle { font-size: 1.2rem; font-weight: 300; opacity: 0.9; margin-bottom: 30px; }
+        
+        .mode-badge { background: var(--secondary-color); color: #000; font-weight: bold; padding: 5px 15px; border-radius: 6px; font-size: 1rem; margin-right: 15px;}
+        
+        /* --- Collaboration Banner --- */
+        .collab-banner { background-color: white; padding: 25px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .collab-text { font-size: 1.1rem; font-weight: 600; color: #555; margin: 0; }
+        .collab-highlight { color: var(--primary-color); font-family: 'Merriweather', serif; font-weight: 700;}
+        
+        /* --- Feature Cards --- */
+        .section-title { color: var(--primary-color); font-weight: 700; margin-bottom: 40px; position: relative; display: inline-block; padding-bottom: 10px; }
+        .section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background-color: var(--secondary-color); border-radius: 2px; }
+        
+        .module-card { background: white; border-radius: 12px; padding: 30px; height: 100%; border: 1px solid #eee; box-shadow: 0 5px 20px rgba(0,0,0,0.02); transition: all 0.3s ease; }
+        .module-card:hover { transform: translateY(-8px); border-color: var(--tech-blue); box-shadow: 0 15px 30px rgba(0, 102, 204, 0.1); }
+        .module-icon { width: 60px; height: 60px; background: #e6f2ff; color: var(--tech-blue); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 20px; }
+        
+        /* --- Schedule --- */
+        .timeline { position: relative; max-width: 800px; margin: 0 auto; }
+        .timeline-day { background: white; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-left: 5px solid var(--primary-color); }
+        .timeline-day.alt { border-left-color: var(--secondary-color); }
+        .timeline-day.alt-2 { border-left-color: var(--tech-blue); }
+        .day-badge { display: inline-block; background: var(--bg-light); color: var(--primary-color); font-weight: bold; padding: 5px 15px; border-radius: 20px; margin-bottom: 15px; font-size: 0.85rem; }
+        
+        /* --- Registration Pricing --- */
+        .pricing-card { background: white; border-radius: 12px; padding: 40px 30px; text-align: center; border: 2px solid transparent; transition: 0.3s; height: 100%; }
+        .pricing-card:hover { border-color: var(--primary-color); transform: scale(1.02); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .price { font-size: 3rem; font-weight: bold; color: var(--primary-color); margin: 20px 0; }
+        
+        .btn-custom { background-color: var(--primary-color); color: white; padding: 12px 30px; font-weight: bold; border-radius: 8px; transition: 0.3s; border: none; }
+        .btn-custom:hover { background-color: var(--secondary-color); color: #000; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar-custom d-flex justify-content-center">
+        <a class="navbar-brand text-decoration-none" href="#">
+            <i class="fa-solid fa-graduation-cap text-warning me-2"></i> ISSSA ACADEMY
+        </a>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="sponsorship-badge">
+                <i class="fa-solid fa-building-columns me-2 text-warning"></i> Sponsored by ICSSR, Ministry of Education, Govt. of India
+            </div>
+            
+            <h1 class="hero-title">National Capacity Building Workshop on<br>Modern Tools & AI in Education</h1>
+            <p class="hero-subtitle mx-auto" style="max-width: 700px;">Equipping academicians, researchers, and educators with next-generation pedagogical technologies, Generative AI, and digital assessment frameworks aligned with NEP 2020.</p>
+            
+            <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center mt-4">
+                <span class="mode-badge"><i class="fa-solid fa-tower-broadcast me-2"></i> Hybrid Mode</span>
+                <span class="fs-5 fw-bold"><i class="fa-regular fa-calendar-check me-2 text-warning"></i> May 25 - 29, 2026</span>
+            </div>
+            
+            <div class="mt-5">
+                <a href="#register" class="btn btn-custom shadow-lg fs-5 px-5 py-3">Register Now</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="collab-banner text-center">
+        <div class="container">
+            <p class="collab-text">Organised by the <span class="collab-highlight">International Social Sciences Studies Association (ISSSA)</span><br>in Academic Association with <span class="collab-highlight">Shri Baldev P. G. College, Varanasi</span>.</p>
+            <p class="small text-muted mt-2 mb-0"><a href="https://sbpgcollege.ac.in" target="_blank" class="text-decoration-none text-primary"><i class="fa-solid fa-link"></i> sbpgcollege.ac.in</a></p>
+        </div>
+    </div>
+
+    <section class="py-5 mt-4">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <h2 class="brand" style="color: var(--primary-color);">Context & Rationale</h2>
+                    <div style="width: 60px; height: 4px; background-color: var(--secondary-color); margin: 15px 0 25px;"></div>
+                    <p class="fs-5 text-muted" style="line-height: 1.8;">The integration of Artificial Intelligence and modern digital tools is no longer an option, but a necessity for modern academia.</p>
+                    <p class="text-muted mb-4" style="line-height: 1.8;">This 5-Day intensive National Workshop is designed to bridge the digital divide. Under the guidelines of the National Education Policy (NEP) 2020, participants will receive hands-on training in Generative AI for academic writing, digital classroom management, advanced data analysis tools, and maintaining research integrity in the era of automated content.</p>
+                    
+                    <div class="alert alert-info border-info bg-white shadow-sm mt-4 p-4">
+                        <h5 class="brand text-primary mb-3"><i class="fa-solid fa-bullseye text-warning me-2"></i> Who Should Attend?</h5>
+                        <ul class="mb-0 text-muted small lh-lg">
+                            <li><i class="fa-solid fa-check text-success me-2"></i> Faculty Members & Assistant Professors</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i> Ph.D. Research Scholars</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i> EdTech Developers & Curriculum Designers</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i> Academic Administrators</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <img src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&q=80&w=600" class="img-fluid rounded-3 shadow-sm mb-3" alt="Tech">
+                            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=600" class="img-fluid rounded-3 shadow-sm" alt="Education">
+                        </div>
+                        <div class="col-6 mt-4">
+                            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=600" class="img-fluid rounded-3 shadow-lg" alt="Workshop">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-white">
+        <div class="container text-center">
+            <h2 class="section-title">Core Learning Modules</h2>
+            <p class="text-muted mx-auto mb-5" style="max-width: 600px;">15+ Hours of interactive, hands-on training delivered by industry experts and senior academicians.</p>
+            
+            <div class="row g-4 text-start">
+                <div class="col-md-6 col-lg-4">
+                    <div class="module-card">
+                        <div class="module-icon"><i class="fa-solid fa-robot"></i></div>
+                        <h4 class="brand mb-3 fs-5">Generative AI in Pedagogy</h4>
+                        <p class="text-muted small mb-0">Mastering ChatGPT, Gemini, and Claude for creating dynamic lesson plans, case studies, and interactive quizzes.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="module-card">
+                        <div class="module-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                        <h4 class="brand mb-3 fs-5">AI for Literature Review</h4>
+                        <p class="text-muted small mb-0">Utilizing modern tools like Elicit, Consensus, and Mendeley for rapid literature mapping and citation management.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="module-card">
+                        <div class="module-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                        <h4 class="brand mb-3 fs-5">LMS & Digital Classrooms</h4>
+                        <p class="text-muted small mb-0">Setting up and automating Google Workspace for Education, Canvas, and interactive whiteboarding tools.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="module-card">
+                        <div class="module-icon"><i class="fa-solid fa-earth-asia"></i></div>
+                        <h4 class="brand mb-3 fs-5">Spatial Tools & Remote Sensing</h4>
+                        <p class="text-muted small mb-0">Integrating open-source GIS tools and spatial data visualization into social science curriculum and field research.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="module-card">
+                        <div class="module-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <h4 class="brand mb-3 fs-5">Ethics & Anti-Plagiarism</h4>
+                        <p class="text-muted small mb-0">Navigating AI ethics, deepfake detection, and utilizing advanced similarity checking software (Turnitin/DrillBit).</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="module-card">
+                        <div class="module-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                        <h4 class="brand mb-3 fs-5">Automated Assessments</h4>
+                        <p class="text-muted small mb-0">Designing auto-grading rubrics, proctored digital exams, and tracking student analytics in real-time.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5" style="background-color: #f0f4f8;">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Workshop Itinerary</h2>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-day">
+                    <span class="day-badge"><i class="fa-solid fa-calendar-day me-1"></i> Day 1 | May 25</span>
+                    <h4 class="brand text-dark">Inauguration & Fundamentals of AI</h4>
+                    <p class="text-muted small mb-0 mt-2">Keynote address by ICSSR delegates. Introduction to the evolution of Educational Technology and prompt engineering basics for educators.</p>
+                </div>
+                
+                <div class="timeline-day alt">
+                    <span class="day-badge" style="color: var(--secondary-color);"><i class="fa-solid fa-calendar-day me-1"></i> Day 2 | May 26</span>
+                    <h4 class="brand text-dark">Modern Research & Data Tools</h4>
+                    <p class="text-muted small mb-0 mt-2">Hands-on sessions on automated literature reviews, data visualization, and integrating spatial/GIS mapping into non-technical research methodologies.</p>
+                </div>
+
+                <div class="timeline-day alt-2">
+                    <span class="day-badge" style="color: var(--tech-blue);"><i class="fa-solid fa-calendar-day me-1"></i> Day 3 | May 27</span>
+                    <h4 class="brand text-dark">LMS & Assessment Automation</h4>
+                    <p class="text-muted small mb-0 mt-2">Designing interactive digital classrooms, deploying automated grading rubrics, and securing online assessments against AI-assisted cheating.</p>
+                </div>
+
+                <div class="timeline-day">
+                    <span class="day-badge"><i class="fa-solid fa-calendar-day me-1"></i> Day 4 & 5 | May 28 - 29</span>
+                    <h4 class="brand text-dark">Ethics, Practicum & Valedictory</h4>
+                    <p class="text-muted small mb-0 mt-2">Participant project presentations, discussions on AI ethics and copyright policies, followed by the valedictory session and certificate distribution at Shri Baldev P.G. College.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="register" class="py-5 bg-white">
+        <div class="container text-center">
+            <h2 class="section-title">Registration Details</h2>
+            <p class="text-muted mx-auto mb-5" style="max-width: 600px;">Due to the hands-on nature of the workshop, seats are limited. ISSSA Life Members are eligible for special fee waivers.</p>
+            
+            <div class="row justify-content-center g-4">
+                <div class="col-md-5 col-lg-4">
+                    <div class="pricing-card shadow-sm">
+                        <span class="badge bg-secondary mb-3 px-3 py-2">Virtual Mode (Zoom)</span>
+                        <h4 class="brand text-dark">Online Delegate</h4>
+                        <div class="price">₹800</div>
+                        <ul class="list-unstyled text-muted small text-start mx-auto mt-4 mb-4" style="max-width: 200px;">
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Live stream access</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> E-Resource Materials</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> E-Certificate</li>
+                        </ul>
+                        <a href="payment.html" class="btn btn-outline-primary w-100 fw-bold">Register Online</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-5 col-lg-4">
+                    <div class="pricing-card shadow border border-2 border-primary position-relative">
+                        <div class="position-absolute top-0 start-50 translate-middle badge bg-danger px-3 py-2 rounded-pill">Limited Seats</div>
+                        <span class="badge bg-primary mb-3 px-3 py-2">Physical Mode</span>
+                        <h4 class="brand text-dark">On-Campus Delegate</h4>
+                        <div class="price">₹1,500</div>
+                        <p class="small text-muted mb-2">Venue: Shri Baldev P.G. College</p>
+                        <ul class="list-unstyled text-muted small text-start mx-auto mt-4 mb-4" style="max-width: 220px;">
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Physical Lab Access</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Workshop Kit & Lunch</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Hardcopy Certificate</li>
+                        </ul>
+                        <a href="payment.html" class="btn btn-custom w-100">Register Offline</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white py-5 mt-auto border-top border-4 border-warning">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-4 text-center text-md-start">
+                    <h4 class="brand mb-2">ISSSA</h4>
+                    <p class="small text-white-50 mb-0">International Social Sciences Studies Association</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h6 class="text-uppercase text-white-50 mb-2" style="letter-spacing: 1px;">Academic Partner</h6>
+                    <p class="small text-white mb-0 fw-bold">Shri Baldev P.G. College</p>
+                    <p class="small text-white-50 mb-0">Baragaon, Varanasi - 221204</p>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <h6 class="text-uppercase text-white-50 mb-2" style="letter-spacing: 1px;">Sponsor</h6>
+                    <p class="small text-white mb-0 fw-bold">ICSSR, Ministry of Education</p>
+                    <p class="small text-white-50 mb-0">Government of India</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
