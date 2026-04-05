@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Save The Earth Movement Summit | ISSSA</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #002b5e; /* ISSSA Navy */
+            --accent-color: #f4a261;  /* ISSSA Orange */
+            --earth-green: #2d6a4f;   /* Summit Green */
+            --light-green: #e8f5e9;
+            --bg-light: #f4f6f9;
+        }
+
+        body { font-family: 'Open Sans', sans-serif; background-color: var(--bg-light); color: #333; }
+        h1, h2, h3, h4, h5, .brand { font-family: 'Merriweather', serif; }
+        
+        /* --- Navigation --- */
+        .navbar-custom { background-color: white; box-shadow: 0 2px 15px rgba(0,0,0,0.05); padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
+        .navbar-brand { color: var(--primary-color); font-weight: 900; font-size: 1.5rem; letter-spacing: 1px; }
+        
+        /* --- Hero Section --- */
+        .hero-section {
+            background: linear-gradient(rgba(0, 43, 94, 0.85), rgba(45, 106, 79, 0.85)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000') center/cover fixed;
+            color: white;
+            padding: 120px 0 100px;
+            text-align: center;
+        }
+        .hero-subtitle { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent-color); font-weight: 700; margin-bottom: 20px; }
+        .hero-title { font-size: 3.5rem; font-weight: 900; margin-bottom: 25px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); line-height: 1.2; }
+        .hero-date { font-size: 1.3rem; font-weight: 300; margin-bottom: 40px; }
+        
+        /* --- Motto Section --- */
+        .motto-banner { background-color: var(--earth-green); color: white; padding: 40px 0; text-align: center; box-shadow: 0 10px 30px rgba(45, 106, 79, 0.2); }
+        .motto-text { font-size: 1.8rem; font-style: italic; font-weight: 300; margin: 0; }
+        
+        /* --- Cards & Features --- */
+        .section-title { color: var(--primary-color); font-weight: 700; margin-bottom: 40px; position: relative; display: inline-block; padding-bottom: 10px; }
+        .section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background-color: var(--earth-green); border-radius: 2px; }
+        
+        .track-card { background: white; border-radius: 12px; padding: 30px; height: 100%; border: none; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: all 0.3s ease; border-bottom: 4px solid transparent; }
+        .track-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-bottom-color: var(--earth-green); }
+        .track-icon { width: 70px; height: 70px; background: var(--light-green); color: var(--earth-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 20px; }
+        
+        /* --- Schedule --- */
+        .timeline { border-left: 3px solid var(--earth-green); padding-left: 30px; margin-left: 20px; position: relative; }
+        .timeline-item { margin-bottom: 30px; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; left: -42px; top: 5px; width: 20px; height: 20px; background: white; border: 4px solid var(--earth-green); border-radius: 50%; }
+        .timeline-time { font-weight: bold; color: var(--accent-color); font-size: 0.9rem; letter-spacing: 1px; }
+        
+        /* --- Buttons --- */
+        .btn-earth { background-color: var(--earth-green); color: white; padding: 12px 30px; font-weight: bold; border-radius: 8px; transition: 0.3s; border: none; font-size: 1.1rem; }
+        .btn-earth:hover { background-color: #1b4332; color: white; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(45, 106, 79, 0.3); }
+        .btn-outline-light:hover { background-color: var(--accent-color); color: #000; border-color: var(--accent-color); }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar-custom d-flex justify-content-center">
+        <a class="navbar-brand text-decoration-none" href="#">
+            <i class="fa-solid fa-globe text-success me-2"></i> ISSSA
+        </a>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-subtitle">International Social Sciences Studies Association Presents</div>
+            <h1 class="hero-title">National Save The Earth<br>Movement Summit 2026</h1>
+            <p class="hero-date"><i class="fa-solid fa-calendar-days me-2 text-warning"></i> May 15 - 16, 2026 &nbsp;|&nbsp; <i class="fa-solid fa-location-dot me-2 text-danger ms-3"></i> Varanasi, Uttar Pradesh</p>
+            <div class="d-flex gap-3 justify-content-center mt-4">
+                <a href="#register" class="btn btn-earth shadow-lg"><i class="fa-solid fa-ticket me-2"></i> Reserve Your Seat</a>
+                <a href="submit.html" class="btn btn-outline-light fw-bold px-4 py-2" style="border-radius: 8px;"><i class="fa-solid fa-file-arrow-up me-2"></i> Submit Abstract</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="motto-banner">
+        <div class="container">
+            <h2 class="motto-text">"Geospatial Intelligence & Social Sciences for a Sustainable Tomorrow."</h2>
+        </div>
+    </div>
+
+    <section class="py-5 mt-4">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <h2 class="brand" style="color: var(--primary-color);">About The Movement</h2>
+                    <div style="width: 60px; height: 4px; background-color: var(--earth-green); margin: 15px 0 25px;"></div>
+                    <p class="fs-5 text-muted" style="line-height: 1.8;">The Earth is undergoing unprecedented ecological stress. Under the aegis of the ISSSA, the National Save The Earth Movement Summit acts as an apex gathering for geographers, environmental scientists, urban planners, and coders to forge holistic solutions.</p>
+                    <p class="text-muted mb-4" style="line-height: 1.8;">Our mission is to bridge the gap between advanced technology and human resource development. By uniting mapping technologies, social sciences, and grassroots activism, we aim to map, monitor, and mitigate ecological degradation across the Indian subcontinent.</p>
+                    <div class="d-flex gap-4">
+                        <div>
+                            <h3 class="fw-bold" style="color: var(--earth-green);">50+</h3>
+                            <span class="small text-uppercase fw-bold text-muted">Universities</span>
+                        </div>
+                        <div>
+                            <h3 class="fw-bold" style="color: var(--earth-green);">200+</h3>
+                            <span class="small text-uppercase fw-bold text-muted">Research Papers</span>
+                        </div>
+                        <div>
+                            <h3 class="fw-bold" style="color: var(--earth-green);">4</h3>
+                            <span class="small text-uppercase fw-bold text-muted">Core Domains</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800" alt="Earth from space" class="img-fluid rounded-4 shadow-lg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-white">
+        <div class="container text-center">
+            <h2 class="section-title">Summit Research Tracks</h2>
+            <p class="text-muted mx-auto mb-5" style="max-width: 600px;">Researchers are invited to submit abstracts and full papers to the INJASSS editorial board under the following four critical environmental domains.</p>
+            
+            <div class="row g-4 text-start">
+                <div class="col-md-6 col-lg-3">
+                    <div class="track-card">
+                        <div class="track-icon"><i class="fa-solid fa-satellite"></i></div>
+                        <h4 class="brand mb-3" style="font-size: 1.2rem;">GIS & Remote Sensing</h4>
+                        <p class="text-muted small">Applying satellite imagery and QGIS/ArcGIS for monitoring deforestation, watershed management, and climate modeling.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="track-card">
+                        <div class="track-icon"><i class="fa-solid fa-microchip"></i></div>
+                        <h4 class="brand mb-3" style="font-size: 1.2rem;">Green IoT Tech</h4>
+                        <p class="text-muted small">Deploying Arduino and ESP32 microcontrollers for real-time air quality, soil moisture, and ecological data collection.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="track-card">
+                        <div class="track-icon"><i class="fa-solid fa-users-viewfinder"></i></div>
+                        <h4 class="brand mb-3" style="font-size: 1.2rem;">Human Geography</h4>
+                        <p class="text-muted small">Understanding the impact of human resource development on the environment and holistic societal progress.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="track-card">
+                        <div class="track-icon"><i class="fa-solid fa-city"></i></div>
+                        <h4 class="brand mb-3" style="font-size: 1.2rem;">Urban Sustainability</h4>
+                        <p class="text-muted small">Reimagining city infrastructure, tackling pollution, and drafting policy frameworks for sustainable urban futures.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="text-center mb-5">
+                        <h2 class="section-title">Official Itinerary</h2>
+                    </div>
+                    
+                    <h4 class="brand text-primary mb-4 border-bottom pb-2">Day 1: Environmental Mapping & Technology</h4>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-time">09:00 AM - 10:00 AM</div>
+                            <h5 class="fw-bold mt-1">Inaugural Keynote Address</h5>
+                            <p class="text-muted small">"The State of the Earth: Geographic Perspectives on Climate Action."</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-time">10:30 AM - 01:00 PM</div>
+                            <h5 class="fw-bold mt-1">Paper Presentations: Track 1 & 2</h5>
+                            <p class="text-muted small">Research presentations on GIS mapping and IoT sensor networks for conservation.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-time">02:00 PM - 04:30 PM</div>
+                            <h5 class="fw-bold mt-1">Interactive Workshop</h5>
+                            <p class="text-muted small">Building localized environmental monitoring hubs using web technologies and microcontrollers.</p>
+                        </div>
+                    </div>
+
+                    <h4 class="brand text-primary mt-5 mb-4 border-bottom pb-2">Day 2: Human Dynamics & Policy</h4>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-time">09:30 AM - 12:30 PM</div>
+                            <h5 class="fw-bold mt-1">Paper Presentations: Track 3 & 4</h5>
+                            <p class="text-muted small">Focusing on human resource development and policy changes for sustainable cities.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-time">01:30 PM - 03:00 PM</div>
+                            <h5 class="fw-bold mt-1">Delegation Debates (MUN Style)</h5>
+                            <p class="text-muted small">Drafting the "Varanasi Environmental Accord" through moderated academic debate.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-time">03:30 PM - 05:00 PM</div>
+                            <h5 class="fw-bold mt-1">Valedictory Session & Awards</h5>
+                            <p class="text-muted small">Best Paper Awards and official closing of the summit.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="register" class="py-5 bg-white">
+        <div class="container text-center">
+            <h2 class="section-title">Delegate Registration</h2>
+            <p class="text-muted mx-auto mb-5" style="max-width: 600px;">Secure your pass for the summit. Verified ISSSA Life Members receive complimentary registration and priority presentation slots.</p>
+            
+            <div class="row justify-content-center g-4">
+                <div class="col-md-5">
+                    <div class="card border border-2 border-primary h-100 p-4 rounded-4 text-center">
+                        <span class="badge bg-primary w-auto mx-auto mb-3 px-3 py-2">Non-Members & General Public</span>
+                        <h2 class="brand display-5 text-dark fw-bold mb-0">₹1,200</h2>
+                        <span class="text-muted small">Per Delegate</span>
+                        <ul class="list-unstyled mt-4 mb-4 text-start mx-auto" style="max-width: 250px;">
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Entry to all sessions</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Summit Kit & Lunch</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Participation Certificate</li>
+                        </ul>
+                        <button class="btn btn-outline-primary w-100 mt-auto fw-bold" onclick="alert('General registration opens May 1st, 2026.')">Register as Guest</button>
+                    </div>
+                </div>
+                
+                <div class="col-md-5">
+                    <div class="card bg-primary text-white h-100 p-4 rounded-4 text-center position-relative shadow-lg border-0">
+                        <span class="badge bg-warning text-dark w-auto mx-auto mb-3 px-3 py-2 position-absolute" style="top: -15px; right: 20px;">Exclusive Benefit</span>
+                        <h3 class="mt-3 mb-2 fw-bold text-uppercase" style="letter-spacing: 1px;">ISSSA Members</h3>
+                        <h2 class="brand display-5 text-white fw-bold mb-0">₹0</h2>
+                        <span class="text-white-50 small">Fully Waived</span>
+                        <ul class="list-unstyled mt-4 mb-4 text-start mx-auto" style="max-width: 250px;">
+                            <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i> Priority Paper Review</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i> VIP Seating & Kit</li>
+                            <li class="mb-2"><i class="fa-solid fa-check text-warning me-2"></i> Fast-Track INJASSS Publication</li>
+                        </ul>
+                        <a href="member.html" class="btn btn-warning w-100 mt-auto fw-bold text-dark">Log in to Claim Pass</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white py-4 mt-auto">
+        <div class="container text-center">
+            <h4 class="brand mb-2">ISSSA</h4>
+            <p class="small text-white-50 mb-0">International Social Sciences Studies Association<br>Varanasi, Uttar Pradesh, India</p>
+            <div class="mt-3">
+                <a href="mailto:contact@injasss.org" class="text-white-50 text-decoration-none small"><i class="fa-solid fa-envelope me-1"></i> Contact Secretariat</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
