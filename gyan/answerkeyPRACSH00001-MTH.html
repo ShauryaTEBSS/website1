@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Answer Key - Class 6 Math (Patterns)</title>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <style>
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -26,8 +27,35 @@
             color: #2c3e50;
             border-bottom: 3px solid #3498db;
             padding-bottom: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
             font-size: 1.5rem;
+        }
+        .explanation-box {
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 0 5px 5px 0;
+            font-size: 0.95rem;
+            color: #2c3e50;
+        }
+        #scanner-container {
+            text-align: center;
+            padding: 20px 0;
+        }
+        #reader {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            border: none !important;
+        }
+        /* Hides the default yellow debug/border boxes from the scanner library to keep it clean */
+        #reader__dashboard_section_csr span, #reader__dashboard_section_swaplink {
+            color: #3498db;
+            text-decoration: none;
+        }
+        #answer-key-container {
+            display: none; /* Hidden by default until scanned */
         }
         h2 {
             color: #2980b9;
@@ -59,77 +87,139 @@
             margin-top: 5px;
             font-style: italic;
         }
+        .emergency-btn {
+            background: none;
+            border: none;
+            color: #ccc;
+            font-size: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>Answer Key: Patterns in Mathematics (Class 6)</h1>
+        
+        <div class="explanation-box">
+            <strong>About this Document:</strong> This answer key provides step-by-step solutions for the Class 6 Mathematics sample paper covering triangular numbers, square numbers, Fibonacci sequences, and competency-based case studies. Use these solutions to verify your work and understand the logic behind mathematical patterns.
+        </div>
 
-        <h2>Section A: Multiple Choice Questions</h2>
-        <ul class="answer-list">
-            <li><span class="q-num">1.</span> (b) 144 <span class="explanation">(12<sup>2</sup> = 144)</span></li>
-            <li><span class="q-num">2.</span> (b) 21 <span class="explanation">((6 &times; 7) / 2 = 21)</span></li>
-            <li><span class="q-num">3.</span> (c) Virahanka / Fibonacci numbers</li>
-            <li><span class="q-num">4.</span> (a) 8<sup>2</sup> = 64</li>
-            <li><span class="q-num">5.</span> (b) 12 <span class="explanation">(The 3rd triangular number is 6; 6 &times; 2 = 12)</span></li>
-        </ul>
+        <div id="scanner-container">
+            <h3 style="color: #e74c3c;">Authentication Required</h3>
+            <p>Please scan the authorization QR code to unlock the solutions.</p>
+            <div id="reader"></div>
+            <button class="emergency-btn" onclick="unlockAnswers()">Bypass Scanner (Dev Mode)</button>
+        </div>
 
-        <h2>Section B: Very Short Answer Questions</h2>
-        <ul class="answer-list">
-            <li><span class="q-num">6.</span> n(n + 1) / 2</li>
-            <li><span class="q-num">7.</span> 32 <span class="explanation">(2<sup>5</sup>)</span></li>
-            <li><span class="q-num">8.</span> Square numbers</li>
-            <li><span class="q-num">9.</span> 30</li>
-            <li><span class="q-num">10.</span> 400 <span class="explanation">(Sum of numbers up and down to 20 = 20<sup>2</sup>)</span></li>
-        </ul>
+        <div id="answer-key-container">
+            <h3 style="color: #27ae60; text-align: center;">🔓 Access Granted</h3>
+            
+            <h2>Section A: Multiple Choice Questions</h2>
+            <ul class="answer-list">
+                <li><span class="q-num">1.</span> (b) 144 <span class="explanation">(12<sup>2</sup> = 144)</span></li>
+                <li><span class="q-num">2.</span> (b) 21 <span class="explanation">((6 &times; 7) / 2 = 21)</span></li>
+                <li><span class="q-num">3.</span> (c) Virahanka / Fibonacci numbers</li>
+                <li><span class="q-num">4.</span> (a) 8<sup>2</sup> = 64</li>
+                <li><span class="q-num">5.</span> (b) 12 <span class="explanation">(The 3rd triangular number is 6; 6 &times; 2 = 12)</span></li>
+            </ul>
 
-        <h2>Section C: Short Answer Questions</h2>
-        <ul class="answer-list">
-            <li><span class="q-num">11.</span> 7th term = 5 + 8 = 13; 8th term = 8 + 13 = 21. <span class="explanation">(Each term is the sum of the two preceding terms).</span></li>
-            <li><span class="q-num">12.</span> (25 &times; 26) / 2 = 325.</li>
-            <li><span class="q-num">13.</span> First three triangular numbers are 1, 3, 6.<br>
-                1st term: (6 &times; 1) + 1 = 7<br>
-                2nd term: (6 &times; 3) + 1 = 19<br>
-                3rd term: (6 &times; 6) + 1 = 37
-            </li>
-            <li><span class="q-num">14.</span> There are 8 consecutive odd numbers in the sequence. The sum is 8<sup>2</sup> = 64.</li>
-            <li><span class="q-num">15.</span> 5th term = 5<sup>2</sup> + 1 = 26.<br>
-                10th term = 10<sup>2</sup> + 1 = 101.
-            </li>
-        </ul>
+            <h2>Section B: Very Short Answer Questions</h2>
+            <ul class="answer-list">
+                <li><span class="q-num">6.</span> n(n + 1) / 2</li>
+                <li><span class="q-num">7.</span> 32 <span class="explanation">(2<sup>5</sup>)</span></li>
+                <li><span class="q-num">8.</span> Square numbers</li>
+                <li><span class="q-num">9.</span> 30</li>
+                <li><span class="q-num">10.</span> 400 <span class="explanation">(Sum of numbers up and down to 20 = 20<sup>2</sup>)</span></li>
+            </ul>
 
-        <h2>Section D: Long Answer Questions</h2>
-        <ul class="answer-list">
-            <li><span class="q-num">16.</span> 4th and 5th triangular numbers are 10 and 15. Sum = 10 + 15 = 25 (which is 5<sup>2</sup>, a perfect square).<br>
-                The 6th triangular number is 21, and the 7th is 28.<br>
-                Sum = 21 + 28 = 49 (which is 7<sup>2</sup>). Yes, the rule applies.
-            </li>
-            <li><span class="q-num">17.</span> Sum = 2 + 4 + 8 + 16 + 32 = 62.<br>
-                The formula for the sum of the first <i>n</i> powers of 2 is 2<sup>n+1</sup> - 2.
-            </li>
-            <li><span class="q-num">18.</span> (a) Total saplings = 12th triangular number = (12 &times; 13) / 2 = 78.<br>
-                (b) The 9th triangular number is 45 ((9 &times; 10)/2). He can plant exactly 9 complete rows.
-            </li>
-            <li><span class="q-num">19.</span> (a) (1-1) = 0; (4-2) = 2; (9-3) = 6; (16-4) = 12.<br>
-                (b) The sequence is 0, 2, 6, 12. These numbers are exactly double the sequence of triangular numbers (0&times;2=0, 1&times;2=2, 3&times;2=6, 6&times;2=12).
-            </li>
-        </ul>
+            <h2>Section C: Short Answer Questions</h2>
+            <ul class="answer-list">
+                <li><span class="q-num">11.</span> 7th term = 5 + 8 = 13; 8th term = 8 + 13 = 21. <span class="explanation">(Each term is the sum of the two preceding terms).</span></li>
+                <li><span class="q-num">12.</span> (25 &times; 26) / 2 = 325.</li>
+                <li><span class="q-num">13.</span> First three triangular numbers are 1, 3, 6.<br>
+                    1st term: (6 &times; 1) + 1 = 7<br>
+                    2nd term: (6 &times; 3) + 1 = 19<br>
+                    3rd term: (6 &times; 6) + 1 = 37
+                </li>
+                <li><span class="q-num">14.</span> There are 8 consecutive odd numbers in the sequence. The sum is 8<sup>2</sup> = 64.</li>
+                <li><span class="q-num">15.</span> 5th term = 5<sup>2</sup> + 1 = 26.<br>
+                    10th term = 10<sup>2</sup> + 1 = 101.
+                </li>
+            </ul>
 
-        <h2>Section E: Case-Study Based Questions</h2>
-        <ul class="answer-list">
-            <li><span class="q-num">20.</span> 
-                (i) 3rd hexagonal number = 3(2(3) - 1) = 3(5) = 15.<br>
-                (ii) 5th hexagonal number = 5(2(5) - 1) = 5(9) = 45.<br>
-                (iii) 4th hexagonal number = 4(2(4) - 1) = 4(7) = 28. Riya's 4th term = 28 + 1 = 29.
-            </li>
-            <li><span class="q-num">21.</span> 
-                (i) Triangular numbers.<br>
-                (ii) Total blocks for an 8-step staircase = 8th triangular number = (8 &times; 9) / 2 = 36.<br>
-                (iii) The 10th triangular number is (10 &times; 11) / 2 = 55. The child can build exactly a 10-step staircase with 0 blocks left over.
-            </li>
-        </ul>
+            <h2>Section D: Long Answer Questions</h2>
+            <ul class="answer-list">
+                <li><span class="q-num">16.</span> 4th and 5th triangular numbers are 10 and 15. Sum = 10 + 15 = 25 (which is 5<sup>2</sup>, a perfect square).<br>
+                    The 6th triangular number is 21, and the 7th is 28.<br>
+                    Sum = 21 + 28 = 49 (which is 7<sup>2</sup>). Yes, the rule applies.
+                </li>
+                <li><span class="q-num">17.</span> Sum = 2 + 4 + 8 + 16 + 32 = 62.<br>
+                    The formula for the sum of the first <i>n</i> powers of 2 is 2<sup>n+1</sup> - 2.
+                </li>
+                <li><span class="q-num">18.</span> (a) Total saplings = 12th triangular number = (12 &times; 13) / 2 = 78.<br>
+                    (b) The 9th triangular number is 45 ((9 &times; 10)/2). He can plant exactly 9 complete rows.
+                </li>
+                <li><span class="q-num">19.</span> (a) (1-1) = 0; (4-2) = 2; (9-3) = 6; (16-4) = 12.<br>
+                    (b) The sequence is 0, 2, 6, 12. These numbers are exactly double the sequence of triangular numbers (0&times;2=0, 1&times;2=2, 3&times;2=6, 6&times;2=12).
+                </li>
+            </ul>
+
+            <h2>Section E: Case-Study Based Questions</h2>
+            <ul class="answer-list">
+                <li><span class="q-num">20.</span> 
+                    (i) 3rd hexagonal number = 3(2(3) - 1) = 3(5) = 15.<br>
+                    (ii) 5th hexagonal number = 5(2(5) - 1) = 5(9) = 45.<br>
+                    (iii) 4th hexagonal number = 4(2(4) - 1) = 4(7) = 28. Riya's 4th term = 28 + 1 = 29.
+                </li>
+                <li><span class="q-num">21.</span> 
+                    (i) Triangular numbers.<br>
+                    (ii) Total blocks for an 8-step staircase = 8th triangular number = (8 &times; 9) / 2 = 36.<br>
+                    (iii) The 10th triangular number is (10 &times; 11) / 2 = 55. The child can build exactly a 10-step staircase with 0 blocks left over.
+                </li>
+            </ul>
+        </div>
     </div>
 
+    <script>
+        const targetUrl = "https://qr1.me-qr.com/text/h0cn9799onyl";
+        let html5QrcodeScanner;
+
+        function onScanSuccess(decodedText, decodedResult) {
+            // Check if the scanned QR code matches the target link
+            if (decodedText.trim() === targetUrl) {
+                unlockAnswers();
+            } else {
+                alert("Incorrect QR Code. Please scan the correct code to unlock answers.");
+            }
+        }
+
+        function unlockAnswers() {
+            // Hide the scanner and show the answers
+            document.getElementById('scanner-container').style.display = 'none';
+            document.getElementById('answer-key-container').style.display = 'block';
+            
+            // Stop the camera to save battery
+            if(html5QrcodeScanner) {
+                html5QrcodeScanner.clear();
+            }
+        }
+
+        function onScanFailure(error) {
+            // handle scan failure, usually better to ignore and keep scanning
+            // console.warn(`Code scan error = ${error}`);
+        }
+
+        // Initialize the scanner when the page loads
+        document.addEventListener("DOMContentLoaded", function() {
+            html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader",
+                { fps: 10, qrbox: {width: 250, height: 250} },
+                /* verbose= */ false
+            );
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        });
+    </script>
 </body>
 </html>
